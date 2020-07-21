@@ -1,3 +1,56 @@
 <resources>
     <string name="app_name">mockproject_chatapp</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+<!--    Language English-->
+    <string name="txt_login_en">"Login"</string>
+    <string name="txt_forgot_password_en">"Forgot your password?"</string>
+    <string name="txt_no_account_en">"New member?"</string>
+    <string name="txt_register_en">"Register now"</string>
+    <string name="txt_invalid_password_en">"Password must be more than 6 characters"</string>
+    <string name="txt_name_en">"Name"</string>
+    <string name="txt_message_en">"Message"</string>
+    <string name="txt_friends_en">"Friends"</string>
+    <string name="txt_profile_en">"Profile"</string>
+    <string name="txt_today_en">"Today"</string>
+    <string name="txt_yesterday_en">"Yesterday"</string>
+    <string name="txt_cancel_en">"Cancel"</string>
+    <string name="txt_create_message_en">"Create message"</string>
+    <string name="txt_search_friends_en">"Search friends"</string>
+    <string name="txt_search_no_result_en">"No result not found"</string>
+    <string name="txt_language_en">"Language"</string>
+    <string name="txt_notification_en">"Notification"</string>
+    <string name="txt_version_en">"Version"</string>
+    <string name="txt_logout_en">"Logout"</string>
+    <string name="txt_login_failed_en">"Login failed"</string>
+    <string name="txt_invalid_username_en">Not a valid username</string>
+<!--    Language Vietnam-->
+    <string name="txt_login_vi">"Đăng nhập"</string>
+    <string name="txt_forgot_password_vi">"Quên mật khẩu?"</string>
+    <string name="txt_no_account_vi">"Thành viên mới?"</string>
+    <string name="txt_register_vi">"Đăng ký ngay"</string>
+    <string name="txt_invalid_password_vi">"Mật khẩu cân dài hơn 6 ký tự"</string>
+    <string name="txt_name_vi">"Họ và Tên"</string>
+    <string name="txt_message_vi">"Tin nhắn"</string>
+    <string name="txt_friends">"Bạn bè"</string>
+    <string name="txt_profile_vi">"Trang cá nhân"</string>
+    <string name="txt_today_vi">"Hôm nay"</string>
+    <string name="txt_yesterday_vi">"Hôm qua"</string>
+    <string name="txt_cancel_vi">"Hủy"</string>
+    <string name="txt_create_message_vi">"Tạo tin nhắn mới"</string>
+    <string name="txt_search_friends_vi">"Tìm kiếm bạn bè"</string>
+    <string name="txt_search_no_result_vi">"Không có kết quả tìm kiếm"</string>
+    <string name="txt_language_vi">"Ngôn ngữ"</string>
+    <string name="txt_notification_vi">"Thông báo"</string>
+    <string name="txt_version_vi">"Phiên bản"</string>
+    <string name="txt_logout_vi">"Đăng xuất"</string>
+    <string name="txt_login_failed_vi">"Đăng nhập không thành công"</string>
+    <string name="txt_invalid_username_vi">Người dùng không hợp lệ</string>
 </resources>
