@@ -1,7 +1,8 @@
-package com.rikkei.tranning.chatapp
+package com.rikkei.tranning.chatapp.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rikkei.tranning.chatapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
