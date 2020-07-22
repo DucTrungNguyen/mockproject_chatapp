@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.uis.Login">
+    tools:context=".views.uis.LoginActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
             >
             <ImageView
                 android:id="@+id/ImageViewLogo"
-                android:src="@drawable/mail_blue"
+                android:src="@drawable/ic_mail_blue"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="57dp"
                 android:layout_width="124dp"
@@ -76,7 +76,7 @@
                     android:layout_marginTop="24dp"
                     android:fillColor="#4356B4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/email"
+                    android:src="@drawable/ic_mail"
                     android:layout_alignParentRight="true"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -111,7 +111,7 @@
                     android:layout_marginTop="24dp"
                     android:fillColor="#4356B4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/key"
+                    android:src="@drawable/ic_key_1"
                     android:layout_alignParentRight="true"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

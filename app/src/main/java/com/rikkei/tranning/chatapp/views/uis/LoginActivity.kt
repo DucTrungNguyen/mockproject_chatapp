@@ -10,11 +10,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.rikkei.tranning.chatapp.Activity.MainActivity
 import com.rikkei.tranning.chatapp.R
 import java.util.regex.Pattern
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     var btnMoveRegister: Button? = null
     var btnLogin: Button?=null
     var edtEmail: EditText?=null
@@ -27,7 +26,7 @@ class Login : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         enableButton()
         btnMoveRegister!!.setOnClickListener {
-            val intent = Intent(this@Login, SignUp::class.java)
+            val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
         btnLogin!!.setOnClickListener{
@@ -38,13 +37,13 @@ class Login : AppCompatActivity() {
                 edtPass!!.getText().toString()
             )
                 .addOnSuccessListener {
-                    Toast.makeText(this@Login, "User sign in success", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginActivity, "User sign in success", Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this@Login, MainActivity::class.java)
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this@Login, "Sign-in is failed!", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginActivity, "Sign-in is failed!", Toast.LENGTH_SHORT)
                         .show()
                 }
         }

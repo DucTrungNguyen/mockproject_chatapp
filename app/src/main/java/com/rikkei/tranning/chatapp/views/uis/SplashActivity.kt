@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
             isLoggedIn = PrefsHelper.readBoolean("LOGIN", false)!!
             if (!isLoggedIn) {
-                startActivity(Intent(this@SplashActivity, Login::class.java))
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 finish()
             } else {}
 

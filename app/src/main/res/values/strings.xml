@@ -17,6 +17,7 @@
     <string name="txt_invalid_password_en">"Password must be more than 6 characters"</string>
     <string name="txt_name_en">"Name"</string>
     <string name="txt_message_en">"Message"</string>
+    <string name="txt_search_message_en">"Search message"</string>
     <string name="txt_friends_en">"Friends"</string>
     <string name="txt_profile_en">"Profile"</string>
     <string name="txt_today_en">"Today"</string>
@@ -39,6 +40,7 @@
     <string name="txt_invalid_password_vi">"Mật khẩu cân dài hơn 6 ký tự"</string>
     <string name="txt_name_vi">"HỌ VÀ TÊN"</string>
     <string name="txt_message_vi">"Tin nhắn"</string>
+    <string name="txt_search_message_vi">"Tìm kiếm tin nhắn"</string>
     <string name="txt_friends">"Bạn bè"</string>
     <string name="txt_profile_vi">"Trang cá nhân"</string>
     <string name="txt_today_vi">"Hôm nay"</string>

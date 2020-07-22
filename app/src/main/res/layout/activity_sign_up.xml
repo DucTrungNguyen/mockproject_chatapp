@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.uis.SignUp">
+    tools:context=".views.uis.SignUpActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarregister"
         android:layout_marginTop="30dp"
@@ -62,7 +62,7 @@
                     android:layout_marginTop="24dp"
                     android:fillColor="#4356B4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/user"
+                    android:src="@drawable/ic_user"
                     android:layout_alignParentRight="true"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -98,7 +98,7 @@
                     android:layout_marginTop="24dp"
                     android:fillColor="#4356B4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/email"
+                    android:src="@drawable/ic_mail"
                     android:layout_alignParentRight="true"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -133,7 +133,7 @@
                     android:layout_marginTop="24dp"
                     android:fillColor="#4356B4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/key"
+                    android:src="@drawable/ic_key_1"
                     android:layout_alignParentRight="true"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

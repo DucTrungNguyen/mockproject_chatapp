@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
 import java.util.regex.Pattern
 
-class SignUp : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     var toolbar: Toolbar? = null
     var btnMoveLogin: Button? = null
     var checkBox: CheckBox? = null
@@ -34,7 +34,7 @@ class SignUp : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         EnableButton()
         btnMoveLogin!!.setOnClickListener {
-            val intent = Intent(this@SignUp, Login::class.java)
+            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(intent)
         }
         btnSignUp!!.setOnClickListener {
@@ -46,14 +46,14 @@ class SignUp : AppCompatActivity() {
                 )
                     .addOnSuccessListener {
                         Toast.makeText(
-                            this@SignUp,
+                            this@SignUpActivity,
                             "Sign-up success",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                     .addOnFailureListener {
                         Toast.makeText(
-                            this@SignUp,
+                            this@SignUpActivity,
                             "Sign-up failed", Toast.LENGTH_SHORT
                         ).show()
                     }
