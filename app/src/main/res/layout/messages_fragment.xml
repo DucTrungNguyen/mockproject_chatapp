@@ -5,7 +5,7 @@
     android:layout_gravity="bottom"
     android:layout_marginTop="150dp"
     android:layout_height="match_parent"
-    android:background=""
+
     tools:context=".views.uis.MessagesFragment">
 
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "568187284902",
+    "firebase_url": "https://chatapp-23f48.firebaseio.com",
+    "project_id": "chatapp-23f48",
+    "storage_bucket": "chatapp-23f48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568187284902:android:1b611ca413c5ccf40eb367",
+        "android_client_info": {
+          "package_name": "com.rikkei.tranning.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568187284902-ut0h9rnne4cr632pdilvi6acs6upus7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rikkei.tranning.chatapp",
+            "certificate_hash": "fa88e4ef4198277869507cd584429cf9ecb81ad1"
+          }
+        },
+        {
+          "client_id": "568187284902-ldufruiofquj5n604ci8evhsugtv2qg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7s6k8GpaaATkan58gyntXVlznVWyNBbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568187284902-ldufruiofquj5n604ci8evhsugtv2qg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

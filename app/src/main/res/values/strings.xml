@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">mockproject_chatapp</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_email">EMAIL</string>
+    <string name="prompt_password">MẬT KHẨU</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
@@ -35,9 +35,9 @@
     <string name="txt_login_vi">"Đăng nhập"</string>
     <string name="txt_forgot_password_vi">"Quên mật khẩu?"</string>
     <string name="txt_no_account_vi">"Thành viên mới?"</string>
-    <string name="txt_register_vi">"Đăng ký ngay"</string>
+    <string name="txt_register_vi">"Đăng ký"</string>
     <string name="txt_invalid_password_vi">"Mật khẩu cân dài hơn 6 ký tự"</string>
-    <string name="txt_name_vi">"Họ và Tên"</string>
+    <string name="txt_name_vi">"HỌ VÀ TÊN"</string>
     <string name="txt_message_vi">"Tin nhắn"</string>
     <string name="txt_friends">"Bạn bè"</string>
     <string name="txt_profile_vi">"Trang cá nhân"</string>
@@ -55,4 +55,6 @@
     <string name="txt_invalid_username_vi">Người dùng không hợp lệ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="txt_rule_vi">Tôi đồng ý với các chính sách và điều khoản</string>
 </resources>

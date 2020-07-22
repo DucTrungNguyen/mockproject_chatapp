@@ -1,11 +1,13 @@
-package com.rikkei.tranning.chatapp
+package com.rikkei.tranning.chatapp.views.uis
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.rikkei.tranning.chatapp.helper.PrefsHelper
-import com.rikkei.tranning.chatapp.views.uis.MainActivity
+
 
 
 class SplashActivity : AppCompatActivity() {
@@ -16,22 +18,16 @@ class SplashActivity : AppCompatActivity() {
         PrefsHelper.init(applicationContext)
 //        val sharedPreferences:  SharedPreferences  = getSharedPreferences("CHAT_APP" , Context.MODE_PRIVATE)
         Handler().postDelayed(Runnable {
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("CHAT_APP", Context.MODE_PRIVATE)
+
             isLoggedIn = PrefsHelper.readBoolean("LOGIN", false)!!
-
-            if ( !isLoggedIn) {
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-
+            if (!isLoggedIn) {
+                startActivity(Intent(this@SplashActivity, Login::class.java))
                 finish()
-
-            }
-            else
-            {
-
-            }
-
+            } else {}
 
         }, 3000)
-
 
     }
 }
