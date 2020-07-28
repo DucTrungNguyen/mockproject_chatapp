@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatarFriend"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_margin="15sp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:textColor="#4356B4"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Name"
+            android:layout_toRightOf="@+id/avatarFriend"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:text="Cancel"
+            android:textColor="#4356B4"
+            android:layout_marginRight="10dp"
+            android:layout_width="100sp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:background="@drawable/button_action_friend" />
+        <Button
+            android:id="@+id/btnAdd"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_width="100sp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:background="@drawable/button_action_friend02" />
+        <Button
+            android:id="@+id/btnAccess"
+            android:text="Access"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_width="100sp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:background="@drawable/button_action_friend02" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

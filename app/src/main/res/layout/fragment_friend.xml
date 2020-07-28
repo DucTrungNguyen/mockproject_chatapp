@@ -47,16 +47,17 @@
         android:layout_height="match_parent"
         >
     <com.google.android.material.tabs.TabLayout
+
         app:tabTextColor="#999999"
         app:tabSelectedTextColor="#4356B4"
         app:tabIndicatorColor="#4356B4"
-        android:id="@+id/TabLayoutFriend"
+        android:id="@+id/tabLayoutFriend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
     <androidx.viewpager.widget.ViewPager
-        android:layout_below="@+id/TabLayoutFriend"
-        android:id="@+id/ViewPagerFriend"
+        android:layout_below="@+id/tabLayoutFriend"
+        android:id="@+id/viewPagerFriend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

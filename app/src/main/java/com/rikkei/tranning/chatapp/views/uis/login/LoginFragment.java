@@ -47,7 +47,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentLoginBinding=getViewDataBinding();
+        mFragmentLoginBinding = getViewDataBinding();
         String htmlcontentbutton="Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>";
         mFragmentLoginBinding.ButtonMoveRegister.setText(android.text.Html.fromHtml(htmlcontentbutton));
     }
