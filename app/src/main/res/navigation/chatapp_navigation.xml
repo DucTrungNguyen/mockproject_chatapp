@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chatapp_navigation"
+    app:startDestination="@+id/navigation_message">
+    <fragment
+        android:id="@+id/navigation_message"
+        android:name="com.rikkei.tranning.chatapp.views.uis.MessagesFragment"
+        android:label="@string/txt_message_en"
+        tools:layout="@layout/messages_fragment"/>
+
+    <fragment
+        android:id="@+id/navigation_friends"
+        android:name="com.rikkei.tranning.chatapp.views.uis.FriendsFragment"
+        android:label="@string/txt_friends_en"
+        tools:layout="@layout/friends_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.rikkei.tranning.chatapp.views.uis.ProfileFragment"
+        android:label="@string/txt_profile_en"
+        tools:layout="@layout/profile_fragment" />
+
+</navigation>
+
+

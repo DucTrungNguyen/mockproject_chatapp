@@ -17,6 +17,7 @@
     <string name="txt_invalid_password_en">"Password must be more than 6 characters"</string>
     <string name="txt_name_en">"Name"</string>
     <string name="txt_message_en">"Message"</string>
+    <string name="txt_search_message_en">"Search message"</string>
     <string name="txt_friends_en">"Friends"</string>
     <string name="txt_profile_en">"Profile"</string>
     <string name="txt_today_en">"Today"</string>
@@ -39,6 +40,7 @@
     <string name="txt_invalid_password_vi">"Mật khẩu cân dài hơn 6 ký tự"</string>
     <string name="txt_name_vi">"HỌ VÀ TÊN"</string>
     <string name="txt_message_vi">"Tin nhắn"</string>
+    <string name="txt_search_message_vi">"Tìm kiếm tin nhắn"</string>
     <string name="txt_friends">"Bạn bè"</string>
     <string name="txt_profile_vi">"Trang cá nhân"</string>
     <string name="txt_today_vi">"Hôm nay"</string>
@@ -53,5 +55,14 @@
     <string name="txt_logout_vi">"Đăng xuất"</string>
     <string name="txt_login_failed_vi">"Đăng nhập không thành công"</string>
     <string name="txt_invalid_username_vi">Người dùng không hợp lệ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="txt_rule_vi">Tôi đồng ý với các chính sách và điều khoản</string>
+    <string name="txt_friend_title_vi">Bạn bè</string>
+    <string name="txt_language_title_vi">Ngôn ngữ</string>
+    <string name="txt_notification_title_vi">Thông báo</string>
+    <string name="txt_edit_profile_vi">Chỉnh sửa thông tin</string>
+    <string name="txt_phone_vi">SỐ ĐIỆN THOẠI</string>
+    <string name="txt_date_of_birth_vi">NGÀY SINH</string>
 </resources>
