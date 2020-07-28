@@ -12,7 +12,7 @@ import com.rikkei.tranning.chatapp.Base.BaseViewModel;
 
 import java.util.regex.Pattern;
 
-public class LoginViewModel extends BaseViewModel<LoginNavigator> {
+public class  LoginViewModel extends BaseViewModel<LoginNavigator> {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
     public void replaceFragmentClick(){
         getNavigator().replaceFragment();

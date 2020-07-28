@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
-import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment
 
 class SplashActivity : AppCompatActivity() {
     var txtappname: TextView? = null
