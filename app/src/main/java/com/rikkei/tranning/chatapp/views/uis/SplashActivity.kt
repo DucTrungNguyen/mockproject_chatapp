@@ -6,8 +6,10 @@ import android.os.Handler
 import android.text.Html
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
+import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment
 
 class SplashActivity : AppCompatActivity() {
     var txtappname: TextView? = null
@@ -25,14 +27,13 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else {
-                val fragmentManager =
-                    supportFragmentManager
-                val fragmentTransaction =
-                    fragmentManager.beginTransaction()
-                val login =
-                    LoginFragment()
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val login = LoginFragment()
                 fragmentTransaction.add(R.id.FrameLayout, login, null)
                 fragmentTransaction.commit()
+
+                startActivity(intent)
             }
         }, 3000)
     }
