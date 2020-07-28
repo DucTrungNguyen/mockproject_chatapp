@@ -6,6 +6,6 @@
     android:layout_marginTop="50dp"
     android:layout_gravity="bottom"
     android:background="@drawable/fragment"
-    tools:context=".views.uis.ProfileFragment">
+    tools:context=".views.uis.profile.ProfileFragment">
 
 </FrameLayout>

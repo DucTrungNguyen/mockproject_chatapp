@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
+import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment
 
 class SplashActivity : AppCompatActivity() {
     var txtappname: TextView? = null
@@ -29,7 +30,8 @@ class SplashActivity : AppCompatActivity() {
                     supportFragmentManager
                 val fragmentTransaction =
                     fragmentManager.beginTransaction()
-                val login = LoginFragment()
+                val login =
+                    LoginFragment()
                 fragmentTransaction.add(R.id.FrameLayout, login, null)
                 fragmentTransaction.commit()
             }

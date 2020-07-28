@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rikkei.tranning.chatapp.viewmodels.SignUpViewModel"
+            type="com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel"
             />
     </data>
     <RelativeLayout

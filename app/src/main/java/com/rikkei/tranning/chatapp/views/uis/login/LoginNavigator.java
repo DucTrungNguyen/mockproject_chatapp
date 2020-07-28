@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.Navigator;
+package com.rikkei.tranning.chatapp.views.uis.login;
 
 public interface LoginNavigator {
     void replaceFragment();

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModelEditProfile"
-            type="com.rikkei.tranning.chatapp.viewmodels.ProfileViewModel" />
+            type="com.rikkei.tranning.chatapp.views.uis.profile.ProfileViewModel" />
     </data>
     <RelativeLayout
         android:background="@drawable/bg"

@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.views.uis;
+package com.rikkei.tranning.chatapp.views.uis.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +13,10 @@ import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.Model.User;
-import com.rikkei.tranning.chatapp.Navigator.ProfileNavigator;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
-import com.rikkei.tranning.chatapp.viewmodels.ProfileViewModel;
+import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> implements ProfileNavigator {

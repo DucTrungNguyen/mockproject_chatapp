@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.Navigator;
+package com.rikkei.tranning.chatapp.views.uis.profile;
 
 public interface ProfileNavigator {
     void showMessage(String message);

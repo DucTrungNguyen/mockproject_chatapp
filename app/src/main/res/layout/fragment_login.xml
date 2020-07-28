@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.rikkei.tranning.chatapp.viewmodels.LoginViewModel" />
+            type="com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"

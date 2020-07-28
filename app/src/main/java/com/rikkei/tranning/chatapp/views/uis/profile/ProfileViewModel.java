@@ -1,11 +1,7 @@
-package com.rikkei.tranning.chatapp.viewmodels;
-
-import android.content.Intent;
-import android.net.Uri;
+package com.rikkei.tranning.chatapp.views.uis.profile;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +14,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.rikkei.tranning.chatapp.Base.BaseViewModel;
 import com.rikkei.tranning.chatapp.Model.User;
-import com.rikkei.tranning.chatapp.Navigator.ProfileNavigator;
 
 public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();

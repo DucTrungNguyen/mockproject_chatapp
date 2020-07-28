@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.views.uis;
+package com.rikkei.tranning.chatapp.views.uis.signup;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,11 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
-import com.rikkei.tranning.chatapp.Navigator.SignUpNavigator;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentSignupBinding;
-import com.rikkei.tranning.chatapp.viewmodels.SignUpViewModel;
+import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment;
 
 public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpViewModel> implements SignUpNavigator {
     private FragmentSignupBinding mFragmentSignUpBinding;

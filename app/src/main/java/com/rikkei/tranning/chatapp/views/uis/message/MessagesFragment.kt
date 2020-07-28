@@ -1,6 +1,5 @@
-package com.rikkei.tranning.chatapp.views.uis
+package com.rikkei.tranning.chatapp.views.uis.message
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
