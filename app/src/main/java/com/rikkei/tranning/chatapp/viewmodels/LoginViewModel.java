@@ -69,6 +69,11 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             }
         };
     }
+
+    public void setFirebaseAuth(FirebaseAuth firebaseAuth) {
+        this.firebaseAuth = firebaseAuth;
+    }
+
     public void loginFirebase(String email, String password){
         firebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
