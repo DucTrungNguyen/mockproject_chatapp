@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.Base.BaseViewModel;
 
 import java.util.regex.Pattern;
-
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
     public void replaceFragmentClick(){
@@ -36,17 +35,13 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getNavigator().setEnableButton();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         };
     }
@@ -54,25 +49,16 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getNavigator().setEnableButton();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         };
     }
-
-    public void setFirebaseAuth(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
-    }
-
     public void loginFirebase(String email, String password){
         firebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {

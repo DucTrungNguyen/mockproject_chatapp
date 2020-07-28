@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
+import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel;
 
@@ -23,6 +24,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }
         if(modelClass.isAssignableFrom(ProfileViewModel.class)){
             return (T) new ProfileViewModel();
+        }
+        if(modelClass.isAssignableFrom(EditProfileViewModel.class)){
+            return (T) new EditProfileViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

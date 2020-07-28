@@ -26,16 +26,16 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
-import com.rikkei.tranning.chatapp.Model.User;
-import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
+import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
-import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
+import com.rikkei.tranning.chatapp.services.network.Network;
 import com.squareup.picasso.Picasso;
 import static android.app.Activity.RESULT_OK;
-public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, ProfileViewModel> implements ProfileNavigator {
-    FragmentEditprofileBinding mFragmentEditprofileBinding;
-    ProfileViewModel mProfileViewModel;
+public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> implements EditProfileNavigator {
+    FragmentEditprofileBinding mFragmentEditProfileBinding;
+    EditProfileViewModel mEditProfileViewModel;
     private static final int IMAGE_REQUEST=1;
     StorageReference storageReference= FirebaseStorage.getInstance().getReference("uploads");
     private Uri imageUri;
@@ -49,50 +49,46 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     public int getLayoutId() {
         return R.layout.fragment_editprofile;
     }
+
     @Override
-    public ProfileViewModel getViewModel() {
-        mProfileViewModel= ViewModelProviders.of(this, new ViewModelProviderFactory()).get(ProfileViewModel.class);
-        return mProfileViewModel;
+    public EditProfileViewModel getViewModel() {
+        mEditProfileViewModel= ViewModelProviders.of(this, new ViewModelProviderFactory()).get(EditProfileViewModel.class);
+        return mEditProfileViewModel;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProfileViewModel.setNavigator(this);
+        mEditProfileViewModel.setNavigator(this);
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentEditprofileBinding=getViewDataBinding();
-        mProfileViewModel.infoUserFromFirebase(new ProfileViewModel.DataStatus() {
+        mFragmentEditProfileBinding=getViewDataBinding();
+        new Network().infoUserFromFirebase(new Network.DataStatus() {
             @Override
             public void DataIsLoaded(User user) {
-                mFragmentEditprofileBinding.editTextNameProfile.setText(user.getUserName());
+                mFragmentEditProfileBinding.editTextNameProfile.setText(user.getUserName());
                 if(user.getUserPhone().equals("default")){
-                    mFragmentEditprofileBinding.editPhoneProfile.setText("");
+                    mFragmentEditProfileBinding.editPhoneProfile.setText("");
                 }
                 else{
-                    mFragmentEditprofileBinding.editPhoneProfile.setText(user.getUserPhone());
+                    mFragmentEditProfileBinding.editPhoneProfile.setText(user.getUserPhone());
                 }
                 if(user.getUserDateOfBirth().equals("default")){
-                    mFragmentEditprofileBinding.editDateOfBirthProfile.setText("");
+                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText("");
                 }
                 else {
-                    mFragmentEditprofileBinding.editDateOfBirthProfile.setText(user.getUserDateOfBirth());
+                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText(user.getUserDateOfBirth());
                 }
                 if(user.getUserImgUrl().equals("default")){
-                    mFragmentEditprofileBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
+                    mFragmentEditProfileBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
                 }
                 else{
-                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentEditprofileBinding.CircleImageUserEdit);
+                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentEditProfileBinding.CircleImageUserEdit);
                 }
             }
         });
-    }
-    @Override
-    public void showMessage(String message) {
-    }
-    @Override
-    public void replaceFragment() {
     }
     @Override
     public void removeFragment() {
@@ -102,12 +98,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
-    @Override
-    public void logout() {
-        Intent intent=new Intent(getContext(), SplashActivity.class);
-        startActivity(intent);
 
-    }
     @Override
     public void openImage() {
         Intent intent=new Intent();
@@ -117,9 +108,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     }
     @Override
     public void updateInfoUser() {
-        String name=mFragmentEditprofileBinding.editTextNameProfile.getText().toString().trim();
-        String phone=mFragmentEditprofileBinding.editPhoneProfile.getText().toString().trim();
-        String date=mFragmentEditprofileBinding.editDateOfBirthProfile.getText().toString().trim();
+        String name=mFragmentEditProfileBinding.editTextNameProfile.getText().toString().trim();
+        String phone=mFragmentEditProfileBinding.editPhoneProfile.getText().toString().trim();
+        String date=mFragmentEditProfileBinding.editDateOfBirthProfile.getText().toString().trim();
         if(TextUtils.isEmpty(name)){
             name="default";
         }
@@ -129,11 +120,11 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         if(TextUtils.isEmpty(date)){
             date="default";
         }
-        mProfileViewModel.updateInforFromFirebase("userName",name);
-        mProfileViewModel.updateInforFromFirebase("userPhone",phone);
-        mProfileViewModel.updateInforFromFirebase("userDateOfBirth",date);
+        new Network().updateInforFromFirebase("userName",name);
+        new Network().updateInforFromFirebase("userPhone",phone);
+        new Network().updateInforFromFirebase("userDateOfBirth",date);
         if(!TextUtils.isEmpty(uriImage)){
-            mProfileViewModel.updateInforFromFirebase("userImgUrl",uriImage);
+            new Network().updateInforFromFirebase("userImgUrl",uriImage);
         }
     }
     private String getFileExtension(Uri uri){
@@ -164,7 +155,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                         Uri downloadUri=task.getResult();
                         String mUri=downloadUri.toString();
                         uriImage=mUri;
-                        Glide.with(getContext()).load(mUri).into(mFragmentEditprofileBinding.CircleImageUserEdit);
+                        Glide.with(getContext()).load(mUri).into(mFragmentEditProfileBinding.CircleImageUserEdit);
                         progressDialog.dismiss();
                     }
                     else{

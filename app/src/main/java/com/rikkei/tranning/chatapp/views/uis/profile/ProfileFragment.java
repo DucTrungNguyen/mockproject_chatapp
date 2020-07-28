@@ -3,19 +3,20 @@ package com.rikkei.tranning.chatapp.views.uis.profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
-import com.bumptech.glide.Glide;
+
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
-import com.rikkei.tranning.chatapp.Model.User;
+import com.rikkei.tranning.chatapp.services.models.User;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
+import com.rikkei.tranning.chatapp.services.network.Network;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 import com.squareup.picasso.Picasso;
 
@@ -42,12 +43,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         super.onCreate(savedInstanceState);
         mProfileViewModel.setNavigator(this);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentProfileBinding=getViewDataBinding();
-        mProfileViewModel.infoUserFromFirebase(new ProfileViewModel.DataStatus() {
+        new Network().infoUserFromFirebase(new Network.DataStatus() {
             @Override
             public void DataIsLoaded(User user) {
                 mFragmentProfileBinding.TextViewNameUser.setText(user.getUserName());
@@ -63,12 +63,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             }
         });
     }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void replaceFragment() {
         FragmentManager fragmentManager=getFragmentManager();
@@ -77,27 +71,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.replace(R.id.FrameLayoutEditProfile,editProfile,null);
         fragmentTransaction.commit();
     }
-
-    @Override
-    public void removeFragment() {
-
-    }
-
     @Override
     public void logout() {
         Intent intent=new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
-    @Override
-    public void openImage() {
-
-    }
-
-    @Override
-    public void updateInfoUser() {
-
-    }
-
 }

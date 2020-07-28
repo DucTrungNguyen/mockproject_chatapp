@@ -74,7 +74,6 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
         String password=mFragmentSignUpBinding.editTextPassRegister.getText().toString().trim();
         if(mSignUpViewModel.validateEmailPassword(email,password)){
             mSignUpViewModel.createUserFireBase(email,password,name);
-           // Toast.makeText(getContext(), "sucess", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getContext(), "Invalid email or password!", Toast.LENGTH_SHORT).show();

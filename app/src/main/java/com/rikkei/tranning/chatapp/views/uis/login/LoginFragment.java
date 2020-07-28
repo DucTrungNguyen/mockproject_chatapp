@@ -71,7 +71,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         else{
             Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

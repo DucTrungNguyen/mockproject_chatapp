@@ -11,9 +11,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.rikkei.tranning.chatapp.Base.BaseViewModel;
-import com.rikkei.tranning.chatapp.Model.User;
+import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.network.Network;
 
 import java.util.regex.Pattern;
 
@@ -46,14 +46,11 @@ public class SignUpViewModel extends BaseViewModel<SignUpNavigator> {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getNavigator().setEnableButton();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 if(TextUtils.isEmpty(editable)){
@@ -66,17 +63,13 @@ public class SignUpViewModel extends BaseViewModel<SignUpNavigator> {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getNavigator().setEnableButton();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         };
     }
@@ -84,17 +77,13 @@ public class SignUpViewModel extends BaseViewModel<SignUpNavigator> {
         return  new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getNavigator().setEnableButton();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         };
     }
@@ -106,11 +95,10 @@ public class SignUpViewModel extends BaseViewModel<SignUpNavigator> {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        databaseReference= FirebaseDatabase.getInstance().getReference("user");
                         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
                         String userId=firebaseUser.getUid();
                         User user=new User(userId,name,email,"default","default","default");
-                        databaseReference.child(userId).setValue(user);
+                        new Network().createUserFromFirebase(user,userId);
                         getNavigator().showMessageSignUp("Sign Up Success!");
                     }
                 })
