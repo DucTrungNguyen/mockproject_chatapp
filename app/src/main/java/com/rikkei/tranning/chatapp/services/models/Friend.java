@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.Model;
+package com.rikkei.tranning.chatapp.services.models;
 
 public class Friend {
     private String userImgUrl;

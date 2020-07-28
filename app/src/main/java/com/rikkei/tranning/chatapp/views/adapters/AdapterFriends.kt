@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.rikkei.tranning.chatapp.Model.Friend
+import com.rikkei.tranning.chatapp.services.models.Friend
 import kotlinx.android.synthetic.main.item_friend.view.*
 
 class AdapterFriends(val listFriend : List<Friend>) : RecyclerView.Adapter<AdapterFriends.ItemViewHolder>() {
