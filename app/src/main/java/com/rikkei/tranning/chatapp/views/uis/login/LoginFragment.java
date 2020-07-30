@@ -1,6 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.login;
 
-import android.app.UiAutomation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,12 +21,9 @@ import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding;
-import com.rikkei.tranning.chatapp.services.models.User;
-import com.rikkei.tranning.chatapp.services.models.loginUser;
+import com.rikkei.tranning.chatapp.services.models.LoginUserModel;
 import com.rikkei.tranning.chatapp.views.uis.MainActivity;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment;
-
-import java.util.ArrayList;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
     FragmentLoginBinding mFragmentLoginBinding;
@@ -68,9 +64,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mLoginViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<loginUser>() {
+        mLoginViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<LoginUserModel>() {
             @Override
-            public void onChanged(loginUser loginUser) {
+            public void onChanged(LoginUserModel loginUser) {
                if(loginUser.validateEmailPassword()==false){
                    Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
                }

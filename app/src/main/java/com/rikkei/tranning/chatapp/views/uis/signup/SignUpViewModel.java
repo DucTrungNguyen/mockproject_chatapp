@@ -1,9 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.signup;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,14 +9,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.rikkei.tranning.chatapp.Base.BaseViewModel;
-import com.rikkei.tranning.chatapp.services.models.User;
-import com.rikkei.tranning.chatapp.services.models.loginUser;
-import com.rikkei.tranning.chatapp.services.network.Network;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.models.LoginUserModel;
 import com.rikkei.tranning.chatapp.services.repositories.SignUpRepositories;
-
-import java.util.regex.Pattern;
 
 public class SignUpViewModel extends ViewModel {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
@@ -28,9 +19,9 @@ public class SignUpViewModel extends ViewModel {
     public MutableLiveData<String> userPass = new MutableLiveData<>();
     public MutableLiveData<String> userName=new MutableLiveData<>();
     public MutableLiveData<Boolean> signUpSuccess=new MutableLiveData<>();
-    public MutableLiveData<loginUser> signUpUserMutableLiveData=new MutableLiveData<>();
+    public MutableLiveData<LoginUserModel> signUpUserMutableLiveData=new MutableLiveData<>();
     public void signUpButtonOnClick(){
-        loginUser user=new loginUser(userEmail.getValue(),userPass.getValue());
+        LoginUserModel user=new LoginUserModel(userEmail.getValue(),userPass.getValue());
         signUpUserMutableLiveData.setValue(user);
     }
 //    public void replaceFragmentClick(){
@@ -110,7 +101,7 @@ public class SignUpViewModel extends ViewModel {
                     public void onSuccess(AuthResult authResult) {
                         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
                         String userId=firebaseUser.getUid();
-                        User user=new User(userId,userName.getValue(),userEmail.getValue(),"default","default","default");
+                        UserModel user=new UserModel(userId,userName.getValue(),userEmail.getValue(),"default","default","default");
                         new SignUpRepositories().createUserFromFirebase(user,userId);
                         //getNavigator().showMessageSignUp("Sign Up Success!");
                         signUpSuccess.setValue(true);

@@ -107,7 +107,7 @@
                 android:textSize="18sp"
                 android:layout_marginStart="18dp"
                 android:layout_toEndOf="@+id/ImageViewLanguage"
-                android:layout_width="79dp"
+                android:layout_width="match_parent"
                 android:gravity="center_vertical"
                 android:layout_height="match_parent"
                 />
@@ -157,7 +157,7 @@
                 android:layout_marginStart="23dp"
                 android:gravity="center_vertical"
                 android:layout_toEndOf="@+id/ImageViewNotification"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
             <ImageButton
@@ -194,7 +194,7 @@
                 android:layout_marginStart="18dp"
                 android:gravity="center_vertical"
                 android:layout_toEndOf="@+id/ImageViewVersion"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
             <TextView
@@ -233,10 +233,10 @@
                 android:textSize="18sp"
                 android:text="@string/txt_logout_vi"
                 android:layout_marginStart="18dp"
-                android:gravity="center"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/ImageViewLogout"
-                android:layout_width="82dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 />
         </RelativeLayout>
     </LinearLayout>

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel;

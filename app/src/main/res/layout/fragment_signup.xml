@@ -19,7 +19,8 @@
             android:id="@+id/ButtonBackRegister"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="40dp"
+            android:background="@null"
             android:src="@drawable/ic_back_blue"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
@@ -150,10 +151,11 @@
                 </RelativeLayout>
 
                 <CheckBox
+                    android:layout_centerHorizontal="true"
                   android:layout_below="@id/RelativePass"
                     android:layout_marginTop="32dp"
                     android:id="@+id/checkboxRegister"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/checkbox_custom"
                     android:text="@string/txt_rule_vi"
@@ -166,7 +168,7 @@
 
                     android:id="@+id/ButtonRegister"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/custom_button_login"
                     android:onClick="@{()->viewModels.signUpButtonOnClick()}"
                     android:text="@string/txt_register_vi"
@@ -178,7 +180,8 @@
 
 
 
-        <Button
+        <TextView
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="38dp"

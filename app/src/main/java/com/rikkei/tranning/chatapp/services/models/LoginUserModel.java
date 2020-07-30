@@ -4,11 +4,11 @@ import android.util.Patterns;
 
 import java.util.regex.Pattern;
 
-public class loginUser {
+public class LoginUserModel {
     private String email;
     private String password;
 
-    public loginUser(String email, String password) {
+    public LoginUserModel(String email, String password) {
         this.email = email;
         this.password = password;
     }

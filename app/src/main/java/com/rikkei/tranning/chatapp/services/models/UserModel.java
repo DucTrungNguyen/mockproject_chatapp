@@ -1,6 +1,6 @@
 package com.rikkei.tranning.chatapp.services.models;
 
-public class User {
+public class UserModel {
     private String userId;
     private String userName;
     private String userEmail;
@@ -8,10 +8,10 @@ public class User {
     private String userPhone;
     private String userDateOfBirth;
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(String userId, String userName, String userEmail, String userImgUrl, String userPhone, String userDateOfBirth) {
+    public UserModel(String userId, String userName, String userEmail, String userImgUrl, String userPhone, String userDateOfBirth) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;

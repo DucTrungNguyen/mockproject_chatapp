@@ -11,14 +11,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
-import com.rikkei.tranning.chatapp.services.network.Network;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 import com.squareup.picasso.Picasso;
 
@@ -66,9 +65,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mProfileViewModel.getInfoUser();
-        mProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<User>() {
+        mProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<UserModel>() {
             @Override
-            public void onChanged(User user) {
+            public void onChanged(UserModel user) {
                 mFragmentProfileBinding.TextViewNameUser.setText(user.getUserName());
                 mFragmentProfileBinding.TextViewEmailUser.setText(user.getUserEmail());
                 if(user.getUserImgUrl().equals("default")){
@@ -90,6 +89,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.commit();
     }
     public void logout() {
+        FirebaseAuth.getInstance().signOut();
         Intent intent=new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

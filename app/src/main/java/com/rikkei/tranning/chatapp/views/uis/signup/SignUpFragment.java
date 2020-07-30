@@ -1,6 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.signup;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,7 +20,7 @@ import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentSignupBinding;
-import com.rikkei.tranning.chatapp.services.models.loginUser;
+import com.rikkei.tranning.chatapp.services.models.LoginUserModel;
 import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment;
 
 public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpViewModel> {
@@ -79,9 +78,9 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSignUpViewModel.signUpUserMutableLiveData.observe(getViewLifecycleOwner(), new Observer<loginUser>() {
+        mSignUpViewModel.signUpUserMutableLiveData.observe(getViewLifecycleOwner(), new Observer<LoginUserModel>() {
             @Override
-            public void onChanged(loginUser loginUser) {
+            public void onChanged(LoginUserModel loginUser) {
                 if(loginUser.validateEmailPassword()==false){
                     Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
                 }

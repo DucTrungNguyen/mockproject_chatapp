@@ -26,11 +26,9 @@ import com.google.firebase.storage.UploadTask;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
-import com.rikkei.tranning.chatapp.services.models.editUser;
-import com.rikkei.tranning.chatapp.services.network.Network;
 import com.squareup.picasso.Picasso;
 import static android.app.Activity.RESULT_OK;
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel>{
@@ -82,42 +80,33 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 if(!TextUtils.isEmpty(uriImage)){
                     mEditProfileViewModel.updateInfoUser("userImgUrl",uriImage);
                 }
+                String name=mFragmentEditProfileBinding.editTextNameProfile.getText().toString().trim();
+                String phone=mFragmentEditProfileBinding.editPhoneProfile.getText().toString().trim();
+                String date=mFragmentEditProfileBinding.editDateOfBirthProfile.getText().toString().trim();
+                if(TextUtils.isEmpty(name)){
+                    name="default";
+                }
+                if(TextUtils.isEmpty(phone)){
+                    phone="default";
+                }
+                if(TextUtils.isEmpty(date)){
+                    date="default";
+                }
+                mEditProfileViewModel.updateInfoUser("userName",name);
+                mEditProfileViewModel.updateInfoUser("userPhone",phone);
+                mEditProfileViewModel.updateInfoUser("userDateOfBirth",date);
                 removeFragment();
             }
         });
-//        new Network().infoUserFromFirebase(new Network.DataStatus() {
-//            @Override
-//            public void DataIsLoaded(User user) {
-//                mFragmentEditProfileBinding.editTextNameProfile.setText(user.getUserName());
-//                if(user.getUserPhone().equals("default")){
-//                    mFragmentEditProfileBinding.editPhoneProfile.setText("");
-//                }
-//                else{
-//                    mFragmentEditProfileBinding.editPhoneProfile.setText(user.getUserPhone());
-//                }
-//                if(user.getUserDateOfBirth().equals("default")){
-//                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText("");
-//                }
-//                else {
-//                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText(user.getUserDateOfBirth());
-//                }
-//                if(user.getUserImgUrl().equals("default")){
-//                    mFragmentEditProfileBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
-//                }
-//                else{
-//                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentEditProfileBinding.CircleImageUserEdit);
-//                }
-//            }
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mEditProfileViewModel.getInfoUser();
-        mEditProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<User>() {
+        mEditProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<UserModel>() {
             @Override
-            public void onChanged(User user) {
+            public void onChanged(UserModel user) {
                 mFragmentEditProfileBinding.editTextNameProfile.setText(user.getUserName());
                 if(user.getUserPhone().equals("default")){
                     mFragmentEditProfileBinding.editPhoneProfile.setText("");
@@ -139,23 +128,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 }
             }
         });
-        mEditProfileViewModel.editUserMutableLiveData.observe(getViewLifecycleOwner(), new Observer<editUser>() {
-            @Override
-            public void onChanged(editUser editUser) {
-                if(TextUtils.isEmpty(editUser.getUserName())){
-                    editUser.setUserName("default");
-                }
-                if(TextUtils.isEmpty(editUser.getUserPhone())){
-                    editUser.setUserPhone("default");
-                }
-                if(TextUtils.isEmpty(editUser.getUserDateOfBirth())){
-                    editUser.setUserDateOfBirth("default");
-                }
-                mEditProfileViewModel.updateInfoUser("userName",editUser.getUserName());
-                mEditProfileViewModel.updateInfoUser("userPhone",editUser.getUserPhone());
-                mEditProfileViewModel.updateInfoUser("userDateOfBirth",editUser.getUserDateOfBirth());
-            }
-        });
     }
 
     //    @Override
@@ -166,35 +138,12 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
-//
-//    @Override
     public void openImage() {
         Intent intent=new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,IMAGE_REQUEST);
     }
-//    @Override
-//    public void updateInfoUser() {
-//        String name=mFragmentEditProfileBinding.editTextNameProfile.getText().toString().trim();
-//        String phone=mFragmentEditProfileBinding.editPhoneProfile.getText().toString().trim();
-//        String date=mFragmentEditProfileBinding.editDateOfBirthProfile.getText().toString().trim();
-//        if(TextUtils.isEmpty(name)){
-//            name="default";
-//        }
-//        if(TextUtils.isEmpty(phone)){
-//            phone="default";
-//        }
-//        if(TextUtils.isEmpty(date)){
-//            date="default";
-//        }
-//        new Network().updateInforFromFirebase("userName",name);
-//        new Network().updateInforFromFirebase("userPhone",phone);
-//        new Network().updateInforFromFirebase("userDateOfBirth",date);
-//        if(!TextUtils.isEmpty(uriImage)){
-//            new Network().updateInforFromFirebase("userImgUrl",uriImage);
-//        }
-//    }
     private String getFileExtension(Uri uri){
         ContentResolver contentResolver=getContext().getContentResolver();
         MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
