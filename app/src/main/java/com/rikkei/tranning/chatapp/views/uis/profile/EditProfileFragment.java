@@ -108,7 +108,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
 //                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentEditProfileBinding.CircleImageUserEdit);
 //                }
 //            }
-//        });
 
     }
 

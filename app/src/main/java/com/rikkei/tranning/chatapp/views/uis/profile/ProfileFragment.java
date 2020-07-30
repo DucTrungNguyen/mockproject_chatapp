@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.services.models.User;
