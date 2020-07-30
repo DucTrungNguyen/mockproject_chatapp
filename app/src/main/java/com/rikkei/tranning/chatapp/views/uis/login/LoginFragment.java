@@ -64,6 +64,11 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mLoginViewModel.getLoginStatus().observe(getViewLifecycleOwner(), Observer(){
+
+        });
+
         mLoginViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<LoginUserModel>() {
             @Override
             public void onChanged(LoginUserModel loginUser) {

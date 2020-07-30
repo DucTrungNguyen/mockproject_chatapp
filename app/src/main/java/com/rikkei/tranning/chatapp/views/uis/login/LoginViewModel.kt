@@ -30,12 +30,19 @@ class LoginViewModel : ViewModel() {
     }
 
     fun loginFirebase() {
-//        loginStatus.
+        loginStatus.value = LoginStatus.loading(true)
 
         firebaseAuth?.loginUser( EmailAddress.value!!,
             Password.value!!)
-            ?.addOnSuccessListener { isOk.value = true }
-            ?.addOnFailureListener { isOk.value = false }
+            ?.addOnSuccessListener {
+                loginStatus.value = LoginStatus.isOk(true)
+                loginStatus.value = LoginStatus.loading(false)
+//                isOk.value = true
+            }
+            ?.addOnFailureListener {
+//                isOk.value = false
+                loginStatus.value = LoginStatus.failure(it)
+            }
     }
 
     sealed class LoginStatus{
