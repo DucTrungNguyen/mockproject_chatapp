@@ -1,177 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModels"
             type="com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel" />
     </data>
-    <RelativeLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:paddingHorizontal="24dp">
+
         <ImageButton
-            android:src="@drawable/ic_back_blue"
             android:id="@+id/ButtonBackRegister"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="64dp"
-            android:layout_marginStart="24sp"
-            android:layout_width="13.68dp"
-            android:layout_height="24dp"
-            />
-        <RelativeLayout
+            android:src="@drawable/ic_back_blue"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.07" />
+
+
+        <TextView
+
+            app:layout_constraintTop_toBottomOf="@+id/ButtonBackRegister"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/textViewRegister"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <TextView
-                android:id="@+id/textViewRegister"
-                android:layout_marginStart="25dp"
-                android:text="@string/txt_register_vi"
-                android:textColor="@color/blue"
-                android:textSize="32sp"
-                android:layout_marginTop="136dp"
-                android:layout_width="118dp"
-                android:layout_height="38dp"
-                />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/txt_register_vi"
+            android:textColor="@color/blue"
+            android:textSize="32sp" />
+
+        <ScrollView
+            android:id="@+id/scroll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewRegister"
+            android:layout_marginTop="61dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <RelativeLayout
-                android:id="@+id/RelativeLayoutName"
-                android:layout_below="@+id/textViewRegister"
-                android:layout_marginRight="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="61dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:textColor="@color/grey"
-                    android:textSize="14sp"
-                    android:text="@string/txt_name_vi"
-                    android:gravity="top"
-                    android:id="@+id/textViewName"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/txt_name_vi"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/editTextNameRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:hint="@string/app_title"
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModels.userName}" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="24dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_user" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@+id/RelativeLayoutName"
+                    android:id="@+id/RelativeEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
-                <EditText
-                    android:text="@={viewModels.userName}"
-                    android:inputType="textEmailAddress"
-                    android:id="@+id/editTextNameRegister"
-                    android:layout_marginTop="24dp"
-                    android:hint="@string/app_title"
+
+                    android:layout_marginTop="40dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/prompt_email"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/editTextEmailRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:hint="@string/txt_hintEmail_vi"
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModels.userEmail}" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="24dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_mail" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@id/RelativeEmail"
+
+                    android:layout_marginTop="40dp"
+                    android:id="@+id/RelativePass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:layout_marginTop="24dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_user"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/textViewPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/prompt_password"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/editTextPassRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:inputType="textPassword"
+                        android:text="@={viewModels.userPass}" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="24dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_key_1" />
+                </RelativeLayout>
+
+                <CheckBox
+                  android:layout_below="@id/RelativePass"
+                    android:layout_marginTop="32dp"
+                    android:id="@+id/checkboxRegister"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_custom"
+                    android:text="@string/txt_rule_vi"
+                    android:textColor="#999999"
                     />
+
+                <Button
+                    android:layout_below="@+id/checkboxRegister"
+                    android:layout_marginTop="50dp"
+
+                    android:id="@+id/ButtonRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/custom_button_login"
+                    android:onClick="@{()->viewModels.signUpButtonOnClick()}"
+                    android:text="@string/txt_register_vi"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativeEmail"
-                android:layout_below="@+id/RelativeLayoutName"
-                android:layout_marginRight="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="35dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:textColor="@color/grey"
-                    android:textSize="14sp"
-                    android:text="@string/prompt_email"
-                    android:gravity="top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <EditText
-                    android:text="@={viewModels.userEmail}"
-                    android:inputType="textEmailAddress"
-                    android:id="@+id/editTextEmailRegister"
-                    android:layout_marginTop="24dp"
-                    android:hint="@string/txt_hintEmail_vi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:layout_marginTop="24dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_mail"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativePass"
-                android:layout_below="@+id/RelativeEmail"
-                android:layout_marginRight="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="35dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:textColor="@color/grey"
-                    android:textSize="14sp"
-                    android:text="@string/prompt_password"
-                    android:gravity="top"
-                    android:id="@+id/textViewPass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <EditText
-                    android:text="@={viewModels.userPass}"
-                    android:inputType="textPassword"
-                    android:id="@+id/editTextPassRegister"
-                    android:layout_marginTop="24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:layout_marginTop="24dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_key_1"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-            </RelativeLayout>
-            <CheckBox
-                android:textColor="#999999"
-                android:button="@drawable/checkbox_custom"
-                android:layout_marginStart="57dp"
-                android:layout_marginTop="560dp"
-                android:text="@string/txt_rule_vi"
-                android:id="@+id/checkboxRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <Button
-                android:onClick="@{()->viewModels.signUpButtonOnClick()}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:text="@string/txt_register_vi"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/custom_button_login"
-                android:id="@+id/ButtonRegister"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="610dp"
-                android:layout_width="326dp"
-                android:layout_height="52dp"
-                />
-            <Button
-                android:textColor="@color/grey"
-                android:background="@color/white"
-                android:textAllCaps="false"
-                android:id="@+id/ButtonMoveLogin"
-                android:textSize="14sp"
-                android:layout_marginTop="757dp"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </RelativeLayout>
-    </RelativeLayout>
+
+        </ScrollView>
+
+
+
+        <Button
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="38dp"
+            android:id="@+id/ButtonMoveLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:textAllCaps="false"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

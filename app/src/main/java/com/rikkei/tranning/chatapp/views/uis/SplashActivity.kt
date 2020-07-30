@@ -21,18 +21,19 @@ class SplashActivity : AppCompatActivity() {
 //        txtappname!!.setText(Html.fromHtml(htmlcontent))
         val handler = Handler()
         handler.postDelayed({
-            val firebaseUser = FirebaseAuth.getInstance().currentUser
-            if (firebaseUser != null) {
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                startActivity(intent)
-            }
-            else {
+
+//            val firebaseUser = FirebaseAuth.getInstance().currentUser
+//            if (firebaseUser != null) {
+//                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+//                startActivity(intent)
+//            }
+//            else {
                 val fragmentManager = supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 val login = LoginFragment()
                 fragmentTransaction.add(R.id.FrameLayout, login, null)
                 fragmentTransaction.commit()
-            }
+//            }
         }, 3000)
     }
 }
