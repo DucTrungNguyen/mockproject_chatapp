@@ -25,13 +25,20 @@ class LoginViewModel : ViewModel() {
         }
 
     fun onClick() {
-        val user = LoginUserModel(EmailAddress.value, Password.value)
-        userMutableLiveData!!.value = user
+        loginStatus.value = LoginStatus.loading(true)
+//        loginFirebase()
+//        val user = LoginUserModel(EmailAddress.value.toString(), Password.value.toString())
+//        if (user.validateEmailPassword() ){
+//            loginStatus.value = LoginStatus.errorPassAndEmail(true)
+//        }else {
+//            loginFirebase()
+//        }
+//        if ( user.isEmailValid)
+//        userMutableLiveData!!.value = user
     }
 
     fun loginFirebase() {
         loginStatus.value = LoginStatus.loading(true)
-
         firebaseAuth?.loginUser( EmailAddress.value!!,
             Password.value!!)
             ?.addOnSuccessListener {
@@ -51,7 +58,9 @@ class LoginViewModel : ViewModel() {
 
         data class isOk(var isLogin: Boolean) : LoginStatus()
 
-        data class Failure(val e: Throwable) : LoginStatus()
+        data class Failure(var e: Throwable) : LoginStatus()
+
+        data class ErrorPassAndEmail ( var isError:  Boolean) : LoginStatus()
 
         companion object {
 
@@ -60,6 +69,8 @@ class LoginViewModel : ViewModel() {
             fun success(isLogin: Boolean): LoginStatus = isOk(isLogin)
 
             fun failure(e: Throwable): LoginStatus = Failure(e)
+
+            fun errorPassAndEmail(isErrorPassAndEmail: Boolean) = ErrorPassAndEmail( isErrorPassAndEmail)
         }
 
     }
