@@ -1,14 +1,22 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.rikkei.tranning.chatapp.Base.BaseViewModel;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
-    public void replaceFragmentClick(){
-        getNavigator().replaceFragment();
+import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.network.Network;
+import com.rikkei.tranning.chatapp.services.repositories.ProfileRepositories;
+public class ProfileViewModel extends ViewModel {
+    public MutableLiveData<User> userMutableLiveData =new MutableLiveData<>();
+    public void getInfoUser(){
+        new ProfileRepositories().infoUserFromFirebase(new ProfileRepositories.DataStatus() {
+            @Override
+            public void DataIsLoaded(User user) {
+                userMutableLiveData.setValue(user);
+            }
+        });
     }
-    public void logoutClick(){
-        FirebaseAuth.getInstance().signOut();
-        getNavigator().logout();
+    public void update(){
+
     }
 }

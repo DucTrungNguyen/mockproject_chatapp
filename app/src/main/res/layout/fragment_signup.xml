@@ -11,11 +11,10 @@
         android:layout_height="match_parent"
         >
         <ImageButton
-            android:onClick="@{()->viewModels.replaceFragmentClick()}"
             android:src="@drawable/ic_back_blue"
             android:id="@+id/ButtonBackRegister"
             android:layout_marginTop="64dp"
-            android:layout_marginLeft="24sp"
+            android:layout_marginStart="24sp"
             android:layout_width="13.68dp"
             android:layout_height="24dp"
             />
@@ -25,9 +24,9 @@
             >
             <TextView
                 android:id="@+id/textViewRegister"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:text="@string/txt_register_vi"
-                android:textColor="#4356B4"
+                android:textColor="@color/blue"
                 android:textSize="32sp"
                 android:layout_marginTop="136dp"
                 android:layout_width="118dp"
@@ -43,31 +42,30 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
-                    android:textColor="#999999"
+                    android:textColor="@color/grey"
                     android:textSize="14sp"
                     android:text="@string/txt_name_vi"
                     android:gravity="top"
                     android:id="@+id/textViewName"
-                    android:layout_width="73dp"
-                    android:layout_height="17dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     />
                 <EditText
-                    app:addTextChangedListener="@{viewModels.nameTextWatcher()}"
+                    android:text="@={viewModels.userName}"
                     android:inputType="textEmailAddress"
                     android:id="@+id/editTextNameRegister"
                     android:layout_marginTop="24dp"
-                    android:hint="Awesome Chat"
+                    android:hint="@string/app_title"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     />
                 <ImageView
                     android:layout_marginTop="24dp"
-                    android:fillColor="#4356B4"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_user"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -80,30 +78,29 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
-                    android:textColor="#999999"
+                    android:textColor="@color/grey"
                     android:textSize="14sp"
                     android:text="@string/prompt_email"
                     android:gravity="top"
-                    android:layout_width="42dp"
-                    android:layout_height="17dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     />
                 <EditText
-                    app:addTextChangedListener="@{viewModels.emailTextWatcher()}"
+                    android:text="@={viewModels.userEmail}"
                     android:inputType="textEmailAddress"
                     android:id="@+id/editTextEmailRegister"
                     android:layout_marginTop="24dp"
-                    android:hint="yourname@gmail.com"
+                    android:hint="@string/txt_hintEmail_vi"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     />
                 <ImageView
                     android:layout_marginTop="24dp"
-                    android:fillColor="#4356B4"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_mail"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -116,68 +113,64 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
-                    android:textColor="#999999"
+                    android:textColor="@color/grey"
                     android:textSize="14sp"
                     android:text="@string/prompt_password"
                     android:gravity="top"
                     android:id="@+id/textViewPass"
-                    android:layout_width="73dp"
-                    android:layout_height="17dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     />
                 <EditText
-                    app:addTextChangedListener="@{viewModels.passTextWatcher()}"
+                    android:text="@={viewModels.userPass}"
                     android:inputType="textPassword"
                     android:id="@+id/editTextPassRegister"
                     android:layout_marginTop="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     />
                 <ImageView
                     android:layout_marginTop="24dp"
-                    android:fillColor="#4356B4"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_key_1"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
             </RelativeLayout>
             <CheckBox
                 android:textColor="#999999"
-                android:onClick="@{()->viewModels.checkboxClick()}"
                 android:button="@drawable/checkbox_custom"
-                android:layout_marginLeft="57dp"
-                android:layout_marginTop="518dp"
+                android:layout_marginStart="57dp"
+                android:layout_marginTop="560dp"
                 android:text="@string/txt_rule_vi"
                 android:id="@+id/checkboxRegister"
                 android:layout_width="match_parent"
-                android:layout_height="17dp"
+                android:layout_height="wrap_content"
                 />
             <Button
-                android:onClick="@{()->viewModels.signUpClick()}"
-                android:textColor="#ffffff"
+                android:onClick="@{()->viewModels.signUpButtonOnClick()}"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:text="@string/txt_register_vi"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/custom_button_login"
                 android:id="@+id/ButtonRegister"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="582dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="610dp"
                 android:layout_width="326dp"
                 android:layout_height="52dp"
                 />
             <Button
-                android:textColor="#999999"
-                android:onClick="@{()->viewModels.replaceFragmentClick()}"
-                android:text="Đã có tài khoản?Đăng nhập ngay"
-                android:background="#ffffff"
+                android:textColor="@color/grey"
+                android:background="@color/white"
                 android:textAllCaps="false"
                 android:id="@+id/ButtonMoveLogin"
                 android:textSize="14sp"
                 android:layout_marginTop="757dp"
                 android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="17dp"
+                android:layout_height="wrap_content"
                 />
         </RelativeLayout>
     </RelativeLayout>

@@ -1,15 +1,20 @@
 package com.rikkei.tranning.chatapp.views.uis.login;
 
+import android.app.UiAutomation;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
@@ -17,10 +22,14 @@ import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding;
+import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.loginUser;
 import com.rikkei.tranning.chatapp.views.uis.MainActivity;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment;
 
-public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> implements LoginNavigator {
+import java.util.ArrayList;
+
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
     FragmentLoginBinding mFragmentLoginBinding;
     LoginViewModel mLoginViewModel;
     @Override
@@ -41,18 +50,66 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLoginViewModel.setNavigator(this);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentLoginBinding = getViewDataBinding();
         String htmlcontentbutton="Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>";
         mFragmentLoginBinding.ButtonMoveRegister.setText(android.text.Html.fromHtml(htmlcontentbutton));
+        eventEditText();
+        mFragmentLoginBinding.ButtonMoveRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
     }
-
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mLoginViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<loginUser>() {
+            @Override
+            public void onChanged(loginUser loginUser) {
+               if(loginUser.validateEmailPassword()==false){
+                   Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
+               }
+                else{
+                    mLoginViewModel.loginFirebase();
+                }
+            }
+        });
+        mLoginViewModel.isOk.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(getContext(), "Login success!", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(getContext(),MainActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(), "Login Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    public void eventEditText(){
+        EditText[] editTexts=new EditText[]{mFragmentLoginBinding.editTextPassLogin,mFragmentLoginBinding.editTextEmailLogin};
+        for(int i=0;i<editTexts.length;i++){
+            editTexts[i].addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    setEnableButton();
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
+    }
     public void replaceFragment() {
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -60,20 +117,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         fragmentTransaction.replace(R.id.FrameLayout,signUp,null);
         fragmentTransaction.commit();
     }
-
-    @Override
-    public void login() {
-        String email=mFragmentLoginBinding.editTextEmailLogin.getText().toString().trim();
-        String pass=mFragmentLoginBinding.editTextPassLogin.getText().toString().trim();
-        if(mLoginViewModel.validateEmailPassword(email,pass)){
-            mLoginViewModel.loginFirebase(email,pass);
-        }
-        else{
-            Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public void setEnableButton() {
         if(!TextUtils.isEmpty(mFragmentLoginBinding.editTextEmailLogin.getText().toString())
         && !TextUtils.isEmpty(mFragmentLoginBinding.editTextPassLogin.getText().toString())){
@@ -84,16 +127,5 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             mFragmentLoginBinding.ButtonLogin.setEnabled(false);
             mFragmentLoginBinding.ButtonLogin.setBackgroundResource(R.drawable.custom_button_login);
         }
-    }
-
-    @Override
-    public void showMessageLogin(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void moveIntent() {
-        Intent intent=new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
     }
 }

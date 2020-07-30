@@ -9,6 +9,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="app_title">Awesome Chat</string>
     <!--    Language English-->
     <string name="txt_login_en">"Login"</string>
     <string name="txt_forgot_password_en">"Forgot your password?"</string>
@@ -33,6 +34,13 @@
     <string name="txt_login_failed_en">"Login failed"</string>
     <string name="txt_invalid_username_en">Not a valid username</string>
     <!--    Language Vietnam-->
+    <string name="txt_save_vi">Lưu</string>
+    <string name="txt_version_hint_vi">1.00</string>
+    <string name="txt_vi">Tiếng Việt</string>
+    <string name="txt_password_vi">MẬT KHẨU</string>
+    <string name="txt_hintEmail_vi">yourname@gmail.com</string>
+    <string name="txt_email_vi">EMAIL</string>
+    <string name="txt_titleApp_vi">Trải nghiệm Awesome chat</string>
     <string name="txt_login_vi">"Đăng nhập"</string>
     <string name="txt_forgot_password_vi">"Quên mật khẩu?"</string>
     <string name="txt_no_account_vi">"Thành viên mới?"</string>

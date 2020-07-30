@@ -11,8 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
-public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
+public abstract class BaseFragment<T extends ViewDataBinding, V extends ViewModel> extends Fragment {
     private T mViewDataBinding;
     private V mViewModel;
     private View mView;

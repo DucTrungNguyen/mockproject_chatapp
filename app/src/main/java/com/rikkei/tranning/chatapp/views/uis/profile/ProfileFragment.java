@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
@@ -20,7 +21,7 @@ import com.rikkei.tranning.chatapp.services.network.Network;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 import com.squareup.picasso.Picasso;
 
-public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> implements ProfileNavigator {
+public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel>  {
     FragmentProfileBinding mFragmentProfileBinding;
     ProfileViewModel mProfileViewModel;
     @Override
@@ -41,15 +42,32 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProfileViewModel.setNavigator(this);
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentProfileBinding=getViewDataBinding();
-        new Network().infoUserFromFirebase(new Network.DataStatus() {
+        mFragmentProfileBinding.ImageButtonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void DataIsLoaded(User user) {
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+        mFragmentProfileBinding.RelativeLayoutLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mProfileViewModel.getInfoUser();
+        mProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
                 mFragmentProfileBinding.TextViewNameUser.setText(user.getUserName());
                 mFragmentProfileBinding.TextViewEmailUser.setText(user.getUserEmail());
                 if(user.getUserImgUrl().equals("default")){
@@ -63,7 +81,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             }
         });
     }
-    @Override
     public void replaceFragment() {
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -71,7 +88,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.replace(R.id.FrameLayoutEditProfile,editProfile,null);
         fragmentTransaction.commit();
     }
-    @Override
     public void logout() {
         Intent intent=new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

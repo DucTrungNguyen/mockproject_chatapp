@@ -1,145 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel" />
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    <ImageView
-        android:src="@drawable/ic_mail_blue"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="57dp"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
-        />
-    <TextView
-        android:textSize="26sp"
-        android:textColor="#000000"
-        android:text="Trải nghiệm Awesome chat"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="184dp"
-        android:layout_width="300dp"
-        android:layout_height="31dp"
-        />
-    <TextView
-        android:textColor="#4356B4"
-        android:textSize="32sp"
-        android:gravity="top"
-        android:text="Đăng nhập"
-        android:layout_width="155dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="226dp"
-        />
-    <RelativeLayout
-        android:layout_marginRight="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="325dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="57dp"
+            android:src="@drawable/ic_mail_blue" />
+
         <TextView
-            android:textColor="#999999"
-            android:textSize="14sp"
-            android:text="EMAIL"
+            android:layout_width="300dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="184dp"
+            android:text="Trải nghiệm Awesome chat"
+            android:textColor="#000000"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="155dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="226dp"
             android:gravity="top"
-            android:id="@+id/textViewEmail"
-            android:layout_width="42dp"
-            android:layout_height="17dp"
-            />
-        <EditText
-            app:addTextChangedListener="@{viewModel.emailTextWatcher()}"
-            android:inputType="textEmailAddress"
-            android:id="@+id/editTextEmailLogin"
-            android:layout_marginTop="24dp"
-            android:hint="yourname@gmail.com"
+            android:text="Đăng nhập"
+            android:textColor="#4356B4"
+            android:textSize="32sp" />
+
+        <RelativeLayout
+            android:id="@+id/layoutInsertEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-        <ImageView
-            android:layout_marginTop="24dp"
-            android:fillColor="#4356B4"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_mail"
-            android:layout_alignParentRight="true"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginRight="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="422dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:textColor="#999999"
-            android:textSize="14sp"
-            android:text="MẬT KHẨU"
-            android:gravity="top"
-            android:id="@+id/textViewPass"
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            />
-        <EditText
-            android:inputType="textPassword"
-            app:addTextChangedListener="@{viewModel.passTextWatcher()}"
-            android:id="@+id/editTextPassLogin"
-            android:layout_marginTop="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <ImageView
-            android:layout_marginTop="24dp"
-            android:fillColor="#4356B4"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_key_1"
-            android:layout_alignParentRight="true"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            />
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/TextViewLosePass"
-        android:textColor="#4356B4"
-        android:textSize="14sp"
-        android:gravity="right|top"
-        android:text="Quên mật khẩu?"
-        android:layout_marginLeft="249dp"
-        android:layout_marginTop="494dp"
-        android:layout_width="103dp"
-        android:layout_height="17dp"
-        />
-    <Button
-        android:onClick="@{()->viewModel.loginClick()}"
-        android:textColor="#ffffff"
-        android:textSize="16sp"
-        android:text="Đăng nhập"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/custom_button_login"
-        android:id="@+id/ButtonLogin"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="558dp"
-        android:layout_width="326dp"
-        android:layout_height="52dp"
-        />
-    <Button
-        android:onClick="@{()->viewModel.replaceFragmentClick()}"
-        android:text="Bạn chưa có tài khoản? Đăng kí ngay"
-        android:textAllCaps="false"
-        android:background="#ffffff"
-        android:id="@+id/ButtonMoveRegister"
-        android:gravity="center_horizontal"
-        android:textSize="14sp"
-        android:layout_marginTop="733dp"
-        android:layout_width="match_parent"
-        android:layout_height="17dp"
-        />
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="325dp"
+            android:layout_marginRight="24dp">
+
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:text="@string/txt_email_vi"
+                android:textColor="@color/grey"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextEmailLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="@string/txt_hintEmail_vi"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.EmailAddress}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_mail" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="422dp"
+            android:layout_marginRight="24dp">
+
+            <TextView
+                android:id="@+id/textViewPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:text="@string/txt_password_vi"
+                android:textColor="@color/grey"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextPassLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:inputType="textPassword"
+                android:text="@={viewModel.Password}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_key_1" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/TextViewLosePass"
+            android:layout_width="103dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="249dp"
+            android:layout_marginTop="494dp"
+            android:gravity="right|top"
+            android:text="@string/txt_forgot_password_vi"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/ButtonLogin"
+            android:layout_width="326dp"
+            android:layout_height="52dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="558dp"
+            android:background="@drawable/custom_button_login"
+            android:onClick="@{()->viewModel.onClick()}"
+            android:text="@string/txt_login_vi"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/ButtonMoveRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="733dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+    </RelativeLayout>
 </layout>

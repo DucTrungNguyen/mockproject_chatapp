@@ -4,43 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:id="@+id/ScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
     <FrameLayout
+        android:background="@color/white"
         android:id="@+id/FrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         />
-    </ScrollView>
-    <RelativeLayout
-        android:background="@drawable/bg"
-        android:layout_below="@+id/ScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <ImageView
-        android:layout_alignParentLeft="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_mail_white_1"
-        android:id="@+id/imageView"
-        android:layout_width="164dp"
-        android:layout_height="164dp"
-        android:layout_marginTop="184dp"
-        android:layout_marginLeft="100dp"
-        />
-    <TextView
-        android:layout_alignParentLeft="true"
-        android:id="@+id/textViewAppName"
-        android:layout_width="271dp"
-        android:layout_height="53dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="334dp"
-        android:gravity="center_horizontal|top"
-        android:text="Awesome chat"
-        android:textColor="#ffffff"
-        android:textSize="40sp"
-        />
-    </RelativeLayout>
 </RelativeLayout>

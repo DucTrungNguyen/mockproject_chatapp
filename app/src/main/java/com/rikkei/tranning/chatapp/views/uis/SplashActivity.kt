@@ -16,9 +16,9 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        txtappname = findViewById(R.id.textViewAppName)
-        val htmlcontent = "<b>Awesome </b>chat"
-        txtappname!!.setText(Html.fromHtml(htmlcontent))
+//        txtappname = findViewById(R.id.textViewAppName)
+//        val htmlcontent = "<b>Awesome </b>chat"
+//        txtappname!!.setText(Html.fromHtml(htmlcontent))
         val handler = Handler()
         handler.postDelayed({
             val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -32,8 +32,6 @@ class SplashActivity : AppCompatActivity() {
                 val login = LoginFragment()
                 fragmentTransaction.add(R.id.FrameLayout, login, null)
                 fragmentTransaction.commit()
-
-                startActivity(intent)
             }
         }, 3000)
     }
