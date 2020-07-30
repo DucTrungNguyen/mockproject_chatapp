@@ -10,10 +10,11 @@ class LoginViewModel : ViewModel() {
 
 
 
+    var loginStatus  = MutableLiveData<LoginStatus>()
     var firebaseAuth = AuthRepository().getInstance()
     var EmailAddress = MutableLiveData<String>()
     var Password = MutableLiveData<String>()
-    var isOk = MutableLiveData<Boolean>()
+//    var isOk = MutableLiveData<Boolean>()
     private var userMutableLiveData: MutableLiveData<LoginUserModel>? = null
     val user: MutableLiveData<LoginUserModel>
         get() {
@@ -29,6 +30,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun loginFirebase() {
+//        loginStatus.
 
         firebaseAuth?.loginUser( EmailAddress.value!!,
             Password.value!!)
@@ -36,10 +38,23 @@ class LoginViewModel : ViewModel() {
             ?.addOnFailureListener { isOk.value = false }
     }
 
-    sealed class LoginStatus(){
-        data class Loading(val isLoading :Boolean) : LoginStatus()
-        data class isOk(val isOk : Boolean) : LoginStatus()
-//        data class isFailure(e)
+    sealed class LoginStatus{
+
+        data class Loading(var  loading: Boolean) : LoginStatus()
+
+        data class isOk(var isLogin: Boolean) : LoginStatus()
+
+        data class Failure(val e: Throwable) : LoginStatus()
+
+        companion object {
+
+            fun loading(isLoading: Boolean): LoginStatus = Loading(isLoading)
+
+            fun success(isLogin: Boolean): LoginStatus = isOk(isLogin)
+
+            fun failure(e: Throwable): LoginStatus = Failure(e)
+        }
+
     }
 
 
