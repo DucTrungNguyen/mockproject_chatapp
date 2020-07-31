@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModelFriend"
+            type="com.rikkei.tranning.chatapp.views.uis.friend.FriendViewModel" />
+    </data>
     <RelativeLayout
-        android:id="@+id/RelativeLayout"
+        android:background="@drawable/bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+    <RelativeLayout
+        android:id="@+id/RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <EditText
+            android:id="@+id/editTextSearchFriend"
             android:layout_width="match_parent"
             android:layout_height="40sp"
             android:layout_marginLeft="20sp"
             android:layout_marginTop="70dp"
             android:layout_marginRight="20sp"
             android:background="@drawable/edittext"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
-            android:hint="Tìm kiếm bạn bè"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:hint="@string/txt_search_friends_vi"
             android:padding="5dp" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:text="@string/txt_friend_title_vi"
             android:textColor="#ffffff"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="20sp"
-            android:layout_marginRight="20sp"
+            android:layout_marginEnd="20sp"
             android:src="@drawable/ic_add_new_friend" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_marginTop="50dp"
-        android:background="@drawable/fragment"
-        android:layout_below="@+id/RelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-    <com.google.android.material.tabs.TabLayout
+        android:layout_below="@+id/RelativeLayout"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/fragment">
 
-        app:tabTextColor="#999999"
-        app:tabSelectedTextColor="#4356B4"
-        app:tabIndicatorColor="#4356B4"
-        android:id="@+id/tabLayoutFriend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <androidx.viewpager.widget.ViewPager
-        android:layout_below="@+id/tabLayoutFriend"
-        android:id="@+id/viewPagerFriend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#4356B4"
+            app:tabSelectedTextColor="#4356B4"
+            app:tabTextColor="#999999" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabLayoutFriend" />
     </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

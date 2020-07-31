@@ -27,12 +27,14 @@ import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment;
 public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpViewModel> {
     private FragmentSignupBinding mFragmentSignUpBinding;
     private SignUpViewModel mSignUpViewModel;
+
     public static SignUpFragment newInstance() {
         Bundle args = new Bundle();
         SignUpFragment fragment = new SignUpFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public int getBindingVariable() {
         return BR.viewModels;
@@ -45,9 +47,10 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
 
     @Override
     public SignUpViewModel getViewModel() {
-        mSignUpViewModel= ViewModelProviders.of(this, new ViewModelProviderFactory()).get(SignUpViewModel.class);
+        mSignUpViewModel = ViewModelProviders.of(this, new ViewModelProviderFactory()).get(SignUpViewModel.class);
         return mSignUpViewModel;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +59,10 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentSignUpBinding=getViewDataBinding();
-        String htmlcontentcheckbox="Tôi đồng ý với các<font color=\"#4356B4\"> chính sách</font> và <font color=\"#4356B4\"> điều khoản</font>";
+        mFragmentSignUpBinding = getViewDataBinding();
+        String htmlcontentcheckbox = "Tôi đồng ý với các<font color=\"#4356B4\"> chính sách</font> và <font color=\"#4356B4\"> điều khoản</font>";
         mFragmentSignUpBinding.checkboxRegister.setText(android.text.Html.fromHtml(htmlcontentcheckbox));
-        String htmlcontentbutton="Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>";
+        String htmlcontentbutton = "Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>";
         mFragmentSignUpBinding.ButtonMoveLogin.setText(android.text.Html.fromHtml(htmlcontentbutton));
         eventEnableButton();
         mFragmentSignUpBinding.ButtonBackRegister.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +85,9 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
         mSignUpViewModel.signUpUserMutableLiveData.observe(getViewLifecycleOwner(), new Observer<loginUser>() {
             @Override
             public void onChanged(loginUser loginUser) {
-                if(loginUser.validateEmailPassword()==false){
+                if (loginUser.validateEmailPassword() == false) {
                     Toast.makeText(getContext(), "Invalid Email Or Password!", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     mSignUpViewModel.createUserFireBase();
                 }
             }
@@ -93,10 +95,9 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
         mSignUpViewModel.signUpSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     Toast.makeText(getContext(), "Sign Up Success!", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(getContext(), "Sign Up Failed", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -104,23 +105,26 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
         mSignUpViewModel.userName.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(TextUtils.isEmpty(s)){
+                if (TextUtils.isEmpty(s)) {
                     mFragmentSignUpBinding.editTextNameRegister.setError("REQUIRED");
                 }
             }
         });
     }
-    public void eventEnableButton(){
-        EditText[] editTexts=new EditText[]{mFragmentSignUpBinding.editTextNameRegister,mFragmentSignUpBinding.editTextEmailRegister,mFragmentSignUpBinding.editTextPassRegister};
-        for(int i=0;i<editTexts.length;i++){
+
+    public void eventEnableButton() {
+        EditText[] editTexts = new EditText[]{mFragmentSignUpBinding.editTextNameRegister, mFragmentSignUpBinding.editTextEmailRegister, mFragmentSignUpBinding.editTextPassRegister};
+        for (int i = 0; i < editTexts.length; i++) {
             editTexts[i].addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     setEnableButton();
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
                 }
@@ -133,13 +137,15 @@ public class SignUpFragment extends BaseFragment<FragmentSignupBinding, SignUpVi
             }
         });
     }
+
     public void replaceFragment() {
-        FragmentManager fragmentManager=getFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        LoginFragment login=new LoginFragment();
-        fragmentTransaction.replace(R.id.FrameLayout,login,null);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        LoginFragment login = new LoginFragment();
+        fragmentTransaction.replace(R.id.FrameLayout, login, null);
         fragmentTransaction.commit();
     }
+
     public void setEnableButton() {
         if (mFragmentSignUpBinding.checkboxRegister.isChecked()
                 && !TextUtils.isEmpty(mFragmentSignUpBinding.editTextNameRegister.getText().toString())

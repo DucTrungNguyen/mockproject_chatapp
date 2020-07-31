@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.rikkei.tranning.chatapp.views.uis.friend.FriendsFragment
-import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendsFragment
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendsFragment
+import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendFragment
+import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendFragment
 import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendsFragment
 import com.rikkei.tranning.chatapp.views.uis.message.MessagesFragment
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileFragment
@@ -18,10 +17,10 @@ class ViewPagerFriendAdapter(private val myContext: Context, fm: FragmentManager
         when (position) {
             0 -> {
                 //  val homeFragment: HomeFragment = HomeFragment()
-                return MyFriendsFragment()
+                return MyFriendFragment()
             }
             1 -> {
-                return AllFriendsFragment()
+                return AllFriendFragment()
             }
             else -> return RequestFriendsFragment()
         }

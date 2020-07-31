@@ -32,7 +32,12 @@ import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
 import com.rikkei.tranning.chatapp.services.models.editUser;
 import com.rikkei.tranning.chatapp.services.network.Network;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 import static android.app.Activity.RESULT_OK;
+import static com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel.listUserMutableLiveData;
+
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel>{
     FragmentEditprofileBinding mFragmentEditProfileBinding;
     EditProfileViewModel mEditProfileViewModel;

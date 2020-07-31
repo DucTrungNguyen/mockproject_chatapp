@@ -16,7 +16,4 @@ public class ProfileViewModel extends ViewModel {
             }
         });
     }
-    public void update(){
-
-    }
 }

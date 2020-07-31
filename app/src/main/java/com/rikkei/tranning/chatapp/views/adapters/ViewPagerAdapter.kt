@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.rikkei.tranning.chatapp.views.uis.friend.FriendsFragment
+import com.rikkei.tranning.chatapp.views.uis.friend.FriendFragment
 import com.rikkei.tranning.chatapp.views.uis.message.MessagesFragment
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileFragment
 
@@ -18,7 +18,7 @@ class ViewPagerAdapter(private val myContext: Context, fm: FragmentManager, inte
                 return MessagesFragment()
             }
             1 -> {
-                return FriendsFragment()
+                return FriendFragment()
             }
             else -> return ProfileFragment()
         }

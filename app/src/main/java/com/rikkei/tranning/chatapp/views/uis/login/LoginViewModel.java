@@ -1,9 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.login;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,13 +8,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.rikkei.tranning.chatapp.Base.BaseViewModel;
 import com.rikkei.tranning.chatapp.services.models.User;
 import com.rikkei.tranning.chatapp.services.models.loginUser;
-import com.rikkei.tranning.chatapp.services.network.Network;
+import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepositories;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+
 public class LoginViewModel extends ViewModel {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();
@@ -54,4 +49,5 @@ public class LoginViewModel extends ViewModel {
                     }
                 });
     }
+
 }

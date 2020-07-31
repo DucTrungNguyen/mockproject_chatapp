@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.Base.BaseFragment;
 import com.rikkei.tranning.chatapp.services.models.User;
@@ -76,8 +77,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                     mFragmentProfileBinding.CircleImageViewUser.setImageResource(R.mipmap.ic_launcher);
                 }
                 else{
-                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentProfileBinding.ImageViewImageUser);
-                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentProfileBinding.CircleImageViewUser);
+                    Glide.with(getContext()).load(user.getUserImgUrl()).into(mFragmentProfileBinding.ImageViewImageUser);
+                    Glide.with(getContext()).load(user.getUserImgUrl()).circleCrop().into(mFragmentProfileBinding.CircleImageViewUser);
                 }
             }
         });
@@ -90,6 +91,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.commit();
     }
     public void logout() {
+        FirebaseAuth.getInstance().signOut();
         Intent intent=new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
