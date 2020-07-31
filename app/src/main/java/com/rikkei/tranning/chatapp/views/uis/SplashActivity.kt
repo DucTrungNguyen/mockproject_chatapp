@@ -19,6 +19,8 @@ class SplashActivity : AppCompatActivity() {
 //        txtappname = findViewById(R.id.textViewAppName)
 //        val htmlcontent = "<b>Awesome </b>chat"
 //        txtappname!!.setText(Html.fromHtml(htmlcontent))
+        val handler = Handler()
+
             val firebaseUser = FirebaseAuth.getInstance().currentUser
             if (firebaseUser != null) {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
@@ -30,6 +32,9 @@ class SplashActivity : AppCompatActivity() {
                 val login = LoginFragment()
                 fragmentTransaction.add(R.id.FrameLayout, login, null)
                 fragmentTransaction.commit()
+
             }
+
+           }
+
     }
-}

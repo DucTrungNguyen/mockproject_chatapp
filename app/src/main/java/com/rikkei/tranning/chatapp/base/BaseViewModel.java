@@ -1,4 +1,4 @@
-package com.rikkei.tranning.chatapp.Base;
+package com.rikkei.tranning.chatapp.base;
 
 import androidx.lifecycle.ViewModel;
 

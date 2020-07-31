@@ -10,13 +10,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.rikkei.tranning.chatapp.BR;
-import com.rikkei.tranning.chatapp.Base.BaseFragment;
+import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentMyFriendsBinding;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.views.adapters.MyFriendAdapter;
-import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
 
 import java.util.ArrayList;
 
@@ -55,9 +54,9 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding,MyFr
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mMyFriendViewModel.getFriendArray();
-        mMyFriendViewModel.listMyFriendMutableLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+        mMyFriendViewModel.listMyFriendMutableLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
-            public void onChanged(ArrayList<User> userArrayList) {
+            public void onChanged(ArrayList<UserModel> userArrayList) {
                 mMyFriendViewModel.collectionArray(userArrayList);
                 myFriendAdapter.submitList(userArrayList);
             }

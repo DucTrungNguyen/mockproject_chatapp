@@ -1,11 +1,11 @@
 package com.rikkei.tranning.chatapp.services.models;
 
-public class editUser {
+public class EditUserModel {
     private String userName;
     private String userPhone;
     private String userDateOfBirth;
 
-    public editUser(String userName, String userPhone, String userDateOfBirth) {
+    public EditUserModel(String userName, String userPhone, String userDateOfBirth) {
         this.userName = userName;
         this.userPhone = userPhone;
         this.userDateOfBirth = userDateOfBirth;

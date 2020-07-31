@@ -15,28 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
-import com.rikkei.tranning.chatapp.services.models.User;
-import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepositories;
-import com.squareup.picasso.Picasso;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepository;
 
-import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class AllFriendAdapter extends ListAdapter<User,AllFriendAdapter.ViewHolder> {
+public class AllFriendAdapter extends ListAdapter<UserModel,AllFriendAdapter.ViewHolder> {
     Context context;
     public AllFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context=context;
     }
-    private static final DiffUtil.ItemCallback<User> DIFF_CALLBACK = new DiffUtil.ItemCallback<User>() {
+    private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+        public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
             return oldItem.getUserId().equals(newItem.getUserId());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+        public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
             return  oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserEmail().equals(newItem.getUserEmail())
                     && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
@@ -54,7 +49,7 @@ public class AllFriendAdapter extends ListAdapter<User,AllFriendAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final User user=getItem(position);
+        final UserModel user=getItem(position);
         if(user.getUserImgUrl().equals("default")){
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
         }
@@ -64,7 +59,7 @@ public class AllFriendAdapter extends ListAdapter<User,AllFriendAdapter.ViewHold
         }
         holder.txtSection.setText(user.getUserName().substring(0,1));
         holder.txtUserName.setText(user.getUserName());
-        new AllFriendRepositories().searchFriendType(user, new AllFriendRepositories.typeFriend() {
+        new AllFriendRepository().searchFriendType(user, new AllFriendRepository.typeFriend() {
             @Override
             public void typeFriendIsLoad(String s) {
                 switch (s){
@@ -95,19 +90,19 @@ public class AllFriendAdapter extends ListAdapter<User,AllFriendAdapter.ViewHold
             public void onClick(View v) {
                 switch (holder.btnRequest.getText().toString()){
                     case "Kết bạn":
-                        new AllFriendRepositories().createFriend(user);
+                        new AllFriendRepository().createFriend(user);
                         holder.btnRequest.setText("Hủy");
                         break;
                     case "Hủy":
-                        new AllFriendRepositories().deleteFriend(user);
+                        new AllFriendRepository().deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
                         break;
                     case "Đồng ý":
-                        new AllFriendRepositories().updateFriend(user);
+                        new AllFriendRepository().updateFriend(user);
                         holder.btnRequest.setText("Bạn bè");
                         break;
                     case "Bạn bè":
-                        new AllFriendRepositories().deleteFriend(user);
+                        new AllFriendRepository().deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
                         break;
                 }
@@ -115,7 +110,7 @@ public class AllFriendAdapter extends ListAdapter<User,AllFriendAdapter.ViewHold
         });
 
     }
-    public User getNoteAt(int position) {
+    public UserModel getNoteAt(int position) {
         return getItem(position);
     }
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -1,13 +1,13 @@
 package com.rikkei.tranning.chatapp.services.models;
 
-public class Friends {
+public class FriendsModel {
     private String friendId;
     private String type;
 
-    public Friends() {
+    public FriendsModel() {
     }
 
-    public Friends(String friendId, String type) {
+    public FriendsModel(String friendId, String type) {
         this.friendId = friendId;
         this.type = type;
     }

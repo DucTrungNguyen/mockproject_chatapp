@@ -15,22 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 
-public class MyFriendAdapter extends ListAdapter<User,MyFriendAdapter.ViewHolder> {
+public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewHolder> {
     Context context;
     public MyFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context=context;
     }
-    private static final DiffUtil.ItemCallback<User> DIFF_CALLBACK = new DiffUtil.ItemCallback<User>() {
+    private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+        public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
             return oldItem.getUserId().equals(newItem.getUserId());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+        public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
             return  oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserEmail().equals(newItem.getUserEmail())
                     && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
@@ -47,7 +47,7 @@ public class MyFriendAdapter extends ListAdapter<User,MyFriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user=getItem(position);
+        UserModel user=getItem(position);
         holder.btnRequest.setVisibility(View.GONE);
         if(user.getUserImgUrl().equals("default")){
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
@@ -66,7 +66,7 @@ public class MyFriendAdapter extends ListAdapter<User,MyFriendAdapter.ViewHolder
             }
         }
     }
-    public User getNoteAt(int position) {
+    public UserModel getNoteAt(int position) {
         return getItem(position);
     }
     public class ViewHolder extends RecyclerView.ViewHolder{

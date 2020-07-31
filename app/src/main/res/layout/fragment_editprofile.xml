@@ -17,6 +17,7 @@
         android:layout_height="228dp"
         >
         <ImageButton
+            android:background="@null"
             android:id="@+id/ImageViewBack"
             android:layout_marginStart="12.16dp"
             android:layout_marginTop="64dp"
@@ -26,6 +27,7 @@
             android:layout_height="24dp"
             />
         <TextView
+
             android:textSize="18sp"
             android:layout_marginTop="65dp"
             android:textColor="#ffffff"
@@ -35,7 +37,6 @@
             android:layout_height="22dp"
             />
         <Button
-            android:onClick="@{()->viewModelEditProfile.saveButtonOnClick()}"
             android:id="@+id/ButtonSave"
             android:layout_marginEnd="12dp"
             android:textSize="16sp"
@@ -99,7 +100,6 @@
                android:layout_height="17dp"
                />
            <EditText
-               android:text="@={viewModelEditProfile.userName}"
                android:textSize="16sp"
                android:inputType="textEmailAddress"
                android:id="@+id/editTextNameProfile"
@@ -135,7 +135,6 @@
                 />
             <EditText
                 android:textSize="16sp"
-                android:text="@={viewModelEditProfile.userPhone}"
                 android:inputType="number"
                 android:id="@+id/editPhoneProfile"
                 android:layout_marginTop="24dp"
@@ -169,7 +168,6 @@
                 android:layout_height="14dp"
                 />
             <EditText
-                android:text="@={viewModelEditProfile.userDateOfBirth}"
                 android:textSize="16sp"
                 android:inputType="date"
                 android:id="@+id/editDateOfBirthProfile"

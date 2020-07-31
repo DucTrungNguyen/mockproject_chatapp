@@ -3,15 +3,14 @@ package com.rikkei.tranning.chatapp.views.uis.profile;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rikkei.tranning.chatapp.services.models.User;
-import com.rikkei.tranning.chatapp.services.network.Network;
-import com.rikkei.tranning.chatapp.services.repositories.ProfileRepositories;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.repositories.ProfileRepository;
 public class ProfileViewModel extends ViewModel {
-    public MutableLiveData<User> userMutableLiveData =new MutableLiveData<>();
+    public MutableLiveData<UserModel> userMutableLiveData =new MutableLiveData<>();
     public void getInfoUser(){
-        new ProfileRepositories().infoUserFromFirebase(new ProfileRepositories.DataStatus() {
+        new ProfileRepository().infoUserFromFirebase(new ProfileRepository.DataStatus() {
             @Override
-            public void DataIsLoaded(User user) {
+            public void DataIsLoaded(UserModel user) {
                 userMutableLiveData.setValue(user);
             }
         });

@@ -9,24 +9,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rikkei.tranning.chatapp.services.models.User;
-import com.rikkei.tranning.chatapp.services.network.Network;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 
-public class ProfileRepositories {
+public class ProfileRepository {
     FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
     DatabaseReference databaseReference;
-    private User account =new User();
+    private UserModel account =new UserModel();
     public interface DataStatus{
-        void DataIsLoaded(User user);
+        void DataIsLoaded(UserModel user);
     }
-    public void infoUserFromFirebase(final ProfileRepositories.DataStatus dataStatus){
+    public void infoUserFromFirebase(final ProfileRepository.DataStatus dataStatus){
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
         final String userId=firebaseUser.getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference("user").child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                account=dataSnapshot.getValue(User.class);
+                account=dataSnapshot.getValue(UserModel.class);
                 dataStatus.DataIsLoaded(account);
             }
 

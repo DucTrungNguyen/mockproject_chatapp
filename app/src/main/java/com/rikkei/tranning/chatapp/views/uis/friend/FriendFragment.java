@@ -7,22 +7,19 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
-import com.rikkei.tranning.chatapp.Base.BaseFragment;
+import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentFriendBinding;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.views.adapters.MainViewPaperAdaper;
-import com.rikkei.tranning.chatapp.views.adapters.ViewPagerAdapter;
 import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendFragment;
 import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendFragment;
 import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendsFragment;
-import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
 
 import java.util.ArrayList;
 
@@ -81,15 +78,15 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFriendsViewmodel.userArrayLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+        mFriendsViewmodel.userArrayLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
-            public void onChanged(ArrayList<User> userArrayList) {
+            public void onChanged(ArrayList<UserModel> userArrayList) {
                 listUserMutableLiveData.setValue(userArrayList);
             }
         });
-        mFriendsViewmodel.myFriendSearchLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+        mFriendsViewmodel.myFriendSearchLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
-            public void onChanged(ArrayList<User> userArrayList) {
+            public void onChanged(ArrayList<UserModel> userArrayList) {
                 listMyFriendMutableLiveData.setValue(userArrayList);
             }
         });

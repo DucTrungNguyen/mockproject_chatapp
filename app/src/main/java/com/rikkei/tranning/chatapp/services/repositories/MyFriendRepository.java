@@ -10,19 +10,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.rikkei.tranning.chatapp.services.models.Friends;
-import com.rikkei.tranning.chatapp.services.models.User;
+import com.rikkei.tranning.chatapp.services.models.FriendsModel;
+
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 import java.util.ArrayList;
 
-public class MyFriendRepositories {
+public class MyFriendRepository {
     DatabaseReference databaseReference;
-    Friends friends=new Friends();
-    User user=new User();
-    ArrayList<User> userArrayList=new ArrayList<>();
-    ArrayList<Friends> friendsArrayList=new ArrayList<>();
+    FriendsModel friends=new FriendsModel();
+    UserModel user=new UserModel();
+    ArrayList<UserModel> userArrayList=new ArrayList<>();
+    ArrayList<FriendsModel> friendsArrayList=new ArrayList<>();
     public interface DataStatus{
-        void DataIsLoading(ArrayList<User> arrayList);
+        void DataIsLoading(ArrayList<UserModel> arrayList);
     }
     public void getAllFriend(final DataStatus dataStatus){
         final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -33,13 +34,13 @@ public class MyFriendRepositories {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userArrayList.clear();
                 for(DataSnapshot Node: dataSnapshot.getChildren()) {
-                    friends = Node.getValue(Friends.class);
+                    friends = Node.getValue(FriendsModel.class);
                     if (friends.getType().equals("friend")) {
                         databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(friends.getFriendId());
                         databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                 user=dataSnapshot.getValue(User.class);
+                                 user=dataSnapshot.getValue(UserModel.class);
                                  userArrayList.add(user);
                             }
 
@@ -68,13 +69,13 @@ public class MyFriendRepositories {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Friends friends = snapshot.getValue(Friends.class);
+                    FriendsModel friends = snapshot.getValue(FriendsModel.class);
                     databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(friends.getFriendId());
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            ArrayList<User> userArrayList=new ArrayList<>();
-                            user=dataSnapshot.getValue(User.class);
+                            ArrayList<UserModel> userArrayList=new ArrayList<>();
+                            user=dataSnapshot.getValue(UserModel.class);
                             userArrayList.add(user);
                         }
 
