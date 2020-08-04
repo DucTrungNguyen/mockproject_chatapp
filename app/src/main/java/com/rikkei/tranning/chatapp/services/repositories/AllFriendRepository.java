@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.FriendsModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
@@ -17,7 +18,10 @@ import java.util.ArrayList;
 
 public class AllFriendRepository {
     DatabaseReference databaseReference;
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = firebaseUser.getUid();
     private ArrayList<UserModel> userList = new ArrayList<>();
+    private ArrayList<AllUserModel> allUserArray = new ArrayList<>();
     String friendType;
     private ArrayList<FriendsModel> friendArrayList = new ArrayList<>();
 
@@ -25,25 +29,57 @@ public class AllFriendRepository {
         void DataIsLoaded(ArrayList<UserModel> userArrayList);
     }
 
-    public interface typeFriend {
-        void typeFriendIsLoad(String s);
+    public interface Data {
+        void typeFriendIsLoad(ArrayList<AllUserModel> allUserModels);
     }
 
-    public void getAllUser(final DataStatus dataStatus) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String userId = firebaseUser.getUid();
+    public void getAllUser(final Data status) {
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userList.clear();
+                allUserArray.clear();
                 for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
-                    UserModel account = keyNode.getValue(UserModel.class);
+                    final UserModel account = keyNode.getValue(UserModel.class);
                     if (!account.getUserId().equals(userId)) {
-                        userList.add(account);
+                        final AllUserModel allUserModel = new AllUserModel();
+                        allUserModel.setUserName(account.getUserName());
+                        allUserModel.setUserImage(account.getUserImgUrl());
+                        allUserModel.setUserId(account.getUserId());
+                        databaseReference = FirebaseDatabase.getInstance().getReference("friend").child(userId);
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                friendArrayList.clear();
+                                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                                    FriendsModel friend = keyNode.getValue(FriendsModel.class);
+                                    if (friend.getFriendId().equals(account.getUserId())) {
+                                        friendArrayList.add(friend);
+                                        if (friend.getType().equals("friend")) {
+                                            friendType = "friend";
+                                        } else if (friend.getType().equals("sendRequest")) {
+                                            friendType = "sendRequest";
+                                        } else if (friend.getType().equals("friendRequest")) {
+                                            friendType = "friendRequest";
+                                        }
+                                    }
+                                }
+                                if (friendArrayList.size() == 0) {
+                                    friendType = "NoFriend";
+                                }
+                                allUserModel.setUserType(friendType);
+                            }
+
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    allUserArray.add(allUserModel);
                     }
                 }
-                dataStatus.DataIsLoaded(userList);
+                status.typeFriendIsLoad(allUserArray);
             }
 
             @Override
@@ -53,32 +89,33 @@ public class AllFriendRepository {
         });
     }
 
-    public void searchUser(String s, final DataStatus dataStatus) {
+    public Query searchUser(String s, final DataStatus dataStatus) {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Query query = FirebaseDatabase.getInstance().getReference("user").orderByChild("userName")
                 .startAt(s)
                 .endAt(s + "\uf8ff");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UserModel user = snapshot.getValue(UserModel.class);
-                    if (!user.getUserId().equals(firebaseUser.getUid())) {
-                        userList.add(user);
-                    }
-                }
-                dataStatus.DataIsLoaded(userList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        return query;
+//        .addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                userList.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    UserModel user = snapshot.getValue(UserModel.class);
+//                    if (!user.getUserId().equals(firebaseUser.getUid())) {
+//                        userList.add(user);
+//                    }
+//                }
+//                dataStatus.DataIsLoaded(userList);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
-    public void createFriend(UserModel user) {
+    public void createFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
@@ -88,7 +125,7 @@ public class AllFriendRepository {
         databaseReference.child(user.getUserId()).child(userId).setValue(friend2);
     }
 
-    public void deleteFriend(UserModel user) {
+    public void deleteFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
@@ -96,46 +133,11 @@ public class AllFriendRepository {
         databaseReference.child(user.getUserId()).child(userId).setValue(null);
     }
 
-    public void updateFriend(UserModel user) {
+    public void updateFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
         databaseReference.child(userId).child(user.getUserId()).child("type").setValue("friend");
         databaseReference.child(user.getUserId()).child(userId).child("type").setValue("friend");
-    }
-
-    public void searchFriendType(final UserModel user, final typeFriend type) {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = firebaseUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference("friend").child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                friendArrayList.clear();
-                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
-                    FriendsModel account = keyNode.getValue(FriendsModel.class);
-                    if (account.getFriendId().equals(user.getUserId())) {
-                        friendArrayList.add(account);
-                        if (account.getType().equals("friend")) {
-                            friendType = "friend";
-                        } else if (account.getType().equals("sendRequest")) {
-                            friendType = "sendRequest";
-                        } else if (account.getType().equals("friendRequest")) {
-                            friendType = "friendRequest";
-                        }
-                    }
-                }
-                if (friendArrayList.size() == 0) {
-                    friendType = "NoFriend";
-                }
-                type.typeFriendIsLoad(friendType);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
     }
 }

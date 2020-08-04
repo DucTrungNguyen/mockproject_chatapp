@@ -91,7 +91,7 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
         mFriendsViewmodel.userArrayLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
             public void onChanged(ArrayList<UserModel> userArrayList) {
-                AllFriendViewModel.listUserMutableLiveData.setValue(userArrayList);
+//                AllFriendViewModel.listUserMutableLiveData.setValue(userArrayList);
             }
         });
         mFriendsViewmodel.myFriendSearchLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
