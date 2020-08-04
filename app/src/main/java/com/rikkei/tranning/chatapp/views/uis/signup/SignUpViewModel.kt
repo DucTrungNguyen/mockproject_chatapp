@@ -24,7 +24,7 @@ class SignUpViewModel : ViewModel() {
         if (user.isEmailValid)
             signUpUserMutableLiveData.value = user
 
-        if (user.validateEmailPassword()) {
+        if (!user.validateEmailPassword()) {
             signUpStatus.value = SignUpStatus.errorPassAndEmail(true)
         } else {
             createUserFireBase()

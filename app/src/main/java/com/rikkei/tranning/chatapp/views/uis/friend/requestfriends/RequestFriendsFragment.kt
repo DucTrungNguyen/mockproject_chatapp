@@ -123,16 +123,16 @@ class RequestFriendFragment :
             viewLifecycleOwner,
             Observer { userArrayListSend ->
 
-//                if (userArrayListSend.size == 0){
-//                    RecyclerRequestFriend.layoutParams =paramsFill
-//                    RecyclerSendFriend.layoutParams =paramsHide
-//
-//                }else{
+                if (userArrayListSend.size == 0){
+                    RecyclerRequestFriend.layoutParams =paramsFill
+                    RecyclerSendFriend.layoutParams =paramsHide
+
+                }else{
                     mRequestFriendViewModel.collectionArray(userArrayListSend)
                     sendFriendAdapter.submitList(userArrayListSend)
 
 
-//                }
+                }
 
             })
     }

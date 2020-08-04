@@ -24,13 +24,13 @@ class LoginViewModel : ViewModel() {
 
     fun onClick() {
 //        loginStatus.value = LoginStatus.loading(true)
-        loginFirebase()
-//        val user = LoginUserModel(EmailAddress.value.toString(), Password.value.toString())
-//        if (user.validateEmailPassword() ){
-//            loginStatus.value = LoginStatus.errorPassAndEmail(true)
-//        }else {
-//            loginFirebase()
-//        }
+//        loginFirebase()
+        val user = LoginUserModel(EmailAddress.value.toString(), Password.value.toString())
+        if (!user.validateEmailPassword() ){
+            loginStatus.value = LoginStatus.errorPassAndEmail(true)
+        }else {
+            loginFirebase()
+        }
 //        if ( user.isEmailValid)
 //        userMutableLiveData!!.value = user
     }

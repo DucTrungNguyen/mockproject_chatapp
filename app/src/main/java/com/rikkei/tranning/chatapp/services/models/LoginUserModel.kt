@@ -6,7 +6,8 @@ import java.util.regex.Pattern
 class LoginUserModel(var email: String, var password: String) {
 
     fun validateEmailPassword(): Boolean {
-        return Pattern.compile(
+
+        val a = Pattern.compile(
                 "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
                         + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                         + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
@@ -16,6 +17,7 @@ class LoginUserModel(var email: String, var password: String) {
             ).matcher(email).matches() && Pattern.compile(
                 "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
             ).matcher(password).matches()
+        return a
     }
 
     val isEmailValid: Boolean

@@ -75,10 +75,12 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding?, SignUpViewModel?>() 
 
                 }
                 is SignUpViewModel.SignUpStatus.Failure ->{
+                    Toast.makeText(context, "Sign up fail", Toast.LENGTH_SHORT).show()
+                    progress_circular_signUp.visibility = View.GONE
 
                 }
                 is SignUpViewModel.SignUpStatus.ErrorPassAndEmail ->{
-                    Toast.makeText(context, "Sign Up Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Invalid Email Or Password!", Toast.LENGTH_SHORT).show()
                     progress_circular_signUp.visibility = View.GONE
 
             }
