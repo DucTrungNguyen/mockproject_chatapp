@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.fragment_request_friends.*
 import kotlin.properties.Delegates
 
 
-class RequestFriendFragment :
-    BaseFragment<FragmentRequestFriendsBinding?, RequestFriendViewModel?>() {
+class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, RequestFriendViewModel?>() {
     private lateinit var mFragmentRequestFriendsBinding: FragmentRequestFriendsBinding
     private lateinit var mRequestFriendViewModel: RequestFriendViewModel
     private lateinit var requestFriendAdapter: RequestFriendAdapter
@@ -28,7 +27,7 @@ class RequestFriendFragment :
 
     private lateinit var paramsFill: LinearLayout.LayoutParams
     lateinit var paramsHide: LinearLayout.LayoutParams
-    var recyclerView by Delegates.notNull<Int>()
+//    var recyclerView by Delegates.notNull<Int>()
     override fun getBindingVariable(): Int {
         return BR.requestFriendViewModel
     }
@@ -38,7 +37,7 @@ class RequestFriendFragment :
     }
 
     override fun getViewModel(): RequestFriendViewModel {
-        mRequestFriendViewModel =
+        this.mRequestFriendViewModel =
             ViewModelProviders.of(this, ViewModelProviderFactory()).get(
                 RequestFriendViewModel::class.java
             )
@@ -65,6 +64,11 @@ class RequestFriendFragment :
         mFragmentRequestFriendsBinding.RecyclerSendFriend.layoutManager = layoutManagerSend
         mFragmentRequestFriendsBinding.RecyclerSendFriend.adapter = sendFriendAdapter
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
 //        paramsHide = LinearLayout.LayoutParams(
 //            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
 //        )
@@ -77,40 +81,24 @@ class RequestFriendFragment :
 //        paramsFill.weight = 2f
 
 
-
-//        recyclerView = R.layout.fragment_request_friends
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        paramsHide = LinearLayout.LayoutParams(
-            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
-        )
-        paramsHide.weight = 0f
-
-
-        paramsFill= LinearLayout.LayoutParams(
-            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
-        )
-        paramsFill.weight = 2f
-
-
         mRequestFriendViewModel.getRequestFriendArray()
         mRequestFriendViewModel.getSendFriendArray()
+
         mRequestFriendViewModel.listRequestFriendMutableLiveData.observe(
             viewLifecycleOwner,
             Observer { userArrayListRequest ->
 
-
+//
 //                if (userArrayListRequest.size == 0){
 //
-//                    RecyclerRequestFriend.layoutParams =paramsHide
+//                    RecyclerRequestFriend.visibility = View.GONE
 //                    RecyclerSendFriend.layoutParams =paramsFill
 //
 //
 //
 //                }else {
+//                    RecyclerSendFriend.visibility =View.VISIBLE
+//                    RecyclerRequestFriend.visibility = View.VISIBLE
                     mRequestFriendViewModel.collectionArray(userArrayListRequest)
                     requestFriendAdapter.submitList(userArrayListRequest)
 
@@ -124,11 +112,13 @@ class RequestFriendFragment :
             Observer { userArrayListSend ->
 
 //                if (userArrayListSend.size == 0){
-//                    RecyclerSendFriend.layoutParams =paramsHide
+//                    RecyclerSendFriend.visibility =View.GONE
 //                    RecyclerRequestFriend.layoutParams =paramsFill
 //
 //
 //                }else{
+//                    RecyclerSendFriend.visibility =View.VISIBLE
+//                    RecyclerRequestFriend.visibility = View.VISIBLE
                     mRequestFriendViewModel.collectionArray(userArrayListSend)
                     sendFriendAdapter.submitList(userArrayListSend)
 

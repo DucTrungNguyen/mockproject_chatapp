@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
-import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepository;
 import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository;
 
 
@@ -64,25 +63,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
         }
         holder.txtSection.setText("Đã gửi kết bạn");
         holder.txtUserName.setText(user.getUserName());
-        new RequestFriendRepository().searchFriendType(user, new AllFriendRepository.typeFriend() {
-            @Override
-            public void typeFriendIsLoad(String s) {
-                switch (s) {
-//                    case "NoFriend":
-//                        holder.btnRequest.setText("Kết bạn");
-//                        break;
-//                    case "friend":
-//                        holder.btnRequest.setText("Bạn bè");
-//                        break;
-                    case "sendRequest":
-                        holder.btnRequest.setText("Hủy");
-                        break;
-                    case "friendRequest":
-                        holder.btnRequest.setText("Đồng ý");
-                        break;
-                }
-            }
-        });
+        holder.btnRequest.setText("Hủy");
         if (position != 0) {
             holder.txtSection.setVisibility(View.GONE);
 //            int i=position-1;
@@ -95,23 +76,24 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
             @Override
             public void onClick(View v) {
                 switch (holder.btnRequest.getText().toString()) {
-//                    case "Kết bạn":
-//                        new AllFriendRepository().createFriend(user);
-//                        holder.btnRequest.setText("Hủy");
-//                        holder.btnRequest.setBackgroundResource(R.drawable.button_action_friend02);
-//                        break;
+
+                    case "Kết bạn":
+                        new RequestFriendRepository().createFriend(user);
+                        holder.btnRequest.setText("Hủy");
+                        break;
                     case "Hủy":
                         new RequestFriendRepository().deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
                         break;
                     case "Đồng ý":
                         new RequestFriendRepository().updateFriend(user);
+//                            new MyFriendViewModel().getFriendArray();
                         holder.btnRequest.setText("Bạn bè");
                         break;
-//                    case "Bạn bè":
-//                        new AllFriendRepository().deleteFriend(user);
-//                        holder.btnRequest.setText("Kết bạn");
-//                        break;
+                    case "Bạn bè":
+                        new RequestFriendRepository().deleteFriend(user);
+                        holder.btnRequest.setText("Kết bạn");
+                        break;
                 }
             }
         });

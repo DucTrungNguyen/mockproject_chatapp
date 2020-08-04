@@ -68,6 +68,8 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mFriendsViewmodel.updateArray(s.toString());
                 mFriendsViewmodel.updateArrayMyFriend(s.toString());
+                mFriendsViewmodel.updateArrayRequestFriend(s.toString());
+
             }
 
             @Override
