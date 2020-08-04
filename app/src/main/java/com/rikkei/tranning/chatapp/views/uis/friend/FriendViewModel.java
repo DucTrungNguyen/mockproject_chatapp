@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepository;
 import com.rikkei.tranning.chatapp.services.repositories.MyFriendRepository;
-import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository;
 
 import java.util.ArrayList;
 
@@ -23,12 +22,12 @@ public class FriendViewModel extends ViewModel {
     }
 
     public void updateArrayRequestFriend(String s){
-        new RequestFriendRepository().searchFriend(s, new RequestFriendRepository.DataStatus() {
-            @Override
-            public void DataIsLoading(ArrayList<UserModel> arrayList) {
-                requestFriendSearchLiveData.setValue(arrayList);
-            }
-        });
+//        new RequestFriendRepository().searchFriend(s, new RequestFriendRepository.DataStatus() {
+//            @Override
+//            public void DataIsLoading(ArrayList<UserModel> arrayList) {
+//                requestFriendSearchLiveData.setValue(arrayList);
+//            }
+//        });
     }
 
     public void updateArray(String s){

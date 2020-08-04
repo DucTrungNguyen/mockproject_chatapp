@@ -80,10 +80,28 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 //        )
 //        paramsFill.weight = 2f
 
-
-        mRequestFriendViewModel.getRequestFriendArray()
         mRequestFriendViewModel.getSendFriendArray()
+        mRequestFriendViewModel.getRequestFriendArray()
 
+        mRequestFriendViewModel.listSendFriendMutableLiveData.observe(
+            viewLifecycleOwner,
+            Observer { userArrayListSend ->
+
+//                if (userArrayListSend.size == 0){
+//                    RecyclerSendFriend.visibility =View.GONE
+//                    RecyclerRequestFriend.layoutParams =paramsFill
+//
+//
+//                }else{
+//                    RecyclerSendFriend.visibility =View.VISIBLE
+//                    RecyclerRequestFriend.visibility = View.VISIBLE
+//                    mRequestFriendViewModel.collectionArray(userArrayListSend)
+                sendFriendAdapter.submitList(userArrayListSend)
+
+
+//                }
+
+            })
         mRequestFriendViewModel.listRequestFriendMutableLiveData.observe(
             viewLifecycleOwner,
             Observer { userArrayListRequest ->
@@ -99,7 +117,7 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 //                }else {
 //                    RecyclerSendFriend.visibility =View.VISIBLE
 //                    RecyclerRequestFriend.visibility = View.VISIBLE
-                    mRequestFriendViewModel.collectionArray(userArrayListRequest)
+//                    mRequestFriendViewModel.collectionArray(userArrayListRequest)
                     requestFriendAdapter.submitList(userArrayListRequest)
 
 //
@@ -107,24 +125,6 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 
             })
 
-        mRequestFriendViewModel.listSendFriendMutableLiveData.observe(
-            viewLifecycleOwner,
-            Observer { userArrayListSend ->
 
-//                if (userArrayListSend.size == 0){
-//                    RecyclerSendFriend.visibility =View.GONE
-//                    RecyclerRequestFriend.layoutParams =paramsFill
-//
-//
-//                }else{
-//                    RecyclerSendFriend.visibility =View.VISIBLE
-//                    RecyclerRequestFriend.visibility = View.VISIBLE
-                    mRequestFriendViewModel.collectionArray(userArrayListSend)
-                    sendFriendAdapter.submitList(userArrayListSend)
-
-
-//                }
-
-            })
     }
 }
