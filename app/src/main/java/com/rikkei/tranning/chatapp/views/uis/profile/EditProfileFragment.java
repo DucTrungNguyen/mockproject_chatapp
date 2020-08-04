@@ -1,4 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +34,10 @@ import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel>{
@@ -41,6 +48,10 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     private Uri imageUri;
     String uriImage;
     private StorageTask uploadTask;
+
+    final Calendar myCalendar = Calendar.getInstance();
+
+    //    EditText edittext= (EditText) findViewById(R.id.Birthday);
     @Override
     public int getBindingVariable() {
         return BR.viewModelEditProfile;
@@ -100,6 +111,38 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 removeFragment();
             }
         });
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+        mFragmentEditProfileBinding.editDateOfBirthProfile.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(getContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+    }
+    private void updateLabel() {
+        String myFormat = "dd/mm/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        mFragmentEditProfileBinding.editDateOfBirthProfile.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
