@@ -1,61 +1,139 @@
 package com.rikkei.tranning.chatapp.views.uis.friend.requestfriends
 
+//import com.rikkei.tranning.chatapp.BR
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rikkei.tranning.chatapp.R
+import com.rikkei.tranning.chatapp.ViewModelProviderFactory
+import com.rikkei.tranning.chatapp.base.BaseFragment
+import com.rikkei.tranning.chatapp.databinding.FragmentRequestFriendsBinding
+import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter
+import com.rikkei.tranning.chatapp.views.adapters.SendFriendAdapter
+import kotlinx.android.synthetic.main.fragment_request_friends.*
+import kotlin.properties.Delegates
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RequestFriendsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RequestFriendsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class RequestFriendFragment :
+    BaseFragment<FragmentRequestFriendsBinding?, RequestFriendViewModel?>() {
+    private lateinit var mFragmentRequestFriendsBinding: FragmentRequestFriendsBinding
+    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
+    private lateinit var requestFriendAdapter: RequestFriendAdapter
+    private lateinit var sendFriendAdapter: SendFriendAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var paramsFill: LinearLayout.LayoutParams
+    lateinit var paramsHide: LinearLayout.LayoutParams
+    var recyclerView by Delegates.notNull<Int>()
+    override fun getBindingVariable(): Int {
+        return BR.requestFriendViewModel
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_request_friends
+    }
+
+    override fun getViewModel(): RequestFriendViewModel {
+        mRequestFriendViewModel =
+            ViewModelProviders.of(this, ViewModelProviderFactory()).get(
+                RequestFriendViewModel::class.java
+            )
+        return mRequestFriendViewModel as RequestFriendViewModel
+    }
+
+    override fun onViewCreated(
+        view: View,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_request_friends, container, false)
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        mFragmentRequestFriendsBinding = viewDataBinding!!
+        val layoutManagerRequest = LinearLayoutManager(context)
+        layoutManagerRequest.orientation = LinearLayoutManager.VERTICAL
+
+        val layoutManagerSend = LinearLayoutManager(context)
+        layoutManagerSend.orientation = LinearLayoutManager.VERTICAL
+
+        requestFriendAdapter = RequestFriendAdapter(context)
+        mFragmentRequestFriendsBinding.RecyclerRequestFriend.layoutManager = layoutManagerRequest
+        mFragmentRequestFriendsBinding.RecyclerRequestFriend.adapter = requestFriendAdapter
+
+        sendFriendAdapter = SendFriendAdapter(context)
+        mFragmentRequestFriendsBinding.RecyclerSendFriend.layoutManager = layoutManagerSend
+        mFragmentRequestFriendsBinding.RecyclerSendFriend.adapter = sendFriendAdapter
+
+//        paramsHide = LinearLayout.LayoutParams(
+//            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
+//        )
+//        paramsHide.weight = 0f
+//
+//
+//        paramsFill= LinearLayout.LayoutParams(
+//            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
+//        )
+//        paramsFill.weight = 2f
+
+
+
+//        recyclerView = R.layout.fragment_request_friends
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RequestFriendsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RequestFriendsFragment()
-                .apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        paramsHide = LinearLayout.LayoutParams(
+            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
+        )
+        paramsHide.weight = 0f
+
+
+        paramsFill= LinearLayout.LayoutParams(
+            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
+        )
+        paramsFill.weight = 2f
+
+
+        mRequestFriendViewModel.getRequestFriendArray()
+        mRequestFriendViewModel.getSendFriendArray()
+        mRequestFriendViewModel.listRequestFriendMutableLiveData.observe(
+            viewLifecycleOwner,
+            Observer { userArrayListRequest ->
+
+
+                if (userArrayListRequest.size == 0){
+
+                    RecyclerRequestFriend.layoutParams =paramsHide
+                    RecyclerSendFriend.layoutParams =paramsFill
+
+
+
+                }else {
+                    mRequestFriendViewModel.collectionArray(userArrayListRequest)
+                    requestFriendAdapter.submitList(userArrayListRequest)
+
+//
                 }
-            }
+
+            })
+
+        mRequestFriendViewModel.listSendFriendMutableLiveData.observe(
+            viewLifecycleOwner,
+            Observer { userArrayListSend ->
+
+//                if (userArrayListSend.size == 0){
+//                    RecyclerRequestFriend.layoutParams =paramsFill
+//                    RecyclerSendFriend.layoutParams =paramsHide
+//
+//                }else{
+                    mRequestFriendViewModel.collectionArray(userArrayListSend)
+                    sendFriendAdapter.submitList(userArrayListSend)
+
+
+//                }
+
+            })
     }
 }
