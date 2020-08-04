@@ -103,19 +103,19 @@ class RequestFriendFragment :
             Observer { userArrayListRequest ->
 
 
-                if (userArrayListRequest.size == 0){
-
-                    RecyclerRequestFriend.layoutParams =paramsHide
-                    RecyclerSendFriend.layoutParams =paramsFill
-
-
-
-                }else {
+//                if (userArrayListRequest.size == 0){
+//
+//                    RecyclerRequestFriend.layoutParams =paramsHide
+//                    RecyclerSendFriend.layoutParams =paramsFill
+//
+//
+//
+//                }else {
                     mRequestFriendViewModel.collectionArray(userArrayListRequest)
                     requestFriendAdapter.submitList(userArrayListRequest)
 
 //
-                }
+//                }
 
             })
 
@@ -123,16 +123,17 @@ class RequestFriendFragment :
             viewLifecycleOwner,
             Observer { userArrayListSend ->
 
-                if (userArrayListSend.size == 0){
-                    RecyclerRequestFriend.layoutParams =paramsFill
-                    RecyclerSendFriend.layoutParams =paramsHide
-
-                }else{
+//                if (userArrayListSend.size == 0){
+//                    RecyclerSendFriend.layoutParams =paramsHide
+//                    RecyclerRequestFriend.layoutParams =paramsFill
+//
+//
+//                }else{
                     mRequestFriendViewModel.collectionArray(userArrayListSend)
                     sendFriendAdapter.submitList(userArrayListSend)
 
 
-                }
+//                }
 
             })
     }
