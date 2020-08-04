@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter;
 import com.rikkei.tranning.chatapp.views.uis.friend.FriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.searchfriends.SearchFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
+import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel;
@@ -39,6 +43,15 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         }
         if(modelClass.isAssignableFrom(MyFriendViewModel.class)){
             return (T) new MyFriendViewModel();
+        }
+        if(modelClass.isAssignableFrom(ChatViewModel.class)){
+            return (T) new ChatViewModel();
+        }
+        if(modelClass.isAssignableFrom(SearchFriendViewModel.class)){
+            return (T) new SearchFriendViewModel();
+        }
+        if(modelClass.isAssignableFrom(RequestFriendViewModel.class)){
+            return (T) new RequestFriendViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

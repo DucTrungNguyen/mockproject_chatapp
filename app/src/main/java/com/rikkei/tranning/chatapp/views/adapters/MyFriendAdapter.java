@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewHolder> {
     Context context;
+    private OnItemClickListener listener;
     public MyFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context=context;
@@ -50,11 +53,11 @@ public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewH
         UserModel user=getItem(position);
         holder.btnRequest.setVisibility(View.GONE);
         if(user.getUserImgUrl().equals("default")){
-            Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
+            Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cImgUser);
         }
         else{
             Glide.with(context).load(user.getUserImgUrl()).circleCrop()
-                    .into(holder.cimgUser);
+                    .into(holder.cImgUser);
         }
         holder.txtSection.setText(user.getUserName().substring(0,1));
         holder.txtUserName.setText(user.getUserName());
@@ -70,15 +73,30 @@ public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewH
         return getItem(position);
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView cimgUser;
+        ImageView cImgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cimgUser=itemView.findViewById(R.id.CircleImageViewItem);
+            cImgUser=itemView.findViewById(R.id.CircleImageViewItem);
             txtUserName=itemView.findViewById(R.id.TextViewNameUserItem);
             btnRequest=itemView.findViewById(R.id.ButtonRequestItem);
             txtSection=itemView.findViewById(R.id.textViewHeader);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(getItem(position));
+                    }
+                }
+            });
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(UserModel userModel);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

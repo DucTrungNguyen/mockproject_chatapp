@@ -1,24 +1,21 @@
 package com.rikkei.tranning.chatapp.views.uis
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.rikkei.tranning.chatapp.R
-import com.rikkei.tranning.chatapp.views.adapters.ViewPagerAdapter
+import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 
 class MainActivity : AppCompatActivity() {
-    var tabLayout: TabLayout? = null
-    var viewPager: ViewPager? = null
+    //    var tabLayout: TabLayout? = null
+//    var viewPager: ViewPager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val signUp = MainFragment()
+        fragmentTransaction.replace(R.id.frameLayoutChat, signUp, null)
+        fragmentTransaction.commit()
 //        this.supportActionBar?.hide()
 
 //        val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -38,29 +35,29 @@ class MainActivity : AppCompatActivity() {
 //        actionBar?.setTitle("abc")
 //        navView.setupWithNavController(navController)
 
-        tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        viewPager = findViewById<ViewPager>(R.id.viewPager)
-
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Messages").setIcon(R.drawable.ic_chat))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Friends").setIcon(R.drawable.ic_friend))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Profile").setIcon(R.drawable.ic_user_bottom))
-        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-
-        val adapter = ViewPagerAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
-        viewPager!!.adapter = adapter
-
-        viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-
-        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager!!.currentItem = tab.position
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
+//        tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+//        viewPager = findViewById<ViewPager>(R.id.viewPager)
+//
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Messages").setIcon(R.drawable.ic_chat))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Friends").setIcon(R.drawable.ic_friend))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Profile").setIcon(R.drawable.ic_user_bottom))
+//        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+//
+//        val adapter = ViewPagerAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
+//        viewPager!!.adapter = adapter
+//
+//        viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+//
+//        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//            override fun onTabSelected(tab: TabLayout.Tab) {
+//                viewPager!!.currentItem = tab.position
+//            }
+//            override fun onTabUnselected(tab: TabLayout.Tab) {
+//
+//            }
+//            override fun onTabReselected(tab: TabLayout.Tab) {
+//
+//            }
+//        })
     }
 }

@@ -7,6 +7,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -18,14 +20,14 @@ import com.rikkei.tranning.chatapp.databinding.FragmentFriendBinding;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.views.adapters.MainViewPaperAdaper;
 import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendFragment;
+import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendFragment;
-import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendsFragment;
+import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendFragment;
+import com.rikkei.tranning.chatapp.views.uis.friend.searchfriends.SearchFriendFragment;
+import com.rikkei.tranning.chatapp.views.uis.message.ChatFragment;
 
 import java.util.ArrayList;
-
-import static com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel.listUserMutableLiveData;
-import static com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel.listMyFriendMutableLiveData;
-
 public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendViewModel> {
     FragmentFriendBinding mFragmentFriendBinding;
     FriendViewModel mFriendsViewmodel;
@@ -53,7 +55,7 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getFragmentManager());
         mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "Bạn bè");
         mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "Tất cả");
-        mainViewPaperAdaper.AddFragment(new RequestFriendsFragment(), "Yêu cầu");
+        mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), "Yêu cầu");
         mFragmentFriendBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
         mFragmentFriendBinding.tabLayoutFriend.setupWithViewPager(mFragmentFriendBinding.viewPagerFriend);
         mFragmentFriendBinding.editTextSearchFriend.addTextChangedListener(new TextWatcher() {
@@ -73,6 +75,12 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
 
             }
         });
+        mFragmentFriendBinding.imageViewSearchFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragment();
+            }
+        });
     }
 
     @Override
@@ -81,14 +89,21 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
         mFriendsViewmodel.userArrayLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
             public void onChanged(ArrayList<UserModel> userArrayList) {
-                listUserMutableLiveData.setValue(userArrayList);
+                AllFriendViewModel.listUserMutableLiveData.setValue(userArrayList);
             }
         });
         mFriendsViewmodel.myFriendSearchLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
             @Override
             public void onChanged(ArrayList<UserModel> userArrayList) {
-                listMyFriendMutableLiveData.setValue(userArrayList);
+                MyFriendViewModel.listMyFriendMutableLiveData.setValue(userArrayList);
             }
         });
+    }
+    public void addFragment(){
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        SearchFriendFragment searchFriendFragment=new SearchFriendFragment();
+        fragmentTransaction.add(R.id.frameLayoutChat,searchFriendFragment,null);
+        fragmentTransaction.commit();
     }
 }

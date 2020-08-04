@@ -17,15 +17,16 @@ import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepository;
-import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
+import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository;
 
-public class AllFriendAdapter extends ListAdapter<UserModel,AllFriendAdapter.ViewHolder> {
+public class RequestFriendAdapter extends ListAdapter<UserModel, RequestFriendAdapter.RequestFriendViewHolder> {
     Context context;
-    public AllFriendAdapter(Context context) {
+
+    public RequestFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
-        this.context=context;
+        this.context = context;
     }
+
     private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
@@ -34,7 +35,7 @@ public class AllFriendAdapter extends ListAdapter<UserModel,AllFriendAdapter.Vie
 
         @Override
         public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
-            return  oldItem.getUserName().equals(newItem.getUserName())
+            return oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserEmail().equals(newItem.getUserEmail())
                     && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
                     && oldItem.getUserPhone().equals(newItem.getUserPhone())
@@ -42,35 +43,36 @@ public class AllFriendAdapter extends ListAdapter<UserModel,AllFriendAdapter.Vie
         }
     };
 
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend,parent,false);
-        return new ViewHolder(view);
+    public RequestFriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
+        return new RequestFriendViewHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final UserModel user=getItem(position);
-        if(user.getUserImgUrl().equals("default")){
+    public void onBindViewHolder(@NonNull final RequestFriendAdapter.RequestFriendViewHolder holder, int position) {
+        final UserModel user = getItem(position);
+        if (user.getUserImgUrl().equals("default")) {
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
-        }
-        else{
+        } else {
             Glide.with(context).load(user.getUserImgUrl()).circleCrop()
                     .into(holder.cimgUser);
         }
-        holder.txtSection.setText(user.getUserName().substring(0,1));
+        holder.txtSection.setText("Lời mời kết bạn");
         holder.txtUserName.setText(user.getUserName());
-        new AllFriendRepository().searchFriendType(user, new AllFriendRepository.typeFriend() {
+        new RequestFriendRepository().searchFriendType(user, new AllFriendRepository.typeFriend() {
             @Override
             public void typeFriendIsLoad(String s) {
-                switch (s){
-                    case "NoFriend":
-                        holder.btnRequest.setText("Kết bạn");
-                        break;
-                    case "friend":
-                        holder.btnRequest.setText("Bạn bè");
-                        break;
+                switch (s) {
+//                    case "NoFriend":
+//                        holder.btnRequest.setText("Kết bạn");
+//                        break;
+//                    case "friend":
+//                        holder.btnRequest.setText("Bạn bè");
+//                        break;
                     case "sendRequest":
                         holder.btnRequest.setText("Hủy");
                         break;
@@ -80,54 +82,55 @@ public class AllFriendAdapter extends ListAdapter<UserModel,AllFriendAdapter.Vie
                 }
             }
         });
-        if(position >0){
-            int i=position-1;
-            if (i<=this.getItemCount()&&user.getUserName().substring(0,1)
-                    .equals(getNoteAt(i).getUserName().substring(0,1))){
-                holder.txtSection.setVisibility(View.GONE);
-            }
+        if (position > 0) {
+            holder.txtSection.setVisibility(View.GONE);
+//            int i=position-1;
+//            if (i<=this.getItemCount()&&user.getUserName().substring(0,1)
+//                    .equals(getNoteAt(i).getUserName().substring(0,1))){
+//
+//            }
         }
         holder.btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (holder.btnRequest.getText().toString()){
-                    case "Kết bạn":
-                        new AllFriendRepository().createFriend(user);
-                        holder.btnRequest.setText("Hủy");
-                        break;
+                switch (holder.btnRequest.getText().toString()) {
+//                    case "Kết bạn":
+//                        new AllFriendRepository().createFriend(user);
+//                        holder.btnRequest.setText("Hủy");
+//                        holder.btnRequest.setBackgroundResource(R.drawable.button_action_friend02);
+//                        break;
                     case "Hủy":
-                        new AllFriendRepository().deleteFriend(user);
+                        new RequestFriendRepository().deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
                         break;
                     case "Đồng ý":
-                        new AllFriendRepository().updateFriend(user);
-                        new MyFriendViewModel().getFriendArray();
+                        new RequestFriendRepository().updateFriend(user);
                         holder.btnRequest.setText("Bạn bè");
                         break;
-                    case "Bạn bè":
-                        new AllFriendRepository().deleteFriend(user);
-                        new MyFriendViewModel().getFriendArray();
-                        holder.btnRequest.setText("Kết bạn");
-                        break;
+//                    case "Bạn bè":
+//                        new AllFriendRepository().deleteFriend(user);
+//                        holder.btnRequest.setText("Kết bạn");
+//                        break;
                 }
-
             }
         });
-        new MyFriendViewModel().getFriendArray();
     }
+
     public UserModel getNoteAt(int position) {
         return getItem(position);
     }
-    public class ViewHolder extends RecyclerView.ViewHolder{
+
+    public class RequestFriendViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;
-        public ViewHolder(@NonNull View itemView) {
+
+        public RequestFriendViewHolder(@NonNull View itemView) {
             super(itemView);
-            cimgUser=itemView.findViewById(R.id.CircleImageViewItem);
-            txtUserName=itemView.findViewById(R.id.TextViewNameUserItem);
-            btnRequest=itemView.findViewById(R.id.ButtonRequestItem);
-            txtSection=itemView.findViewById(R.id.textViewHeader);
+            cimgUser = itemView.findViewById(R.id.CircleImageViewItem);
+            txtUserName = itemView.findViewById(R.id.TextViewNameUserItem);
+            btnRequest = itemView.findViewById(R.id.ButtonRequestItem);
+            txtSection = itemView.findViewById(R.id.textViewHeader);
         }
     }
 }

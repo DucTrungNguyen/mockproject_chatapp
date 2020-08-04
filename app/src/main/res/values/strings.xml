@@ -57,8 +57,9 @@
     <string name="txt_cancel_vi">"Hủy"</string>
     <string name="txt_create_message_vi">"Tạo tin nhắn mới"</string>
     <string name="txt_search_friends_vi">"Tìm kiếm bạn bè"</string>
-    <string name="txt_search_no_result_vi">"Không có kết quả tìm kiếm"</string>
+    <string name="txt_search_no_result_vi">"Không tìm thấy kết quả phù hợp"</string>
     <string name="txt_language_vi">"Ngôn ngữ"</string>
+    <string name="txt_enterMessage_vi">Nhập tin nhắn</string>
     <string name="txt_notification_vi">"Thông báo"</string>
     <string name="txt_version_vi">"Phiên bản"</string>
     <string name="txt_logout_vi">"Đăng xuất"</string>

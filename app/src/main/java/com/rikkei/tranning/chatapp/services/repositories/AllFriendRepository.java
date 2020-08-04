@@ -103,6 +103,7 @@ public class AllFriendRepository {
         databaseReference.child(userId).child(user.getUserId()).child("type").setValue("friend");
         databaseReference.child(user.getUserId()).child(userId).child("type").setValue("friend");
     }
+
     public void searchFriendType(final UserModel user, final typeFriend type) {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
@@ -115,10 +116,9 @@ public class AllFriendRepository {
                     FriendsModel account = keyNode.getValue(FriendsModel.class);
                     if (account.getFriendId().equals(user.getUserId())) {
                         friendArrayList.add(account);
-                        if(account.getType().equals("friend")){
-                            friendType="friend";
-                        }
-                        else if (account.getType().equals("sendRequest")) {
+                        if (account.getType().equals("friend")) {
+                            friendType = "friend";
+                        } else if (account.getType().equals("sendRequest")) {
                             friendType = "sendRequest";
                         } else if (account.getType().equals("friendRequest")) {
                             friendType = "friendRequest";

@@ -11,33 +11,34 @@
             android:layout_height="wrap_content"
         >
         <EditText
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="40sp"
             android:layout_marginLeft="20sp"
             android:layout_marginTop="70dp"
             android:layout_marginRight="20sp"
             android:background="@drawable/edittext"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
-            android:hint="Tìm kiếm tin nhắn"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:hint="@string/txt_search_message_vi"
             android:padding="5dp" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:text="@string/txt_message_vi"
             android:textColor="#ffffff"
-            android:textSize="32dp"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="20sp"
-            android:layout_marginRight="20sp"
+            android:layout_marginEnd="20sp"
             android:src="@drawable/ic_create_new_message" />
         </RelativeLayout>
         <RelativeLayout
@@ -47,8 +48,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 >
-
         </RelativeLayout>
-
-
 </RelativeLayout>

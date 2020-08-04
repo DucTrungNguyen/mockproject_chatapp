@@ -22,10 +22,12 @@ import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository
 
 public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.SendFriendViewHolder> {
     Context context;
+
     public SendFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
-        this.context=context;
+        this.context = context;
     }
+
     private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
@@ -34,7 +36,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
 
         @Override
         public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
-            return  oldItem.getUserName().equals(newItem.getUserName())
+            return oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserEmail().equals(newItem.getUserEmail())
                     && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
                     && oldItem.getUserPhone().equals(newItem.getUserPhone())
@@ -46,18 +48,17 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
     @NonNull
     @Override
     public SendFriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
         return new SendFriendViewHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull final SendFriendAdapter.SendFriendViewHolder holder, int position) {
-        final UserModel user=getItem(position);
-        if(user.getUserImgUrl().equals("default")){
+        final UserModel user = getItem(position);
+        if (user.getUserImgUrl().equals("default")) {
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
-        }
-        else{
+        } else {
             Glide.with(context).load(user.getUserImgUrl()).circleCrop()
                     .into(holder.cimgUser);
         }
@@ -66,7 +67,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
         new RequestFriendRepository().searchFriendType(user, new AllFriendRepository.typeFriend() {
             @Override
             public void typeFriendIsLoad(String s) {
-                switch (s){
+                switch (s) {
 //                    case "NoFriend":
 //                        holder.btnRequest.setText("Kết bạn");
 //                        break;
@@ -82,7 +83,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
                 }
             }
         });
-        if(position != 0){
+        if (position != 0) {
             holder.txtSection.setVisibility(View.GONE);
 //            int i=position-1;
 //            if (i<=this.getItemCount()&&user.getUserName().substring(0,1)
@@ -93,7 +94,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
         holder.btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (holder.btnRequest.getText().toString()){
+                switch (holder.btnRequest.getText().toString()) {
 //                    case "Kết bạn":
 //                        new AllFriendRepository().createFriend(user);
 //                        holder.btnRequest.setText("Hủy");
@@ -115,19 +116,22 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
             }
         });
     }
+
     public UserModel getNoteAt(int position) {
         return getItem(position);
     }
-    public class SendFriendViewHolder extends RecyclerView.ViewHolder{
+
+    public class SendFriendViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;
+
         public SendFriendViewHolder(@NonNull View itemView) {
             super(itemView);
-            cimgUser=itemView.findViewById(R.id.CircleImageViewItem);
-            txtUserName=itemView.findViewById(R.id.TextViewNameUserItem);
-            btnRequest=itemView.findViewById(R.id.ButtonRequestItem);
-            txtSection=itemView.findViewById(R.id.textViewHeader);
+            cimgUser = itemView.findViewById(R.id.CircleImageViewItem);
+            txtUserName = itemView.findViewById(R.id.TextViewNameUserItem);
+            btnRequest = itemView.findViewById(R.id.ButtonRequestItem);
+            txtSection = itemView.findViewById(R.id.textViewHeader);
         }
     }
 }
