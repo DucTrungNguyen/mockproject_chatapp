@@ -1,18 +1,27 @@
 package com.rikkei.tranning.chatapp.views.uis.message
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.rikkei.tranning.chatapp.BR
 import com.rikkei.tranning.chatapp.R
+import com.rikkei.tranning.chatapp.base.BaseFragment
+import com.rikkei.tranning.chatapp.databinding.FragmentMessageBinding
+import com.rikkei.tranning.chatapp.views.adapters.MessageAdapter
+import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
 
-class MessagesFragment : Fragment() {
+class MessagesFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>() {
 
-    companion object {
-        fun newInstance() =
-            MessagesFragment()
-    }
+
+    lateinit var mFragmentMessageBinding : FragmentMessageBinding;
+    lateinit var messageViewModel: MessageViewModel;
+    private lateinit var messageFriendAdapter : MessageAdapter;
+
 
 
     override fun onCreateView(
@@ -24,7 +33,34 @@ class MessagesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+        mFragmentMessageBinding = viewDataBinding!!
+
+        val layoutManagerRequest = LinearLayoutManager(context)
+        layoutManagerRequest.orientation = LinearLayoutManager.VERTICAL
+
+
+
+
+        messageFriendAdapter = MessageAdapter(context)
+        mFragmentMessageBinding.recyclerMessage.layoutManager = layoutManagerRequest
+        mFragmentMessageBinding.recyclerMessage.adapter = messageFriendAdapter
+
+        messageViewModel.listMessageFiendViewModelLiveData.observe(viewLifecycleOwner, Observer {
+
+        })
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.messageViewmodel
+    }
+
+    override fun getLayoutId(): Int {
+        return  R.layout.item_friend_massage
+    }
+
+    override fun getViewModel(): MessageViewModel {
+        messageViewModel = ViewModelProviders.of(requireActivity()).get(MessageViewModel::class.java)
+        return messageViewModel
     }
 
 }

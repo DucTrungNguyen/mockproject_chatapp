@@ -170,6 +170,8 @@
                 />
             <EditText
                 android:shadowColor="@color/grey3"
+
+
                 android:id="@+id/editDateOfBirthProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

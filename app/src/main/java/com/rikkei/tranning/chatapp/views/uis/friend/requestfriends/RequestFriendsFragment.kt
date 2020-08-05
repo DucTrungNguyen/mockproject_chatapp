@@ -67,10 +67,6 @@ private var sharedFriendViewModel: SharedFriendViewModel? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
-
         sharedFriendViewModel!!.allUserListLiveData.observe(
             viewLifecycleOwner,
             Observer { allUserModels ->
