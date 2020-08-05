@@ -4,7 +4,7 @@
    <data>
       <variable
           name="viewModelAllFriend"
-          type="com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel" />
+          type="com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel" />
    </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,6 +13,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerAllFriend"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <ImageView
+            android:id="@+id/ImageViewNoResultAllFriend"
+            android:src="@drawable/ic_no_search"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
     </RelativeLayout>

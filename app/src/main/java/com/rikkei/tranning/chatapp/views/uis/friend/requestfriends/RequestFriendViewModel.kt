@@ -4,14 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.rikkei.tranning.chatapp.BuildConfig
 import com.rikkei.tranning.chatapp.services.models.FriendsModel
 import com.rikkei.tranning.chatapp.services.models.UserModel
-import com.rikkei.tranning.chatapp.services.repositories.MyFriendRepository
 import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel
 import java.util.*
 
 class RequestFriendViewModel :ViewModel() {

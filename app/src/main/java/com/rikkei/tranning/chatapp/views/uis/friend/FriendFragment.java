@@ -7,31 +7,25 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
-import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentFriendBinding;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.views.adapters.MainViewPaperAdaper;
 import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendFragment;
-import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendFragment;
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendFragment;
-import com.rikkei.tranning.chatapp.views.uis.friend.searchfriends.SearchFriendFragment;
-import com.rikkei.tranning.chatapp.views.uis.message.ChatFragment;
 
 import java.util.ArrayList;
-public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendViewModel> {
-    FragmentFriendBinding mFragmentFriendBinding;
-    FriendViewModel mFriendsViewmodel;
 
+public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFriendViewModel> {
+    FragmentFriendBinding mFragmentFriendBinding;
+    private SharedFriendViewModel sharedFriendViewModel;
+    ArrayList<AllUserModel> allUserArrayList=new ArrayList<>();
     @Override
     public int getBindingVariable() {
         return BR.viewModelFriend;
@@ -43,9 +37,9 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
     }
 
     @Override
-    public FriendViewModel getViewModel() {
-        mFriendsViewmodel = ViewModelProviders.of(this, new ViewModelProviderFactory()).get(FriendViewModel.class);
-        return mFriendsViewmodel;
+    public SharedFriendViewModel getViewModel() {
+        sharedFriendViewModel=ViewModelProviders.of(getActivity()).get(SharedFriendViewModel.class);
+        return sharedFriendViewModel;
     }
 
     @Override
@@ -66,10 +60,7 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mFriendsViewmodel.updateArray(s.toString());
-                mFriendsViewmodel.updateArrayMyFriend(s.toString());
-                mFriendsViewmodel.updateArrayRequestFriend(s.toString());
-
+                sharedFriendViewModel.searchFriend(s.toString(),allUserArrayList);
             }
 
             @Override
@@ -77,35 +68,22 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, FriendVi
 
             }
         });
-        mFragmentFriendBinding.imageViewSearchFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragment();
-            }
-        });
+//        mFragmentFriendBinding.imageViewSearchFriend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addFragment();
+//            }
+//        });
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFriendsViewmodel.userArrayLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
+        sharedFriendViewModel.getUserFromLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
             @Override
-            public void onChanged(ArrayList<UserModel> userArrayList) {
-//                AllFriendViewModel.listUserMutableLiveData.setValue(userArrayList);
+            public void onChanged(ArrayList<AllUserModel> allUserModelArrayList) {
+                allUserArrayList=allUserModelArrayList;
             }
         });
-        mFriendsViewmodel.myFriendSearchLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
-            @Override
-            public void onChanged(ArrayList<UserModel> userArrayList) {
-                MyFriendViewModel.listMyFriendMutableLiveData.setValue(userArrayList);
-            }
-        });
-    }
-    public void addFragment(){
-        FragmentManager fragmentManager=getFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        SearchFriendFragment searchFriendFragment=new SearchFriendFragment();
-        fragmentTransaction.add(R.id.frameLayoutChat,searchFriendFragment,null);
-        fragmentTransaction.commit();
     }
 }

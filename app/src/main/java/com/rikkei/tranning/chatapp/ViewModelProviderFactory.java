@@ -4,12 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter;
-import com.rikkei.tranning.chatapp.views.uis.friend.FriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.searchfriends.SearchFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
 import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
@@ -35,24 +31,16 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if(modelClass.isAssignableFrom(EditProfileViewModel.class)){
             return (T) new EditProfileViewModel();
         }
-        if(modelClass.isAssignableFrom(AllFriendViewModel.class)){
-            return (T) new AllFriendViewModel();
-        }
-        if(modelClass.isAssignableFrom(FriendViewModel.class)){
-            return (T) new FriendViewModel();
-        }
-        if(modelClass.isAssignableFrom(MyFriendViewModel.class)){
-            return (T) new MyFriendViewModel();
-        }
         if(modelClass.isAssignableFrom(ChatViewModel.class)){
             return (T) new ChatViewModel();
-        }
-        if(modelClass.isAssignableFrom(SearchFriendViewModel.class)){
-            return (T) new SearchFriendViewModel();
         }
         if(modelClass.isAssignableFrom(RequestFriendViewModel.class)){
             return (T) new RequestFriendViewModel();
         }
+        if(modelClass.isAssignableFrom(SharedFriendViewModel.class)){
+            return (T) new SharedFriendViewModel();
+        }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

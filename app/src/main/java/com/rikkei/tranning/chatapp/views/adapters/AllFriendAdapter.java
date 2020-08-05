@@ -19,19 +19,18 @@ import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
-import com.rikkei.tranning.chatapp.services.repositories.AllFriendRepository;
-import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
+import com.rikkei.tranning.chatapp.views.uis.friend.allfriends.AllFriendFragment;
+
+import java.util.ArrayList;
 
 public class AllFriendAdapter extends ListAdapter<AllUserModel,AllFriendAdapter.ViewHolder> {
-    AllFriendViewModel allFriendViewModel;
-
+    SharedFriendViewModel sharedFriendViewModel;
     Context context;
     public AllFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context=context;
-        allFriendViewModel= ViewModelProviders.of((FragmentActivity) context,new ViewModelProviderFactory()).get(AllFriendViewModel.class);
+        sharedFriendViewModel=ViewModelProviders.of((FragmentActivity) context).get(SharedFriendViewModel.class);
     }
     private static final DiffUtil.ItemCallback<AllUserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<AllUserModel>() {
         @Override
@@ -44,7 +43,6 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel,AllFriendAdapter.
             return  oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserImage().equals(newItem.getUserImage())
                     && oldItem.getUserType().equals(newItem.getUserType());
-
         }
     };
 
@@ -67,6 +65,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel,AllFriendAdapter.
         }
         holder.txtSection.setText(user.getUserName().substring(0,1));
         holder.txtUserName.setText(user.getUserName());
+
         switch (user.getUserType()){
             case "NoFriend":
                 holder.btnRequest.setText("Kết bạn");
@@ -93,28 +92,26 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel,AllFriendAdapter.
             public void onClick(View v) {
                 switch (holder.btnRequest.getText().toString()){
                     case "Kết bạn":
-                        allFriendViewModel.createFriend(user);
+                        sharedFriendViewModel.createFriend(user);
                         holder.btnRequest.setText("Hủy");
                         break;
                     case "Hủy":
-                        allFriendViewModel.deleteFriend(user);
+                        sharedFriendViewModel.deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
-                        break;
-                    case "Đồng ý":
-                        allFriendViewModel.updateFriend(user);
-                        new MyFriendViewModel().getFriendArray();
-                        holder.btnRequest.setText("Bạn bè");
                         break;
                     case "Bạn bè":
-                        allFriendViewModel.deleteFriend(user);
-                        new MyFriendViewModel().getFriendArray();
+                        sharedFriendViewModel.deleteFriend(user);
                         holder.btnRequest.setText("Kết bạn");
+                        sharedFriendViewModel.getInfoAllFriend();
+                        break;
+                    case "Đồng ý":
+                        sharedFriendViewModel.updateFriend(user);
+                        sharedFriendViewModel.getInfoAllFriend();
+                        holder.btnRequest.setText("Bạn bè");
                         break;
                 }
-
             }
         });
-        new MyFriendViewModel().getFriendArray();
     }
     public AllUserModel getNoteAt(int position) {
         return getItem(position);

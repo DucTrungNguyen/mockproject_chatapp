@@ -2,10 +2,12 @@ package com.rikkei.tranning.chatapp.views.uis.friend.allfriends;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -15,15 +17,17 @@ import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
 import com.rikkei.tranning.chatapp.databinding.FragmentAllFriendsBinding;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.models.FriendsModel;
 import com.rikkei.tranning.chatapp.views.adapters.AllFriendAdapter;
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 
 import java.util.ArrayList;
 
-public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, AllFriendViewModel> {
+public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, SharedFriendViewModel> {
     FragmentAllFriendsBinding mFragmentAllFriendsBinding;
-    AllFriendViewModel mAllFriendViewModel;
-    AllFriendAdapter allFriendAdapter;
+    private SharedFriendViewModel sharedFriendViewModel;
+    public AllFriendAdapter allFriendAdapter;
+
 
     @Override
     public int getBindingVariable() {
@@ -36,9 +40,11 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, A
     }
 
     @Override
-    public AllFriendViewModel getViewModel() {
-        mAllFriendViewModel = ViewModelProviders.of(this, new ViewModelProviderFactory()).get(AllFriendViewModel.class);
-        return mAllFriendViewModel;
+    public SharedFriendViewModel getViewModel() {
+        sharedFriendViewModel= ViewModelProviders.of(getActivity()).get(SharedFriendViewModel.class);
+       // sharedFriendViewModel= new ViewModelProvider(requireActivity()).get(SharedFriendViewModel.class);
+       // sharedFriendViewModel = ViewModelProviders.of(this, new ViewModelProviderFactory()).get(SharedFriendViewModel.class);
+        return sharedFriendViewModel;
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -54,20 +60,18 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, A
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAllFriendViewModel.getAllUserInfo();
-        mAllFriendViewModel.listUserMutableLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
+        sharedFriendViewModel.allUserListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
             @Override
             public void onChanged(ArrayList<AllUserModel> allUserModels) {
-                mAllFriendViewModel.collectionArray(allUserModels);
+                if(allUserModels.isEmpty()){
+                    mFragmentAllFriendsBinding.ImageViewNoResultAllFriend.setVisibility(View.VISIBLE);
+                }
+                else{
+                    mFragmentAllFriendsBinding.ImageViewNoResultAllFriend.setVisibility(View.GONE);
+                }
+                sharedFriendViewModel.collectionArray(allUserModels);
                 allFriendAdapter.submitList(allUserModels);
             }
         });
-//        .observe(getViewLifecycleOwner(), new Observer<ArrayList<UserModel>>() {
-//            @Override
-//            public void onChanged(ArrayList<UserModel> userArrayList) {
-//               mAllFriendViewModel.collectionArray(userArrayList);
-//                allFriendAdapter.submitList(userArrayList);
-//            }
-//        });
     }
 }

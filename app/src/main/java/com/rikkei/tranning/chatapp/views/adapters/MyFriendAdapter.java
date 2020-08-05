@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,30 +18,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
-public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewHolder> {
+public class MyFriendAdapter extends ListAdapter<AllUserModel,MyFriendAdapter.ViewHolder> {
     Context context;
     private OnItemClickListener listener;
     public MyFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context=context;
     }
-    private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
+    private static final DiffUtil.ItemCallback<AllUserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<AllUserModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
+        public boolean areItemsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
             return oldItem.getUserId().equals(newItem.getUserId());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
+        public boolean areContentsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
             return  oldItem.getUserName().equals(newItem.getUserName())
-                    && oldItem.getUserEmail().equals(newItem.getUserEmail())
-                    && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
-                    && oldItem.getUserPhone().equals(newItem.getUserPhone())
-                    && oldItem.getUserDateOfBirth().equals(newItem.getUserDateOfBirth());
+                    && oldItem.getUserImage().equals(newItem.getUserImage())
+                    && oldItem.getUserType().equals(newItem.getUserType());
+
         }
     };
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,35 +51,37 @@ public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        UserModel user=getItem(position);
-        holder.btnRequest.setVisibility(View.GONE);
-        if(user.getUserImgUrl().equals("default")){
-            Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cImgUser);
-        }
-        else{
-            Glide.with(context).load(user.getUserImgUrl()).circleCrop()
-                    .into(holder.cImgUser);
-        }
-        holder.txtSection.setText(user.getUserName().substring(0,1));
-        holder.txtUserName.setText(user.getUserName());
-        if(position >0){
-            int i=position-1;
-            if (i<=this.getItemCount()&&user.getUserName().substring(0,1)
-                    .equals(getNoteAt(i).getUserName().substring(0,1))){
-                holder.txtSection.setVisibility(View.GONE);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        final AllUserModel user=getItem(position);
+            holder.relativeItemFriend.setVisibility(View.VISIBLE);
+            holder.btnRequest.setVisibility(View.GONE);
+            if (user.getUserImage().equals("default")) {
+                Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cImgUser);
+            } else {
+                Glide.with(context).load(user.getUserImage()).circleCrop()
+                        .into(holder.cImgUser);
             }
-        }
+            holder.txtSection.setText(user.getUserName().substring(0, 1));
+            holder.txtUserName.setText(user.getUserName());
+            if (position > 0) {
+                int i = position - 1;
+                if (i <= this.getItemCount() && user.getUserName().substring(0, 1)
+                        .equals(getNoteAt(i).getUserName().substring(0, 1))) {
+                    holder.txtSection.setVisibility(View.GONE);
+                }
+            }
     }
-    public UserModel getNoteAt(int position) {
+    public AllUserModel getNoteAt(int position) {
         return getItem(position);
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView cImgUser;
+        RelativeLayout relativeItemFriend;
         TextView txtUserName, txtSection;
         Button btnRequest;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            relativeItemFriend=itemView.findViewById(R.id.relativeItemFriend);
             cImgUser=itemView.findViewById(R.id.CircleImageViewItem);
             txtUserName=itemView.findViewById(R.id.TextViewNameUserItem);
             btnRequest=itemView.findViewById(R.id.ButtonRequestItem);
@@ -94,7 +98,7 @@ public class MyFriendAdapter extends ListAdapter<UserModel,MyFriendAdapter.ViewH
         }
     }
     public interface OnItemClickListener {
-        void onItemClick(UserModel userModel);
+        void onItemClick(AllUserModel userModel);
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
