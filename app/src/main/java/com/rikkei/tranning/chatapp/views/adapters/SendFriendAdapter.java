@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
+//import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 
-public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.SendFriendViewHolder> {
+public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapter.SendFriendViewHolder> {
     Context context;
 
     public SendFriendAdapter(Context context) {
@@ -26,19 +27,17 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
         this.context = context;
     }
 
-    private static final DiffUtil.ItemCallback<UserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<UserModel>() {
+    private static final DiffUtil.ItemCallback<AllUserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<AllUserModel>() {
         @Override
-        public boolean areItemsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
+        public boolean areItemsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
             return oldItem.getUserId().equals(newItem.getUserId());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
-            return oldItem.getUserName().equals(newItem.getUserName())
-                    && oldItem.getUserEmail().equals(newItem.getUserEmail())
-                    && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
-                    && oldItem.getUserPhone().equals(newItem.getUserPhone())
-                    && oldItem.getUserDateOfBirth().equals(newItem.getUserDateOfBirth());
+        public boolean areContentsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
+            return  oldItem.getUserName().equals(newItem.getUserName())
+                    && oldItem.getUserImage().equals(newItem.getUserImage())
+                    && oldItem.getUserType().equals(newItem.getUserType());
         }
     };
 
@@ -53,11 +52,11 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final SendFriendAdapter.SendFriendViewHolder holder, int position) {
-        final UserModel user = getItem(position);
-        if (user.getUserImgUrl().equals("default")) {
+        final AllUserModel user = getItem(position);
+        if (user.getUserImage().equals("default")) {
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.cimgUser);
         } else {
-            Glide.with(context).load(user.getUserImgUrl()).circleCrop()
+            Glide.with(context).load(user.getUserImage()).circleCrop()
                     .into(holder.cimgUser);
         }
         holder.txtSection.setText("Đã gửi kết bạn");
@@ -98,7 +97,7 @@ public class SendFriendAdapter extends ListAdapter<UserModel, SendFriendAdapter.
         });
     }
 
-    public UserModel getNoteAt(int position) {
+    public AllUserModel getNoteAt(int position) {
         return getItem(position);
     }
 

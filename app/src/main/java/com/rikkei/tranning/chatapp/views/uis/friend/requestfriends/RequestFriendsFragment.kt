@@ -4,24 +4,24 @@ package com.rikkei.tranning.chatapp.views.uis.friend.requestfriends
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rikkei.tranning.chatapp.R
-import com.rikkei.tranning.chatapp.ViewModelProviderFactory
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentRequestFriendsBinding
+import com.rikkei.tranning.chatapp.services.models.AllUserModel
 import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter
 import com.rikkei.tranning.chatapp.views.adapters.SendFriendAdapter
-import kotlinx.android.synthetic.main.fragment_request_friends.*
-import kotlin.properties.Delegates
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
+import java.util.*
 
 
-class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, RequestFriendViewModel?>() {
+class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, SharedFriendViewModel?>() {
     private lateinit var mFragmentRequestFriendsBinding: FragmentRequestFriendsBinding
-    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
+//    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
+private var sharedFriendViewModel: SharedFriendViewModel? = null
     private lateinit var requestFriendAdapter: RequestFriendAdapter
     private lateinit var sendFriendAdapter: SendFriendAdapter
 
@@ -36,13 +36,12 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
         return R.layout.fragment_request_friends
     }
 
-    override fun getViewModel(): RequestFriendViewModel {
-        this.mRequestFriendViewModel =
-            ViewModelProviders.of(this, ViewModelProviderFactory()).get(
-                RequestFriendViewModel::class.java
-            )
-        return mRequestFriendViewModel as RequestFriendViewModel
+    override fun getViewModel(): SharedFriendViewModel? {
+        sharedFriendViewModel = ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
+        return  sharedFriendViewModel
     }
+
+
 
     override fun onViewCreated(
         view: View,
@@ -60,14 +59,46 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
         mFragmentRequestFriendsBinding.RecyclerRequestFriend.layoutManager = layoutManagerRequest
         mFragmentRequestFriendsBinding.RecyclerRequestFriend.adapter = requestFriendAdapter
 
-        sendFriendAdapter = SendFriendAdapter(context)
-        mFragmentRequestFriendsBinding.RecyclerSendFriend.layoutManager = layoutManagerSend
-        mFragmentRequestFriendsBinding.RecyclerSendFriend.adapter = sendFriendAdapter
+//        sendFriendAdapter = SendFriendAdapter(context)
+//        mFragmentRequestFriendsBinding.RecyclerSendFriend.layoutManager = layoutManagerSend
+//        mFragmentRequestFriendsBinding.RecyclerSendFriend.adapter = sendFriendAdapter
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
+
+
+        sharedFriendViewModel!!.allUserListLiveData.observe(
+            viewLifecycleOwner,
+            Observer { allUserModels ->
+                sharedFriendViewModel!!.collectionArray(allUserModels)
+                val requestUserModels = ArrayList<AllUserModel>()
+                val sendUserModels = ArrayList<AllUserModel>()
+                for (i in allUserModels.indices) {
+                    if (allUserModels[i].userType == "friendRequest") {
+                        requestUserModels.add(allUserModels[i])
+                    }else
+                    {
+                        if (allUserModels[i].userType == "sendRequest") {
+                            sendUserModels.add(allUserModels[i])
+                        }
+                    }
+                }
+
+                requestUserModels.addAll(sendUserModels)
+                if (requestUserModels.isEmpty()) {
+                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.VISIBLE)
+                }
+                else {
+                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.GONE)
+                }
+                requestFriendAdapter.submitList(requestUserModels)
+//                sendFriendAdapter.submitList(sendUserModels)
+            })
+
 
 //        paramsHide = LinearLayout.LayoutParams(
 //            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 0
@@ -80,12 +111,12 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 //        )
 //        paramsFill.weight = 2f
 
-        mRequestFriendViewModel.getSendFriendArray()
-        mRequestFriendViewModel.getRequestFriendArray()
-
-        mRequestFriendViewModel.listSendFriendMutableLiveData.observe(
-            viewLifecycleOwner,
-            Observer { userArrayListSend ->
+//        mRequestFriendViewModel.getSendFriendArray()
+//        mRequestFriendViewModel.getRequestFriendArray()
+//
+//        mRequestFriendViewModel.listSendFriendMutableLiveData.observe(
+//            viewLifecycleOwner,
+//            Observer { userArrayListSend ->
 
 //                if (userArrayListSend.size == 0){
 //                    RecyclerSendFriend.visibility =View.GONE
@@ -96,15 +127,15 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 //                    RecyclerSendFriend.visibility =View.VISIBLE
 //                    RecyclerRequestFriend.visibility = View.VISIBLE
 //                    mRequestFriendViewModel.collectionArray(userArrayListSend)
-                sendFriendAdapter.submitList(userArrayListSend)
+//                sendFriendAdapter.submitList(userArrayListSend)
 
 
 //                }
 
-            })
-        mRequestFriendViewModel.listRequestFriendMutableLiveData.observe(
-            viewLifecycleOwner,
-            Observer { userArrayListRequest ->
+//            })
+//        mRequestFriendViewModel.listRequestFriendMutableLiveData.observe(
+//            viewLifecycleOwner,
+//            Observer { userArrayListRequest ->
 
 //
 //                if (userArrayListRequest.size == 0){
@@ -118,13 +149,15 @@ class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, Reque
 //                    RecyclerSendFriend.visibility =View.VISIBLE
 //                    RecyclerRequestFriend.visibility = View.VISIBLE
 //                    mRequestFriendViewModel.collectionArray(userArrayListRequest)
-                    requestFriendAdapter.submitList(userArrayListRequest)
+//                    requestFriendAdapter.submitList(userArrayListRequest)
 
 //
 //                }
 
-            })
+//            })
 
 
     }
+
+
 }

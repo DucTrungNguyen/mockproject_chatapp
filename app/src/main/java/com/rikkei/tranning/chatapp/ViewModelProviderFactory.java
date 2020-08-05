@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
-import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendViewModel;
+//import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
 import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
@@ -34,9 +34,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         if(modelClass.isAssignableFrom(ChatViewModel.class)){
             return (T) new ChatViewModel();
         }
-        if(modelClass.isAssignableFrom(RequestFriendViewModel.class)){
-            return (T) new RequestFriendViewModel();
-        }
+//        if(modelClass.isAssignableFrom(RequestFriendViewModel.class)){
+//            return (T) new RequestFriendViewModel();
+//        }
         if(modelClass.isAssignableFrom(SharedFriendViewModel.class)){
             return (T) new SharedFriendViewModel();
         }
