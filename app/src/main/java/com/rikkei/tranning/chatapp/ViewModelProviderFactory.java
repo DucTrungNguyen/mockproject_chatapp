@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.rikkei.tranning.chatapp.services.models.MessageFriendsViewModel;
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 //import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel;
@@ -11,6 +12,7 @@ import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileViewModel;
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpViewModel;
+import com.rikkei.tranning.chatapp.views.uis.message.MessageViewModel;
 
 public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFactory {
     public ViewModelProviderFactory() {
@@ -39,6 +41,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
 //        }
         if(modelClass.isAssignableFrom(SharedFriendViewModel.class)){
             return (T) new SharedFriendViewModel();
+        }
+        if (modelClass.isAssignableFrom(MessageViewModel.class)){
+            return  (T) new MessageViewModel();
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

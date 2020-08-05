@@ -1,52 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg">
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        >
-        <EditText
-            android:focusable="false"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:layout_marginLeft="20sp"
-            android:layout_marginTop="70dp"
-            android:layout_marginRight="20sp"
-            android:background="@drawable/edittext"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:hint="@string/txt_search_message_vi"
-            android:padding="5dp" />
+<layout xmlns:tools="http://schemas.android.com/tools">
+        <data>
+                <variable
+                    name="messageViewmodel"
+                    type="com.rikkei.tranning.chatapp.views.uis.message.MessageViewModel" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/txt_message_vi"
-            android:textColor="#ffffff"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+        </data>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="20sp"
-            android:layout_marginEnd="20sp"
-            android:src="@drawable/ic_create_new_message" />
-        </RelativeLayout>
         <RelativeLayout
-            android:background="@drawable/fragment"
-            android:layout_marginTop="50dp"
-            android:layout_below="@+id/RelativeLayoutSearch"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-                >
+            android:background="@drawable/bg">
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                        <EditText
+                            android:focusable="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="40sp"
+                            android:layout_marginLeft="20sp"
+                            android:layout_marginTop="70dp"
+                            android:layout_marginRight="20sp"
+                            android:background="@drawable/edittext"
+                            android:drawableStart="@drawable/ic_baseline_search_24"
+                            android:hint="@string/txt_search_message_vi"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/txt_message_vi"
+                            android:textColor="#ffffff"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="20sp"
+                            android:layout_marginEnd="20sp"
+                            android:src="@drawable/ic_create_new_message" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:background="@drawable/fragment"
+                    android:layout_marginTop="50dp"
+                    android:layout_below="@+id/RelativeLayoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerMessage"
+                            tools:listitem="@layout/item_friend_massage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <ImageView
+                            android:layout_gravity="center|center_vertical"
+                            android:id="@+id/ImageViewNoResultMyFriend"
+                            android:src="@drawable/ic_no_search"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            />
+
+                </RelativeLayout>
         </RelativeLayout>
-</RelativeLayout>
+</layout>
