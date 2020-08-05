@@ -84,7 +84,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         EditProfileFragment editProfile=new EditProfileFragment();
-        fragmentTransaction.replace(R.id.FrameLayoutEditProfile,editProfile,null);
+        fragmentTransaction.add(R.id.frameLayoutChat,editProfile,null);
         fragmentTransaction.commit();
     }
     public void logout() {

@@ -178,7 +178,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     //    @Override
     public void removeFragment() {
         FragmentManager fragmentManager=getFragmentManager();
-        Fragment fragment=fragmentManager.findFragmentById(R.id.FrameLayoutEditProfile);
+        Fragment fragment=fragmentManager.findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();

@@ -100,24 +100,11 @@ public class RequestFriendAdapter extends ListAdapter<AllUserModel, RequestFrien
             @Override
             public void onClick(View v) {
                 switch (holder.btnRequest.getText().toString()) {
-
-                    case "Kết bạn":
-                        sharedFriendViewModel.createFriend(user);
-                        holder.btnRequest.setText("Hủy");
-                        break;
                     case "Hủy":
                         sharedFriendViewModel.deleteFriend(user);
-                        holder.btnRequest.setText("Kết bạn");
-                        break;
-                    case "Bạn bè":
-                        sharedFriendViewModel.deleteFriend(user);
-                        holder.btnRequest.setText("Kết bạn");
-                        sharedFriendViewModel.getInfoAllFriend();
                         break;
                     case "Đồng ý":
                         sharedFriendViewModel.updateFriend(user);
-                        sharedFriendViewModel.getInfoAllFriend();
-                        holder.btnRequest.setText("Bạn bè");
                         break;
                 }
             }

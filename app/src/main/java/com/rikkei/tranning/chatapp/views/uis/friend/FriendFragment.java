@@ -65,7 +65,6 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 //        mFragmentFriendBinding.imageViewSearchFriend.setOnClickListener(new View.OnClickListener() {

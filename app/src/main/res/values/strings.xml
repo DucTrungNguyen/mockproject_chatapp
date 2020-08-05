@@ -61,7 +61,7 @@
     <string name="txt_language_vi">"Ngôn ngữ"</string>
     <string name="txt_enterMessage_vi">Nhập tin nhắn</string>
     <string name="txt_notification_vi">"Thông báo"</string>
-    <string name="txt_version_vi">"Phiên bản"</string>
+    <string name="txt_version_vi">"Phiên bản ứng dụng"</string>
     <string name="txt_logout_vi">"Đăng xuất"</string>
     <string name="txt_login_failed_vi">"Đăng nhập không thành công"</string>
     <string name="txt_invalid_username_vi">Người dùng không hợp lệ</string>

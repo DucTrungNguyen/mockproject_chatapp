@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         val signUp = MainFragment()
-        fragmentTransaction.replace(R.id.frameLayoutChat, signUp, null)
+        fragmentTransaction.add(R.id.frameLayoutChat, signUp, null)
         fragmentTransaction.commit()
 //        this.supportActionBar?.hide()
 

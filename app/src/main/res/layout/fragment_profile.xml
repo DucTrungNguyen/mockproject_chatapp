@@ -43,7 +43,7 @@
                 android:id="@+id/CircleImageViewUser"
                 android:layout_width="69dp"
                 android:layout_height="96dp"
-                android:layout_marginTop="29dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginLeft="12dp"
                 android:foregroundGravity="center_vertical"
                 android:src="@mipmap/ic_launcher"
@@ -70,23 +70,25 @@
                 android:layout_marginStart="13dp"
                 android:layout_toEndOf="@+id/CircleImageViewUser"
                 android:layout_below="@+id/TextViewNameUser"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
             <ImageButton
                 android:id="@+id/ImageButtonEditProfile"
                 android:src="@drawable/ic_edit"
-                android:layout_marginEnd="11.98dp"
-                android:layout_marginTop="42dp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="45dp"
                 android:layout_alignParentEnd="true"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 />
             <TextView
-                android:background="@color/grey"
+                android:background="@color/grey3"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="5dp"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -107,7 +109,7 @@
                 android:textSize="18sp"
                 android:layout_marginStart="18dp"
                 android:layout_toEndOf="@+id/ImageViewLanguage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_height="match_parent"
                 />
@@ -131,7 +133,7 @@
                 android:layout_height="match_parent"
                 />
             <TextView
-                android:background="@color/grey"
+                android:background="@color/grey3"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -169,7 +171,7 @@
                 android:layout_height="match_parent"
                 />
             <TextView
-                android:background="@color/grey"
+                android:background="@color/grey3"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -198,7 +200,7 @@
                 android:layout_height="match_parent"
                 />
             <TextView
-                android:textColor="#999999"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:text="@string/txt_version_hint_vi"
                 android:gravity="center"
@@ -208,10 +210,10 @@
                 android:layout_height="match_parent"
                 />
             <TextView
-                android:background="#999999"
+                android:background="@color/grey3"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="5dp"
                 />
         </RelativeLayout>
         <RelativeLayout

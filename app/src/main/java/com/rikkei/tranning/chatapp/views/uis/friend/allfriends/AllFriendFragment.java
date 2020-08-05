@@ -55,6 +55,23 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
         mFragmentAllFriendsBinding.RecyclerAllFriend.setLayoutManager(layoutManager);
         allFriendAdapter = new AllFriendAdapter(getContext());
         mFragmentAllFriendsBinding.RecyclerAllFriend.setAdapter(allFriendAdapter);
+//        allFriendAdapter.setOnItemClickListener(new AllFriendAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AllUserModel userModel, String t) {
+//                switch (t) {
+//                    case "Kết bạn":
+//                        sharedFriendViewModel.createFriend(userModel);
+//                        break;
+//                    case "Hủy":
+//                    case "Bạn bè":
+//                        sharedFriendViewModel.deleteFriend(userModel);
+//                        break;
+//                    case "Đồng ý":
+//                        sharedFriendViewModel.updateFriend(userModel);
+//                        break;
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -69,6 +86,7 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
                 else{
                     mFragmentAllFriendsBinding.ImageViewNoResultAllFriend.setVisibility(View.GONE);
                 }
+
                 sharedFriendViewModel.collectionArray(allUserModels);
                 allFriendAdapter.submitList(allUserModels);
             }

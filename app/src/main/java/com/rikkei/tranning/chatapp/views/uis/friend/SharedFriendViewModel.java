@@ -10,10 +10,8 @@ import com.rikkei.tranning.chatapp.services.repositories.FriendsRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
-import okhttp3.MultipartBody;
-
 public class SharedFriendViewModel extends ViewModel {
+    public ArrayList<AllUserModel> arrayAllFriend=new ArrayList<>();
     FriendsRepository friendRepository;
     public MutableLiveData<ArrayList<AllUserModel>> allUserListLiveData = new MutableLiveData<>();
     public MutableLiveData<ArrayList<AllUserModel>> getUserFromLiveData=new MutableLiveData<>();
@@ -24,19 +22,10 @@ public class SharedFriendViewModel extends ViewModel {
             public void InfoUserLoaded(ArrayList<AllUserModel> allUserModels) {
                 allUserListLiveData.setValue(allUserModels);
                 getUserFromLiveData.setValue(allUserModels);
+                arrayAllFriend=allUserModels;
             }
         });
     }
-    public void getInfoAllFriend(){
-        friendRepository.getUserInfo(new FriendsRepository.InfoUser() {
-            @Override
-            public void InfoUserLoaded(ArrayList<AllUserModel> allUserModels) {
-                allUserListLiveData.setValue(allUserModels);
-                getUserFromLiveData.setValue(allUserModels);
-            }
-        });
-    }
-
     public void collectionArray(ArrayList<AllUserModel> userArray) {
         Collections.sort(userArray, new Comparator<AllUserModel>() {
             @Override
