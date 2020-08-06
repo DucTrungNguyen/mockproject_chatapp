@@ -8,15 +8,12 @@ import java.util.*
 
 class MessageRepository{
 
-    lateinit var firebaseDatabase: FirebaseDatabase
-    lateinit var fireAuth : FirebaseUser
-    lateinit var currentUserId : String
-    companion object{
-        val instance  = MessageRepository()
-    }
-    init {
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        currentUserId = FirebaseAuth.getInstance().currentUser!!.uid;
+    var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    lateinit var fireAuth: FirebaseUser
+    var currentUserId: String = FirebaseAuth.getInstance().currentUser!!.uid
+
+    companion object {
+        val instance = MessageRepository()
     }
 
     interface MessageStatus {

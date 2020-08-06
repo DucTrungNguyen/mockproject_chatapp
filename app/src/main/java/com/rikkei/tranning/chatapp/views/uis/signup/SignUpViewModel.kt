@@ -25,7 +25,7 @@ class SignUpViewModel : ViewModel() {
             signUpUserMutableLiveData.value = user
 
         if (!user.validateEmailPassword()) {
-            signUpStatus.value = SignUpStatus.errorPassAndEmail(true)
+            signUpStatus.value = SignUpStatus.ErrorPassAndEmail(true)
         } else {
             createUserFireBase()
         }
@@ -54,14 +54,14 @@ class SignUpViewModel : ViewModel() {
                     .createUserFromFirebase(user, userId)
                 //getNavigator().showMessageSignUp("Sign Up Success!");
                 signUpSuccess.value = true
-                signUpStatus.value = SignUpStatus.isOk(true)
+                signUpStatus.value = SignUpStatus.IsOk(true)
                 signUpStatus.value = SignUpStatus.Loading(false)
 
 
             }
             .addOnFailureListener {
                 signUpStatus.value = SignUpStatus.Failure(it)
-                signUpStatus.value = SignUpStatus.isOk(false)
+                signUpStatus.value = SignUpStatus.IsOk(false)
                 signUpStatus.value = SignUpStatus.Loading(false)
 
             }
@@ -71,23 +71,12 @@ class SignUpViewModel : ViewModel() {
 
         data class Loading(var loading: Boolean) : SignUpStatus()
 
-        data class isOk(var isLogin: Boolean) : SignUpStatus()
+        data class IsOk(var isLogin: Boolean) : SignUpStatus()
 
         data class Failure(var e: Throwable) : SignUpStatus()
 
         data class ErrorPassAndEmail(var isError: Boolean) : SignUpStatus()
 
-        companion object {
-
-            fun loading(isLoading: Boolean): SignUpStatus = Loading(isLoading)
-
-            fun success(isLogin: Boolean): SignUpStatus = isOk(isLogin)
-
-            fun failure(e: Throwable): SignUpStatus = Failure(e)
-
-            fun errorPassAndEmail(isErrorPassAndEmail: Boolean) =
-                ErrorPassAndEmail(isErrorPassAndEmail)
-        }
 
     }
 }

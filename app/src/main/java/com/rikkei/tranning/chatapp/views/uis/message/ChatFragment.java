@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,11 +28,9 @@ import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 import java.util.ArrayList;
 
 public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel> {
-    FragmentChatBinding mFragmentChatBinding;
     ChatViewModel mChatViewModel;
     ChatAdapter chatAdapter;
     String id;
-    Toolbar toolbar;
     @Override
     public int getBindingVariable() {
         return BR.viewModelChat;
@@ -56,27 +51,21 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentChatBinding=getViewDataBinding();
 
-        mFragmentChatBinding.ImageButtonBackChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeFragment();
+        mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
+        mViewDataBinding.imageButtonSend.setOnClickListener(v -> {
+            Bundle bundle = getArguments();
+            String iD = null;
+            if (bundle != null) {
+                iD = bundle.getString("idUser");
             }
+            String message = mViewDataBinding.editTextMessage.getText().toString().trim();
+            mChatViewModel.sendMessage(iD, message);
+            mViewDataBinding.editTextMessage.setText("");
+            mChatViewModel.displayMessage(id);
         });
-        mFragmentChatBinding.imageButtonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle=getArguments();
-                String iD=bundle.getString("idUser");
-                String message= mFragmentChatBinding.editTextMessage.getText().toString().trim();
-                mChatViewModel.sendMessage(iD, message);
-                mFragmentChatBinding.editTextMessage.setText("");
-                mChatViewModel.displayMessage(id);
-            }
-        });
-        mFragmentChatBinding.imageButtonSend.setEnabled(false);
-        mFragmentChatBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
+        mViewDataBinding.imageButtonSend.setEnabled(false);
+        mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -84,13 +73,13 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(TextUtils.isEmpty(s.toString())){
-                    mFragmentChatBinding.imageButtonSend.setEnabled(false);
-                    mFragmentChatBinding.imageButtonSend.setImageResource(R.drawable.ic_send_unable);
+                if (TextUtils.isEmpty(s.toString())) {
+                    mViewDataBinding.imageButtonSend.setEnabled(false);
+                    mViewDataBinding.imageButtonSend.setImageResource(R.drawable.ic_send_unable);
                 }
                 else {
-                    mFragmentChatBinding.imageButtonSend.setEnabled(true);
-                    mFragmentChatBinding.imageButtonSend.setImageResource(R.drawable.ic_send);
+                    mViewDataBinding.imageButtonSend.setEnabled(true);
+                    mViewDataBinding.imageButtonSend.setImageResource(R.drawable.ic_send);
                 }
             }
 
@@ -109,19 +98,18 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mChatViewModel.userChatLiveData.observe(getViewLifecycleOwner(), new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
-                if(userModel.getUserImgUrl().equals("default")){
-                    Glide.with(getContext()).load(R.mipmap.ic_launcher).circleCrop().into(mFragmentChatBinding.imageViewTitleChat);
+                if (userModel.getUserImgUrl().equals("default")) {
+                    Glide.with(getContext()).load(R.mipmap.ic_launcher).circleCrop().into(mViewDataBinding.imageViewTitleChat);
+                } else {
+                    Glide.with(getContext()).load(userModel.getUserImgUrl()).circleCrop().into(mViewDataBinding.imageViewTitleChat);
                 }
-                else {
-                    Glide.with(getContext()).load(userModel.getUserImgUrl()).circleCrop().into(mFragmentChatBinding.imageViewTitleChat);
-                }
-                mFragmentChatBinding.textViewUserNameChat.setText(userModel.getUserName());
-                mFragmentChatBinding.recyclerChat.setHasFixedSize(true);
-                LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+                mViewDataBinding.textViewUserNameChat.setText(userModel.getUserName());
+                mViewDataBinding.recyclerChat.setHasFixedSize(true);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setStackFromEnd(true);
-                chatAdapter=new ChatAdapter(getContext(),userModel.getUserImgUrl());
-                mFragmentChatBinding.recyclerChat.setLayoutManager(layoutManager);
-                mFragmentChatBinding.recyclerChat.setAdapter(chatAdapter);
+                chatAdapter = new ChatAdapter(getContext(), userModel.getUserImgUrl());
+                mViewDataBinding.recyclerChat.setLayoutManager(layoutManager);
+                mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
             }
         });
         mChatViewModel.displayMessage(id);

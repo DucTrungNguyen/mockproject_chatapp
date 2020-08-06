@@ -1,5 +1,7 @@
 package com.rikkei.tranning.chatapp.views.uis.login
 
+//import com.rikkei.tranning.chatapp.BR
+//import com.rikkei.tranning.chatapp.BR
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -11,18 +13,15 @@ import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-//import com.rikkei.tranning.chatapp.BR
-//import com.rikkei.tranning.chatapp.BR
-import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory
+import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding
 import com.rikkei.tranning.chatapp.views.uis.MainActivity
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
-    var mFragmentLoginBinding: FragmentLoginBinding? = null
     var mLoginViewModel: LoginViewModel? = null
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -40,23 +39,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         return mLoginViewModel as LoginViewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        mFragmentLoginBinding = viewDataBinding
         val htmlcontentbutton =
             "Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>"
-        mFragmentLoginBinding!!.ButtonMoveRegister.text = Html.fromHtml(
+        mViewDataBinding?.ButtonMoveRegister?.text = Html.fromHtml(
             htmlcontentbutton
         )
         eventEditText()
-        mFragmentLoginBinding!!.ButtonMoveRegister.setOnClickListener { replaceFragment() }
+        mViewDataBinding?.ButtonMoveRegister?.setOnClickListener { replaceFragment() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -70,7 +64,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
                 is LoginViewModel.LoginStatus.Loading -> {
                     progress_circular.visibility = View.VISIBLE
                 }
-                is LoginViewModel.LoginStatus.isOk -> {
+                is LoginViewModel.LoginStatus.IsOk -> {
                     progress_circular.visibility = View.GONE
                     Toast.makeText(context, "Login success!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java)
@@ -91,13 +85,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         })
     }
 
-    fun eventEditText() {
+    private fun eventEditText() {
         val editTexts = arrayOf(
-            mFragmentLoginBinding!!.editTextPassLogin,
-            mFragmentLoginBinding!!.editTextEmailLogin
+            mViewDataBinding?.editTextPassLogin,
+            mViewDataBinding?.editTextEmailLogin
         )
         for (i in editTexts.indices) {
-            editTexts[i].addTextChangedListener(object : TextWatcher {
+            editTexts[i]?.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence,
                     start: Int,
@@ -130,16 +124,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
     }
 
     fun setEnableButton() {
-        if (!TextUtils.isEmpty(mFragmentLoginBinding!!.editTextEmailLogin.text.toString())
+        if (!TextUtils.isEmpty(mViewDataBinding?.editTextEmailLogin?.text.toString())
             && !TextUtils.isEmpty(
-                mFragmentLoginBinding!!.editTextPassLogin.text.toString()
+                mViewDataBinding?.editTextPassLogin?.text.toString()
             )
         ) {
-            mFragmentLoginBinding!!.ButtonLogin.isEnabled = true
-            mFragmentLoginBinding!!.ButtonLogin.setBackgroundResource(R.drawable.custom_button_enable)
+            mViewDataBinding?.ButtonLogin?.isEnabled = true
+            mViewDataBinding?.ButtonLogin?.setBackgroundResource(R.drawable.custom_button_enable)
         } else {
-            mFragmentLoginBinding!!.ButtonLogin.isEnabled = false
-            mFragmentLoginBinding!!.ButtonLogin.setBackgroundResource(R.drawable.custom_button_login)
+            mViewDataBinding?.ButtonLogin?.isEnabled = false
+            mViewDataBinding?.ButtonLogin?.setBackgroundResource(R.drawable.custom_button_login)
         }
     }
 }

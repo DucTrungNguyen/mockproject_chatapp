@@ -31,10 +31,10 @@ class RequestFriendRepository private constructor(){
     }
 
     interface DataStatus {
-        fun DataIsLoading(arrayList: ArrayList<UserModel>?)
+        fun dataIsLoading(arrayList: ArrayList<UserModel>?)
     }
 
-    interface typeFriend {
+    interface TypeFriend {
         fun typeFriendIsLoad(s: String?)
     }
 
@@ -80,7 +80,7 @@ class RequestFriendRepository private constructor(){
                         override fun onCancelled(databaseError: DatabaseError) {}
                     })
                 }
-                dataStatus.DataIsLoading(userArrayList)
+                dataStatus.dataIsLoading(userArrayList)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -89,7 +89,7 @@ class RequestFriendRepository private constructor(){
 
     fun searchFriendType(
         user: UserModel,
-        type: typeFriend
+        type: TypeFriend
     ) {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val userId = firebaseUser!!.uid
@@ -102,12 +102,16 @@ class RequestFriendRepository private constructor(){
                         keyNode.getValue(FriendsModel::class.java)!!
                     if (account.friendId == user.userId) {
                         friendArrayList.add(account)
-                        if (account.type == "friend") {
-                            friendType = "friend"
-                        } else if (account.type == "sendRequest") {
-                            friendType = "sendRequest"
-                        } else if (account.type == "friendRequest") {
-                            friendType = "friendRequest"
+                        when (account.type) {
+                            "friend" -> {
+                                friendType = "friend"
+                            }
+                            "sendRequest" -> {
+                                friendType = "sendRequest"
+                            }
+                            "friendRequest" -> {
+                                friendType = "friendRequest"
+                            }
                         }
                     }
                 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -24,7 +23,7 @@
                 android:id="@+id/ImageButtonBackChat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="34dp"
                 android:background="@null"
                 android:scaleType="fitXY"
@@ -37,7 +36,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="25dp"
                 android:layout_toEndOf="@+id/ImageButtonBackChat"
-                android:src="@mipmap/ic_launcher" />
+                tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/textViewUserNameChat"

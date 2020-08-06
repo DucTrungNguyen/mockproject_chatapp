@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rikkei.tranning.chatapp.R;
-import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 
 public class MessageAdapter extends ListAdapter<MessageModel, MessageAdapter.ViewHolder > {
@@ -44,7 +43,7 @@ public class MessageAdapter extends ListAdapter<MessageModel, MessageAdapter.Vie
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_massage,parent,false);
-        return new MessageAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -52,11 +51,12 @@ public class MessageAdapter extends ListAdapter<MessageModel, MessageAdapter.Vie
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cImgUser;
         RelativeLayout relativeItemFriend;
         TextView txtUserName, txtSection;
         Button btnRequest;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 //            relativeItemFriend = itemView.findViewById(R.id.relativeItemFriend);

@@ -1,9 +1,7 @@
 package com.rikkei.tranning.chatapp.views.uis.message
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,33 +10,21 @@ import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentMessageBinding
 import com.rikkei.tranning.chatapp.views.adapters.MessageAdapter
-import com.rikkei.tranning.chatapp.views.adapters.RequestFriendAdapter
-import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
 
 class MessagesFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>() {
 
 
-    lateinit var mFragmentMessageBinding: FragmentMessageBinding;
-    lateinit var messageViewModel: MessageViewModel;
-    private lateinit var messageFriendAdapter: MessageAdapter;
-
-
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return inflater.inflate(R.layout.fragment_message, container, false)
-//    }
+    private lateinit var messageViewModel: MessageViewModel
+    private lateinit var messageFriendAdapter: MessageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mFragmentMessageBinding = viewDataBinding!!
         val layoutManagerRequest = LinearLayoutManager(context)
         layoutManagerRequest.orientation = LinearLayoutManager.VERTICAL
 
         messageFriendAdapter = MessageAdapter(context)
-        mFragmentMessageBinding.recyclerMessage.layoutManager = layoutManagerRequest
-        mFragmentMessageBinding.recyclerMessage.adapter = messageFriendAdapter
+        mViewDataBinding.recyclerMessage.layoutManager = layoutManagerRequest
+        mViewDataBinding.recyclerMessage.adapter = messageFriendAdapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

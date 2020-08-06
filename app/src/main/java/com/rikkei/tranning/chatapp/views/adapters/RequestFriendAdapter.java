@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
-import com.rikkei.tranning.chatapp.services.repositories.RequestFriendRepository;
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 
 public class RequestFriendAdapter extends ListAdapter<AllUserModel, RequestFriendAdapter.RequestFriendViewHolder> {
@@ -115,7 +113,7 @@ public class RequestFriendAdapter extends ListAdapter<AllUserModel, RequestFrien
         return getItem(position);
     }
 
-    public class RequestFriendViewHolder extends RecyclerView.ViewHolder {
+    public static class RequestFriendViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;

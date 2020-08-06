@@ -12,20 +12,21 @@ import com.google.firebase.database.ValueEventListener;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 public class ProfileRepository {
-    FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     DatabaseReference databaseReference;
-    private UserModel account =new UserModel();
-    public interface DataStatus{
-        void DataIsLoaded(UserModel user);
-    }
-    public void infoUserFromFirebase(final ProfileRepository.DataStatus dataStatus){
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        final String userId=firebaseUser.getUid();
-        databaseReference= FirebaseDatabase.getInstance().getReference("user").child(userId);
+    private UserModel account = new UserModel();
+
+    public void infoUserFromFirebase(final ProfileRepository.DataStatus dataStatus) {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            return;
+        }
+        final String userId = firebaseUser.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                account=dataSnapshot.getValue(UserModel.class);
+                account = dataSnapshot.getValue(UserModel.class);
                 dataStatus.DataIsLoaded(account);
             }
 
@@ -35,10 +36,18 @@ public class ProfileRepository {
             }
         });
     }
-    public void updateInforFromFirebase(String key, String value){
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        String userId=firebaseUser.getUid();
-        databaseReference=FirebaseDatabase.getInstance().getReference("user");
+
+    public void updateInforFromFirebase(String key, String value) {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            return;
+        }
+        String userId = firebaseUser.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("user");
         databaseReference.child(userId).child(key).setValue(value);
+    }
+
+    public interface DataStatus {
+        void DataIsLoaded(UserModel user);
     }
 }
