@@ -98,16 +98,17 @@ public class ChatAdapter extends ListAdapter<MessageModel,ChatAdapter.ViewHolder
         });
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgUserChat;
         TextView txtMessage, txtDate;
         View view;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgUserChat=itemView.findViewById(R.id.imageViewUserChat);
-            txtMessage=itemView.findViewById(R.id.textViewMessage);
-            view=itemView.findViewById(R.id.view);
-            txtDate=itemView.findViewById(R.id.textViewDate);
+            imgUserChat = itemView.findViewById(R.id.imageViewUserChat);
+            txtMessage = itemView.findViewById(R.id.textViewMessage);
+            view = itemView.findViewById(R.id.view);
+            txtDate = itemView.findViewById(R.id.textViewDate);
         }
     }
     public MessageModel getNoteAt(int position) {

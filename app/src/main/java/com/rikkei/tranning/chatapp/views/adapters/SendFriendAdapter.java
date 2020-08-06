@@ -101,7 +101,7 @@ public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapt
         return getItem(position);
     }
 
-    public class SendFriendViewHolder extends RecyclerView.ViewHolder {
+    public static class SendFriendViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;

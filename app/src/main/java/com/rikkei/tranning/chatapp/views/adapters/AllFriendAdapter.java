@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
@@ -108,7 +110,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         return getItem(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;

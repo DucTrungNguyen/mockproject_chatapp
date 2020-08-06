@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
@@ -23,7 +23,7 @@ class RequestFriendFragment :
     private lateinit var mFragmentRequestFriendsBinding: FragmentRequestFriendsBinding
 
     //    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
-    private var sharedFriendViewModel: SharedFriendViewModel? = null
+    private val sharedFriendViewModel: SharedFriendViewModel by viewModels()
     private lateinit var requestFriendAdapter: RequestFriendAdapter
     private lateinit var sendFriendAdapter: SendFriendAdapter
 
@@ -40,8 +40,6 @@ class RequestFriendFragment :
     }
 
     override fun getViewModel(): SharedFriendViewModel? {
-        sharedFriendViewModel =
-            ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
         return sharedFriendViewModel
     }
 
@@ -51,7 +49,6 @@ class RequestFriendFragment :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        mFragmentRequestFriendsBinding = viewDataBinding!!
         val layoutManagerRequest = LinearLayoutManager(context)
         layoutManagerRequest.orientation = LinearLayoutManager.VERTICAL
 
@@ -70,10 +67,10 @@ class RequestFriendFragment :
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sharedFriendViewModel!!.allUserListLiveData.observe(
+        sharedFriendViewModel.allUserListLiveData.observe(
             viewLifecycleOwner,
             Observer { allUserModels ->
-                sharedFriendViewModel!!.collectionArray(allUserModels)
+                sharedFriendViewModel.collectionArray(allUserModels)
                 val requestUserModels = ArrayList<AllUserModel>()
                 val sendUserModels = ArrayList<AllUserModel>()
                 for (i in allUserModels.indices) {
@@ -88,9 +85,10 @@ class RequestFriendFragment :
 
                 requestUserModels.addAll(sendUserModels)
                 if (requestUserModels.isEmpty()) {
-                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.VISIBLE)
+                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.visibility =
+                        View.VISIBLE
                 } else {
-                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.GONE)
+                    mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.visibility = View.GONE
                 }
                 requestFriendAdapter.submitList(requestUserModels)
 //                sendFriendAdapter.submitList(sendUserModels)

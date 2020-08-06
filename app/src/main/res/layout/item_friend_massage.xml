@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeItemFriend"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:weightSum="4"
     android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:id="@+id/relativeItemFriend"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
+    <!--    fixme-->
     <ImageView
         android:layout_below="@+id/textViewHeader"
         android:layout_margin="10dp"

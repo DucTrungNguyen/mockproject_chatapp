@@ -10,18 +10,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.BR;
-import com.rikkei.tranning.chatapp.base.BaseFragment;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
+import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
+import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel>  {
-    FragmentProfileBinding mFragmentProfileBinding;
     ProfileViewModel mProfileViewModel;
     @Override
     public int getBindingVariable() {
@@ -45,19 +45,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentProfileBinding=getViewDataBinding();
-        mFragmentProfileBinding.ImageButtonEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment();
-            }
-        });
-        mFragmentProfileBinding.RelativeLayoutLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
+        mViewDataBinding.ImageButtonEditProfile.setOnClickListener(v -> replaceFragment());
+        mViewDataBinding.RelativeLayoutLogout.setOnClickListener(v -> logout());
     }
 
     @Override
@@ -67,15 +56,14 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         mProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel user) {
-                mFragmentProfileBinding.TextViewNameUser.setText(user.getUserName());
-                mFragmentProfileBinding.TextViewEmailUser.setText(user.getUserEmail());
-                if(user.getUserImgUrl().equals("default")){
-                    mFragmentProfileBinding.ImageViewImageUser.setImageResource(R.mipmap.ic_launcher);
-                    mFragmentProfileBinding.CircleImageViewUser.setImageResource(R.mipmap.ic_launcher);
-                }
-                else{
-                    Glide.with(getContext()).load(user.getUserImgUrl()).into(mFragmentProfileBinding.ImageViewImageUser);
-                    Glide.with(getContext()).load(user.getUserImgUrl()).circleCrop().into(mFragmentProfileBinding.CircleImageViewUser);
+                mViewDataBinding.TextViewNameUser.setText(user.getUserName());
+                mViewDataBinding.TextViewEmailUser.setText(user.getUserEmail());
+                if (user.getUserImgUrl().equals("default")) {
+                    mViewDataBinding.ImageViewImageUser.setImageResource(R.mipmap.ic_launcher);
+                    mViewDataBinding.CircleImageViewUser.setImageResource(R.mipmap.ic_launcher);
+                } else {
+                    Glide.with(getContext()).load(user.getUserImgUrl()).into(mViewDataBinding.ImageViewImageUser);
+                    Glide.with(getContext()).load(user.getUserImgUrl()).circleCrop().into(mViewDataBinding.CircleImageViewUser);
                 }
             }
         });

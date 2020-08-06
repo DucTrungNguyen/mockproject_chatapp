@@ -3,10 +3,8 @@ package com.rikkei.tranning.chatapp.views.uis
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.text.Html
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment
@@ -25,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
             if (firebaseUser != null) {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
             else {
                 val fragmentManager = supportFragmentManager

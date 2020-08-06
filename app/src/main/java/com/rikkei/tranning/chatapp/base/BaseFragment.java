@@ -1,6 +1,5 @@
 package com.rikkei.tranning.chatapp.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends ViewModel> extends Fragment {
-    private T mViewDataBinding;
-    private V mViewModel;
-    private View mView;
+    protected T mViewDataBinding;
+    protected V mViewModel;
 
     public abstract int getBindingVariable();
 
@@ -26,10 +24,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends ViewMode
     int getLayoutId();
 
     public abstract V getViewModel();
-
-    public T getViewDataBinding() {
-        return mViewDataBinding;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +36,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends ViewMode
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mView = mViewDataBinding.getRoot();
-        return mView;
+        return mViewDataBinding.getRoot();
     }
 
     @Override

@@ -18,23 +18,13 @@ public class ChatViewModel extends ViewModel {
     }
 
     public  void getInfoUserChat(String id){
-        chatRepository.infoUserFromFirebase(id, new ChatRepository.DataStatus() {
-            @Override
-            public void DataIsLoaded(UserModel user) {
-                userChatLiveData.setValue(user);
-            }
-        });
+        chatRepository.infoUserFromFirebase(id, user -> userChatLiveData.setValue(user));
     }
     public void sendMessage(String idUser, String message){
         chatRepository.createMessage(idUser,message);
     }
     public void displayMessage(String idFriend){
-        chatRepository.getMessage(idFriend, new ChatRepository.MessageStatus() {
-            @Override
-            public void DataIsLoaded(ArrayList<MessageModel> messageArray) {
-                messageListLiveData.setValue(messageArray);
-            }
-        });
+        chatRepository.getMessage(idFriend, messageArray -> messageListLiveData.setValue(messageArray));
 
     }
 }

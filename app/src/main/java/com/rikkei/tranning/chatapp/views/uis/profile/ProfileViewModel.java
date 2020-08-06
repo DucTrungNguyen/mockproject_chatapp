@@ -8,11 +8,6 @@ import com.rikkei.tranning.chatapp.services.repositories.ProfileRepository;
 public class ProfileViewModel extends ViewModel {
     public MutableLiveData<UserModel> userMutableLiveData =new MutableLiveData<>();
     public void getInfoUser(){
-        new ProfileRepository().infoUserFromFirebase(new ProfileRepository.DataStatus() {
-            @Override
-            public void DataIsLoaded(UserModel user) {
-                userMutableLiveData.setValue(user);
-            }
-        });
+        new ProfileRepository().infoUserFromFirebase(user -> userMutableLiveData.setValue(user));
     }
 }

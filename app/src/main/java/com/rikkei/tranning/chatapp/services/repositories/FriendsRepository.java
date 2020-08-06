@@ -45,7 +45,7 @@ public class FriendsRepository {
                 userModelArrayList.clear();
                 for (DataSnapshot Node : dataSnapshot.getChildren()) {
                     UserModel userModel = Node.getValue(UserModel.class);
-                    if (!userModel.getUserId().equals(firebaseUser.getUid())) {
+                    if (userModel != null && !userModel.getUserId().equals(firebaseUser.getUid())) {
                         userModelArrayList.add(userModel);
                     }
                 }
@@ -86,7 +86,7 @@ public class FriendsRepository {
             @Override
             public void UserIsLoaded(ArrayList<UserModel> userModels) {
                 userModelArrayList = userModels;
-                if (isLoadUser.getValue() == true) {
+                if (isLoadUser.getValue() != null && isLoadUser.getValue()) {
                     getFriend(new DataStatus() {
                         @Override
                         public void UserIsLoaded(ArrayList<UserModel> userModels) {
@@ -96,7 +96,7 @@ public class FriendsRepository {
                         @Override
                         public void FriendIsLoaded(ArrayList<FriendsModel> friendsModels) {
                             friendsModelsArray = friendsModels;
-                            if (isLoadFriend.getValue() == true) {
+                            if (isLoadFriend.getValue() != null && isLoadFriend.getValue()) {
                                 allUserModelArray.clear();
                                 for (int i = 0; i < userModelArrayList.size(); i++) {
                                     AllUserModel allUserModel = new AllUserModel();
@@ -133,6 +133,9 @@ public class FriendsRepository {
     public void createFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            return;
+        }
         String userId = firebaseUser.getUid();
         FriendsModel friend = new FriendsModel(user.getUserId(), "sendRequest");
         FriendsModel friend2 = new FriendsModel(userId, "friendRequest");
@@ -143,6 +146,9 @@ public class FriendsRepository {
     public void deleteFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            return;
+        }
         String userId = firebaseUser.getUid();
         databaseReference.child(userId).child(user.getUserId()).setValue(null);
         databaseReference.child(user.getUserId()).child(userId).setValue(null);
@@ -151,6 +157,9 @@ public class FriendsRepository {
     public void updateFriend(AllUserModel user) {
         databaseReference = FirebaseDatabase.getInstance().getReference("friend");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            return;
+        }
         String userId = firebaseUser.getUid();
         databaseReference.child(userId).child(user.getUserId()).child("type").setValue("friend");
         databaseReference.child(user.getUserId()).child(userId).child("type").setValue("friend");
