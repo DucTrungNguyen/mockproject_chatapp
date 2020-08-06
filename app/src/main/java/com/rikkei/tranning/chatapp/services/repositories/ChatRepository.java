@@ -24,6 +24,10 @@ public class ChatRepository {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     ArrayList<MessageModel> messageList=new ArrayList<>();
+    FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+    ArrayList<String> listKeyUserChat=new ArrayList<>();
+    ArrayList<UserModel> listUserChat=new ArrayList<>();
+    String keyId;
     public interface DataStatus{
         void DataIsLoaded(UserModel user);
     }
@@ -93,5 +97,35 @@ public class ChatRepository {
         });
 
 
+    }
+    public void getListUserChat(){
+        databaseReference=FirebaseDatabase.getInstance().getReference("chat");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listKeyUserChat.clear();
+                for(DataSnapshot keyNode: dataSnapshot.getChildren()){
+                   keyId=keyNode.getKey();
+                   if(keyId.contains(firebaseUser.getUid())){
+                       String  a = keyId.substring(0,keyId.length()/2);
+                       String b = keyId.substring(keyId.length()/2,keyId.length());
+                       if(a.equals(firebaseUser.getUid())){
+                           listKeyUserChat.add(a);
+                       }
+                       else{
+                           listKeyUserChat.add(b);
+                       }
+                   }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void getInfoListUserChat(){
+        databaseReference=FirebaseDatabase.getInstance().getReference();
     }
 }

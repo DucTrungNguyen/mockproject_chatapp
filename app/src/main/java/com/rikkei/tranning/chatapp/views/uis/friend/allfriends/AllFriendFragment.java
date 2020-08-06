@@ -80,15 +80,18 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
         sharedFriendViewModel.allUserListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
             @Override
             public void onChanged(ArrayList<AllUserModel> allUserModels) {
-                if(allUserModels.isEmpty()){
+                ArrayList<AllUserModel> allUserModelsMid=new ArrayList<>();
+                for(int i=0;i<allUserModels.size();i++){
+                        allUserModelsMid.add(allUserModels.get(i));
+                }
+                if(allUserModelsMid.isEmpty()){
                     mFragmentAllFriendsBinding.ImageViewNoResultAllFriend.setVisibility(View.VISIBLE);
                 }
                 else{
                     mFragmentAllFriendsBinding.ImageViewNoResultAllFriend.setVisibility(View.GONE);
                 }
-
-                sharedFriendViewModel.collectionArray(allUserModels);
-                allFriendAdapter.submitList(allUserModels);
+                sharedFriendViewModel.collectionArray(allUserModelsMid);
+                allFriendAdapter.submitList(allUserModelsMid);
             }
         });
     }

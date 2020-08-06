@@ -18,16 +18,19 @@ import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
 import java.util.*
 
 
-class RequestFriendFragment : BaseFragment<FragmentRequestFriendsBinding?, SharedFriendViewModel?>() {
+class RequestFriendFragment :
+    BaseFragment<FragmentRequestFriendsBinding?, SharedFriendViewModel?>() {
     private lateinit var mFragmentRequestFriendsBinding: FragmentRequestFriendsBinding
-//    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
-private var sharedFriendViewModel: SharedFriendViewModel? = null
+
+    //    private lateinit var mRequestFriendViewModel: RequestFriendViewModel
+    private var sharedFriendViewModel: SharedFriendViewModel? = null
     private lateinit var requestFriendAdapter: RequestFriendAdapter
     private lateinit var sendFriendAdapter: SendFriendAdapter
 
     private lateinit var paramsFill: LinearLayout.LayoutParams
     lateinit var paramsHide: LinearLayout.LayoutParams
-//    var recyclerView by Delegates.notNull<Int>()
+
+    //    var recyclerView by Delegates.notNull<Int>()
     override fun getBindingVariable(): Int {
         return BR.requestFriendViewModel
     }
@@ -37,10 +40,10 @@ private var sharedFriendViewModel: SharedFriendViewModel? = null
     }
 
     override fun getViewModel(): SharedFriendViewModel? {
-        sharedFriendViewModel = ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
-        return  sharedFriendViewModel
+        sharedFriendViewModel =
+            ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
+        return sharedFriendViewModel
     }
-
 
 
     override fun onViewCreated(
@@ -76,8 +79,7 @@ private var sharedFriendViewModel: SharedFriendViewModel? = null
                 for (i in allUserModels.indices) {
                     if (allUserModels[i].userType == "friendRequest") {
                         requestUserModels.add(allUserModels[i])
-                    }else
-                    {
+                    } else {
                         if (allUserModels[i].userType == "sendRequest") {
                             sendUserModels.add(allUserModels[i])
                         }
@@ -87,8 +89,7 @@ private var sharedFriendViewModel: SharedFriendViewModel? = null
                 requestUserModels.addAll(sendUserModels)
                 if (requestUserModels.isEmpty()) {
                     mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.VISIBLE)
-                }
-                else {
+                } else {
                     mFragmentRequestFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.GONE)
                 }
                 requestFriendAdapter.submitList(requestUserModels)

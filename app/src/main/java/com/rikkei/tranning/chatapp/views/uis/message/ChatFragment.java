@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +35,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ChatViewModel mChatViewModel;
     ChatAdapter chatAdapter;
     String id;
+    Toolbar toolbar;
     @Override
     public int getBindingVariable() {
         return BR.viewModelChat;
@@ -48,10 +52,12 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         return mChatViewModel;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentChatBinding=getViewDataBinding();
+
         mFragmentChatBinding.ImageButtonBackChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +116,9 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                     Glide.with(getContext()).load(userModel.getUserImgUrl()).circleCrop().into(mFragmentChatBinding.imageViewTitleChat);
                 }
                 mFragmentChatBinding.textViewUserNameChat.setText(userModel.getUserName());
+                mFragmentChatBinding.recyclerChat.setHasFixedSize(true);
                 LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                layoutManager.setStackFromEnd(true);
                 chatAdapter=new ChatAdapter(getContext(),userModel.getUserImgUrl());
                 mFragmentChatBinding.recyclerChat.setLayoutManager(layoutManager);
                 mFragmentChatBinding.recyclerChat.setAdapter(chatAdapter);
@@ -132,4 +139,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
+
+
 }

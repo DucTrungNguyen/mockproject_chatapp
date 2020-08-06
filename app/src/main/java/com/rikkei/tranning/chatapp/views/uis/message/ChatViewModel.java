@@ -12,8 +12,13 @@ import java.util.ArrayList;
 public class ChatViewModel extends ViewModel {
     MutableLiveData<UserModel> userChatLiveData =new MutableLiveData<>();
     MutableLiveData<ArrayList<MessageModel>> messageListLiveData=new MutableLiveData<>();
+    ChatRepository chatRepository;
+    public ChatViewModel() {
+        chatRepository=new ChatRepository();
+    }
+
     public  void getInfoUserChat(String id){
-        new ChatRepository().infoUserFromFirebase(id, new ChatRepository.DataStatus() {
+        chatRepository.infoUserFromFirebase(id, new ChatRepository.DataStatus() {
             @Override
             public void DataIsLoaded(UserModel user) {
                 userChatLiveData.setValue(user);
@@ -21,10 +26,10 @@ public class ChatViewModel extends ViewModel {
         });
     }
     public void sendMessage(String idUser, String message){
-        new ChatRepository().createMessage(idUser,message);
+        chatRepository.createMessage(idUser,message);
     }
     public void displayMessage(String idFriend){
-        new ChatRepository().getMessage(idFriend, new ChatRepository.MessageStatus() {
+        chatRepository.getMessage(idFriend, new ChatRepository.MessageStatus() {
             @Override
             public void DataIsLoaded(ArrayList<MessageModel> messageArray) {
                 messageListLiveData.setValue(messageArray);

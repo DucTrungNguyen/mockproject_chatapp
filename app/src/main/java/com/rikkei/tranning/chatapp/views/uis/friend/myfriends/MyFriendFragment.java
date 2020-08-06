@@ -83,7 +83,6 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding, Sha
         sharedFriendViewModel.allUserListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
             @Override
             public void onChanged(ArrayList<AllUserModel> allUserModels) {
-                sharedFriendViewModel.collectionArray(allUserModels);
                 ArrayList<AllUserModel> allUserModelsMid=new ArrayList<>();
                 for(int i=0;i<allUserModels.size();i++){
                     if(allUserModels.get(i).getUserType().equals("friend")){
@@ -96,6 +95,7 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding, Sha
                 else{
                     mFragmentMyFriendsBinding.ImageViewNoResultMyFriend.setVisibility(View.GONE);
                 }
+                sharedFriendViewModel.collectionArray(allUserModelsMid);
                 myFriendAdapter.submitList(allUserModelsMid);
             }
         });

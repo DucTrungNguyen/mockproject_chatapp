@@ -17,8 +17,6 @@ class MessageRepository{
     init {
         firebaseDatabase = FirebaseDatabase.getInstance()
         currentUserId = FirebaseAuth.getInstance().currentUser!!.uid;
-
-
     }
 
     interface MessageStatus {
@@ -28,6 +26,7 @@ class MessageRepository{
 
     fun getMessageFriend( messageStatus : MessageRepository.MessageStatus){
         val list  = firebaseDatabase.getReference("chat")
+
 
     }
 
