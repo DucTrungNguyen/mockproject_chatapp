@@ -91,7 +91,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
                     holder.btnRequest.setText("Hủy");
                     break;
                 case "Hủy":
-                case "Bạn bè":
+                case "Hủy bạn":
                     sharedFriendViewModel.deleteFriend(user);
                     holder.btnRequest.setText("Kết bạn");
                     break;
