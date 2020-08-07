@@ -9,7 +9,7 @@
     android:weightSum="4">
     <!--    fixme-->
     <ImageView
-        android:foregroundGravity="center"
+
         android:id="@+id/imageViewCircleChat"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -17,59 +17,56 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        android:foregroundGravity="center"
         android:src="@mipmap/ic_launcher" />
 
-    <LinearLayout
-        android:id="@+id/linearContent"
+    <TextView
+        android:layout_toEndOf="@+id/imageViewCircleChat"
+        android:id="@+id/textViewUserChatName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Nguyen Nguyen Nguyen"/>
+
+    <TextView
+        android:text="10:30"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/textViewTimeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="12sp"
+         />
+
+    <TextView
+        android:text="Xin chao, minh dung day tu chieu cac ban oi"
+        android:layout_below="@+id/textViewUserChatName"
+        android:layout_toEndOf="@+id/imageViewCircleChat"
+        android:id="@+id/textViewLastMess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imageViewCircleChat"
-        android:orientation="vertical">
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/grey"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp" />
 
-        <LinearLayout
-            android:weightSum="5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:id="@+id/textViewUserChatName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="3"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-            <TextView
-                android:gravity="right"
-                android:id="@+id/textViewTimeMessage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="2"
-                android:textAllCaps="false"
-                android:textColor="@color/grey"
-                android:textSize="12sp"
-                tools:ignore="RtlHardcoded" />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/textViewLastMess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/grey"
-            android:textSize="14sp" />
-        <View
-            android:layout_marginEnd="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/iconMain" />
-    </LinearLayout>
+    <View
+        android:layout_below="@+id/imageViewCircleChat"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="@color/iconMain" />
 
 </RelativeLayout>
