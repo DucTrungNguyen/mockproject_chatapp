@@ -67,8 +67,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
 
                 }
                 is LoginViewModel.LoginStatus.ErrorPassAndEmail -> {
-                    Toast.makeText(context, "Invalid Email Or Password!", Toast.LENGTH_SHORT).show()
-                    progress_circular.visibility = View.GONE
+                    if ( it.isError){
+                        Toast.makeText(context, "Invalid Email Or Password! Login", Toast.LENGTH_SHORT).show()
+                        progress_circular.visibility = View.GONE
+
+                    }
+
+
+                }
+                is LoginViewModel.LoginStatus.Register ->{
+//                    progress_circular.visibility = View.GONE
+                    replaceFragment()
 
                 }
             }
@@ -107,6 +116,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
     private fun replaceFragment() {
         mViewDataBinding!!.editTextEmailLogin.setText("")
         mViewDataBinding!!.editTextPassLogin.setText("")
+        mViewModel?.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
     }

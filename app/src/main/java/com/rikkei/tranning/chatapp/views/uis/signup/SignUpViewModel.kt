@@ -13,14 +13,13 @@ class SignUpViewModel : ViewModel() {
     var userPass = MutableLiveData<String>()
     var userName = MutableLiveData<String>()
     var signUpSuccess = MutableLiveData<Boolean>()
-    var signUpUserMutableLiveData = MutableLiveData<LoginUserModel>()
 
     var signUpStatus = MutableLiveData<SignUpStatus>()
 
     fun signUpButtonOnClick() {
         val user = LoginUserModel(userEmail.value!!, userPass.value!!)
-        if (user.isEmailValid)
-            signUpUserMutableLiveData.value = user
+//        if (user.isEmailValid)
+//            signUpUserMutableLiveData.value = user
 
         if (!user.validateEmailPassword()) {
             signUpStatus.value = SignUpStatus.ErrorPassAndEmail(true)
@@ -28,6 +27,10 @@ class SignUpViewModel : ViewModel() {
             createUserFireBase()
         }
 
+    }
+
+    fun resetStatus(){
+        signUpStatus.value = SignUpStatus.Loading(false)
     }
 
     fun createUserFireBase() {

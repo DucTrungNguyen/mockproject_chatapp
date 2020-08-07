@@ -52,27 +52,23 @@
                 android:layout_marginEnd="20sp"
                 android:src="@drawable/ic_add_new_friend" />
         </RelativeLayout>
-        <!--        fixme-->
-        <RelativeLayout
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutFriend"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/RelativeLayout"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/RelativeLayout"
             android:layout_marginTop="50dp"
-            android:background="@drawable/fragment">
+            android:background="@drawable/fragment"
+            app:tabIndicatorColor="#4356B4"
+            app:tabSelectedTextColor="#4356B4"
+            app:tabTextColor="#999999" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayoutFriend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="#4356B4"
-                app:tabSelectedTextColor="#4356B4"
-                app:tabTextColor="#999999" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPagerFriend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tabLayoutFriend" />
-        </RelativeLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabLayoutFriend"
+            android:background="@color/white" />
     </RelativeLayout>
 </layout>
