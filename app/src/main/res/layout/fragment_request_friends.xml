@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="requestFriendViewModel"
             type="com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel" />
@@ -11,15 +12,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <!--        fixme-->
         <LinearLayout
             android:id="@+id/linearRequest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:background="@color/white"
 
             android:baselineAligned="false"
-            android:background="@color/white">
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerRequestFriend"
@@ -29,23 +30,23 @@
 
                 tools:listitem="@layout/item_friend" />
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/RecyclerSendFriend"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                tools:listitem="@layout/item_friend" />-->
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/RecyclerSendFriend"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                tools:listitem="@layout/item_friend" />-->
 
         </LinearLayout>
+
         <ImageView
-            android:layout_gravity="center|center_vertical"
             android:id="@+id/ImageViewNoResultMyFriend"
-            android:src="@drawable/ic_no_search"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
+            android:layout_centerInParent="true"
+            android:layout_gravity="center|center_vertical"
+            android:src="@drawable/ic_no_search"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

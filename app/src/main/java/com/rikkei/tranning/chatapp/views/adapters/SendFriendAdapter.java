@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
-//import com.rikkei.tranning.chatapp.services.models.UserModel;
-
 
 public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapter.SendFriendViewHolder> {
     Context context;
@@ -35,7 +33,7 @@ public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapt
 
         @Override
         public boolean areContentsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
-            return  oldItem.getUserName().equals(newItem.getUserName())
+            return oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserImage().equals(newItem.getUserImage())
                     && oldItem.getUserType().equals(newItem.getUserType());
         }
@@ -64,16 +62,9 @@ public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapt
         holder.btnRequest.setText("Hủy");
         if (position != 0) {
             holder.txtSection.setVisibility(View.GONE);
-//            int i=position-1;
-//            if (i<=this.getItemCount()&&user.getUserName().substring(0,1)
-//                    .equals(getNoteAt(i).getUserName().substring(0,1))){
-//
-//            }
         }
-        holder.btnRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.btnRequest.getText().toString()) {
+        holder.btnRequest.setOnClickListener(v -> {
+            switch (holder.btnRequest.getText().toString()) {
 
 //                    case "Kết bạn":
 //                        new RequestFriendRepository().createFriend(user);
@@ -92,16 +83,11 @@ public class SendFriendAdapter extends ListAdapter<AllUserModel, SendFriendAdapt
 //                        new RequestFriendRepository().deleteFriend(user);
 //                        holder.btnRequest.setText("Kết bạn");
 //                        break;
-                }
             }
         });
     }
 
-    public AllUserModel getNoteAt(int position) {
-        return getItem(position);
-    }
-
-    public class SendFriendViewHolder extends RecyclerView.ViewHolder {
+    public static class SendFriendViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;

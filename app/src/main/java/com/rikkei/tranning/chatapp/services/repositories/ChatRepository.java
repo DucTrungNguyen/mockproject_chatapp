@@ -1,8 +1,7 @@
 package com.rikkei.tranning.chatapp.services.repositories;
 
-import android.text.format.Time;
-
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,32 +13,27 @@ import com.google.firebase.database.ValueEventListener;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Locale;
 
 public class ChatRepository {
     DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-    ArrayList<MessageModel> messageList=new ArrayList<>();
-    FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-    ArrayList<String> listKeyUserChat=new ArrayList<>();
-    ArrayList<UserModel> listUserChat=new ArrayList<>();
-    String keyId;
-    public interface DataStatus{
-        void DataIsLoaded(UserModel user);
-    }
-    public interface MessageStatus{
-        void DataIsLoaded(ArrayList<MessageModel> messageArray);
-    }
-    public void infoUserFromFirebase(String id, final DataStatus dataStatus){
-        databaseReference= FirebaseDatabase.getInstance().getReference("user").child(id);
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    ArrayList<MessageModel> messageList = new ArrayList<>();
+    ArrayList<String> listIdChat = new ArrayList<>();
+    ArrayList<UserModel> arrayAllUserChat=new ArrayList<>();
+
+    MutableLiveData<Boolean> isOk=new MutableLiveData<>(false);
+
+    public void infoUserFromFirebase(String id, final DataStatus dataStatus) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserModel account=dataSnapshot.getValue(UserModel.class);
+                UserModel account = dataSnapshot.getValue(UserModel.class);
                 dataStatus.DataIsLoaded(account);
             }
 
@@ -49,42 +43,46 @@ public class ChatRepository {
             }
         });
     }
-    public void createMessage(String id, String message){
-        final Calendar calendar=Calendar.getInstance();
-        SimpleDateFormat simpleDateFormatDate=new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat simpleDateFormatTime=new SimpleDateFormat("hh:mm");
-        String hour=simpleDateFormatTime.format(calendar.getTime());
-        String date=simpleDateFormatDate.format(calendar.getTime());
-        databaseReference=FirebaseDatabase.getInstance().getReference("chat");
-        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        String idUser=firebaseUser.getUid();
-        MessageModel messageModel =new MessageModel(idUser,id,message, "Text",date,hour);
-        String key;
-        if(id.compareTo(idUser)>0){
-            key=id+idUser;
+
+    public void createMessage(String id, String message) {
+        final Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
+        String hour = simpleDateFormatTime.format(calendar.getTime());
+        String date = simpleDateFormatDate.format(calendar.getTime());
+        databaseReference = FirebaseDatabase.getInstance().getReference("chat");
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String idUser = firebaseUser.getUid();
+            MessageModel messageModel = new MessageModel(idUser, id, message, "Text", date, hour);
+            String key;
+            if (id.compareTo(idUser) > 0) {
+                key = id + idUser;
+            } else {
+                key = idUser + id;
+            }
+            databaseReference.child(key).push().setValue(messageModel);
         }
-        else{
-            key=idUser+id;
-        }
-        databaseReference.child(key).push().setValue(messageModel);
     }
-    public void getMessage(String idFriend, final MessageStatus messageStatus){
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        String myId=firebaseUser.getUid();
+
+    public void getMessage(String idFriend, MessageStatus messageStatus) {
+        if (firebaseUser == null) {
+            return;
+        }
+        String myId = firebaseUser.getUid();
         String key;
-        if(idFriend.compareTo(myId)>0){
-            key=idFriend+myId;
+        if (idFriend.compareTo(myId) > 0) {
+            key = idFriend + myId;
+        } else {
+            key = myId + idFriend;
         }
-        else{
-           key=myId+idFriend;
-        }
-        databaseReference=FirebaseDatabase.getInstance().getReference("chat").child(key);
+        databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 messageList.clear();
-                for(DataSnapshot keyNode: dataSnapshot.getChildren()){
-                    MessageModel message=keyNode.getValue(MessageModel.class);
+                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                    MessageModel message = keyNode.getValue(MessageModel.class);
                     messageList.add(message);
                 }
                 messageStatus.DataIsLoaded(messageList);
@@ -95,28 +93,30 @@ public class ChatRepository {
 
             }
         });
-
-
     }
-    public void getListUserChat(){
+
+    public void getAllIdListChat(ListIdChatStatus listIdChatStatus){
         databaseReference=FirebaseDatabase.getInstance().getReference("chat");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listKeyUserChat.clear();
+                listIdChat.clear();
                 for(DataSnapshot keyNode: dataSnapshot.getChildren()){
-                   keyId=keyNode.getKey();
-                   if(keyId.contains(firebaseUser.getUid())){
-                       String  a = keyId.substring(0,keyId.length()/2);
-                       String b = keyId.substring(keyId.length()/2,keyId.length());
-                       if(a.equals(firebaseUser.getUid())){
-                           listKeyUserChat.add(a);
-                       }
-                       else{
-                           listKeyUserChat.add(b);
-                       }
-                   }
+                    String key=keyNode.getKey();
+                    assert key != null;
+                    if(key.contains(firebaseUser.getUid())){
+                        String x= key.substring(0,key.length()/2);
+                        String y=key.substring(key.length()/2, key.length());
+                        if (!x.equals(firebaseUser.getUid())){
+                            listIdChat.add(x);
+                        }
+                        else {
+                            listIdChat.add(y);
+                        }
+                    }
                 }
+                isOk.setValue(true);
+                listIdChatStatus.DataIsLoaded(listIdChat);
             }
 
             @Override
@@ -125,7 +125,46 @@ public class ChatRepository {
             }
         });
     }
-    public void getInfoListUserChat(){
-        databaseReference=FirebaseDatabase.getInstance().getReference();
+    public void getAllInfoUserChat(ListInfoAllUser listInfoAllUser){
+        getAllIdListChat(listKey -> {
+            if (isOk.getValue()!=null && isOk.getValue()){
+                databaseReference=FirebaseDatabase.getInstance().getReference("user");
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        arrayAllUserChat.clear();
+                        for(DataSnapshot keyNode: dataSnapshot.getChildren()){
+                            UserModel userModel=keyNode.getValue(UserModel.class);
+                            for (int i=0;i<listKey.size();i++){
+                                assert userModel != null;
+                                if (listKey.get(i).equals(userModel.getUserId())){
+                                    arrayAllUserChat.add(userModel);
+                                }
+                            }
+                        }
+                        listInfoAllUser.DataIsLoaded(arrayAllUserChat);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    public interface DataStatus {
+        void DataIsLoaded(UserModel user);
+    }
+
+    public interface MessageStatus {
+        void DataIsLoaded(ArrayList<MessageModel> messageArray);
+    }
+    public interface ListIdChatStatus{
+        void DataIsLoaded(ArrayList<String> listKey);
+    }
+    public  interface  ListInfoAllUser{
+        void DataIsLoaded(ArrayList<UserModel> arrayInfoAllUserChat);
     }
 }

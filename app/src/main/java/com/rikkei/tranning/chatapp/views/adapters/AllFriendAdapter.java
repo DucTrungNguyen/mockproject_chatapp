@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
@@ -20,12 +22,12 @@ import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 
 public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter.ViewHolder> {
     Context context;
-    private OnItemClickListener listener;
     SharedFriendViewModel sharedFriendViewModel;
+
     public AllFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context = context;
-        sharedFriendViewModel= ViewModelProviders.of((FragmentActivity) context).get(SharedFriendViewModel.class);
+        sharedFriendViewModel = ViewModelProviders.of((FragmentActivity) context).get(SharedFriendViewModel.class);
     }
 
     private static final DiffUtil.ItemCallback<AllUserModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<AllUserModel>() {
@@ -36,7 +38,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
 
         @Override
         public boolean areContentsTheSame(@NonNull AllUserModel oldItem, @NonNull AllUserModel newItem) {
-            return  oldItem.getUserName().equals(newItem.getUserName())
+            return oldItem.getUserName().equals(newItem.getUserName())
                     && oldItem.getUserImage().equals(newItem.getUserImage())
                     && oldItem.getUserType().equals(newItem.getUserType());
         }
@@ -82,24 +84,21 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
                 holder.txtSection.setVisibility(View.GONE);
             }
         }
-        holder.btnRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.btnRequest.getText().toString()) {
-                    case "Kết bạn":
-                        sharedFriendViewModel.createFriend(user);
-                        holder.btnRequest.setText("Hủy");
-                        break;
-                    case "Hủy":
-                    case "Bạn bè":
-                        sharedFriendViewModel.deleteFriend(user);
-                        holder.btnRequest.setText("Kết bạn");
-                        break;
-                    case "Đồng ý":
-                        sharedFriendViewModel.updateFriend(user);
-                        holder.btnRequest.setText("Bạn bè");
-                        break;
-                }
+        holder.btnRequest.setOnClickListener(v -> {
+            switch (holder.btnRequest.getText().toString()) {
+                case "Kết bạn":
+                    sharedFriendViewModel.createFriend(user);
+                    holder.btnRequest.setText("Hủy");
+                    break;
+                case "Hủy":
+                case "Bạn bè":
+                    sharedFriendViewModel.deleteFriend(user);
+                    holder.btnRequest.setText("Kết bạn");
+                    break;
+                case "Đồng ý":
+                    sharedFriendViewModel.updateFriend(user);
+                    holder.btnRequest.setText("Bạn bè");
+                    break;
             }
         });
     }
@@ -108,7 +107,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         return getItem(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;
@@ -120,11 +119,5 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             btnRequest = itemView.findViewById(R.id.ButtonRequestItem);
             txtSection = itemView.findViewById(R.id.textViewHeader);
         }
-    }
-    public interface OnItemClickListener {
-        void onItemClick(AllUserModel userModel, String t);
-    }
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 }

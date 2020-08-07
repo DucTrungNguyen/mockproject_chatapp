@@ -8,27 +8,26 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-//adapter của tab tìm kiềm, trang chủ
 public class MainViewPaperAdaper extends FragmentPagerAdapter {
-    private ArrayList<Fragment> arrayFragment=new ArrayList<>();//chua cac fragment(tìm kiếm, trang chủ, mv, luu)
-    private ArrayList<String> arrayTitle=new ArrayList<>();//chua cac title cua fragment
+    private ArrayList<Fragment> arrayFragment = new ArrayList<>();
+    private ArrayList<String> arrayTitle = new ArrayList<>();
 
     public MainViewPaperAdaper(@NonNull FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return arrayFragment.get(position);//tra ve vi ri cua fragment lay ra
+        return arrayFragment.get(position);
     }
 
     @Override
     public int getCount() {
-        return arrayFragment.size();//so luong fragment
+        return arrayFragment.size();
     }
-    //add fragment va title cua no
-    public void AddFragment(Fragment fragment, String title){
+
+    public void AddFragment(Fragment fragment, String title) {
         arrayFragment.add(fragment);
         arrayTitle.add(title);
     }

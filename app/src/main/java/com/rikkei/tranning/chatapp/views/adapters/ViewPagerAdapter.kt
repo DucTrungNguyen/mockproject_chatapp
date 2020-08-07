@@ -5,17 +5,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.rikkei.tranning.chatapp.views.uis.friend.FriendFragment
-import com.rikkei.tranning.chatapp.views.uis.message.MessagesFragment
+import com.rikkei.tranning.chatapp.views.uis.message.MessageFragment
 import com.rikkei.tranning.chatapp.views.uis.profile.ProfileFragment
 
-class ViewPagerAdapter(private val myContext: Context, fm: FragmentManager, internal var totalTabs: Int) : FragmentPagerAdapter(fm) {
-
-    // this is for fragment tabs
+class ViewPagerAdapter(
+    private val myContext: Context,
+    fm: FragmentManager,
+    internal var totalTabs: Int
+) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> {
-                //  val homeFragment: HomeFragment = HomeFragment()
-                return MessagesFragment()
+                return MessageFragment()
             }
             1 -> {
                 return FriendFragment()
@@ -24,7 +25,6 @@ class ViewPagerAdapter(private val myContext: Context, fm: FragmentManager, inte
         }
     }
 
-    // this counts total number of tabs
     override fun getCount(): Int {
         return totalTabs
     }

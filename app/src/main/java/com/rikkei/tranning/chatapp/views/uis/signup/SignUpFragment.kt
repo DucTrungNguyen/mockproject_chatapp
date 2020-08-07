@@ -10,16 +10,13 @@ import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.R
-import com.rikkei.tranning.chatapp.ViewModelProviderFactory
+import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentSignupBinding
 import com.rikkei.tranning.chatapp.views.uis.login.LoginFragment
 import kotlinx.android.synthetic.main.fragment_signup.*
 
-class SignUpFragment : BaseFragment<FragmentSignupBinding?, SignUpViewModel?>() {
-    private var mFragmentSignUpBinding: FragmentSignupBinding? = null
-    private var mSignUpViewModel: SignUpViewModel? = null
+class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
     override fun getBindingVariable(): Int {
         return BR.viewModels
     }
@@ -29,15 +26,10 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding?, SignUpViewModel?>() 
     }
 
     override fun getViewModel(): SignUpViewModel {
-        mSignUpViewModel =
-            ViewModelProviders.of(this, ViewModelProviderFactory()).get(
-                SignUpViewModel::class.java
-            )
-        return mSignUpViewModel as SignUpViewModel
-    }
+        return ViewModelProviders.of(requireActivity()).get<SignUpViewModel>(
+            SignUpViewModel::class.java
+        )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(
@@ -45,78 +37,69 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding?, SignUpViewModel?>() 
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        mFragmentSignUpBinding = viewDataBinding
-        val htmlcontentcheckbox =
+        val htmlContentCheckBox =
             "Tôi đồng ý với các<font color=\"#4356B4\"> chính sách</font> và <font color=\"#4356B4\"> điều khoản</font>"
-        mFragmentSignUpBinding!!.checkboxRegister.text = Html.fromHtml(
-            htmlcontentcheckbox
+        mViewDataBinding.checkboxRegister.text = Html.fromHtml(
+            htmlContentCheckBox
         )
-        val htmlcontentbutton =
+        val htmlContentButton =
             "Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>"
-        mFragmentSignUpBinding!!.ButtonMoveLogin.text = Html.fromHtml(htmlcontentbutton)
+        mViewDataBinding.ButtonMoveLogin.text = Html.fromHtml(htmlContentButton)
         eventEnableButton()
-        mFragmentSignUpBinding!!.ButtonBackRegister.setOnClickListener { replaceFragment() }
-        mFragmentSignUpBinding!!.ButtonMoveLogin.setOnClickListener { replaceFragment() }
+        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragment() }
+        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-        mSignUpViewModel!!.signUpStatus.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is SignUpViewModel.SignUpStatus.Loading ->{
+        mViewModel!!.signUpStatus.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is SignUpViewModel.SignUpStatus.Loading -> {
                     progress_circular_signUp.visibility = View.VISIBLE
                 }
-                is SignUpViewModel.SignUpStatus.isOk ->{
+                is SignUpViewModel.SignUpStatus.IsOk -> {
                     progress_circular_signUp.visibility = View.GONE
                     Toast.makeText(context, "Sign Up Success!", Toast.LENGTH_SHORT).show()
                     replaceFragment()
-
                 }
-                is SignUpViewModel.SignUpStatus.Failure ->{
+                is SignUpViewModel.SignUpStatus.Failure -> {
                     Toast.makeText(context, "Sign up fail", Toast.LENGTH_SHORT).show()
                     progress_circular_signUp.visibility = View.GONE
-
                 }
-                is SignUpViewModel.SignUpStatus.ErrorPassAndEmail ->{
+                is SignUpViewModel.SignUpStatus.ErrorPassAndEmail -> {
                     Toast.makeText(context, "Invalid Email Or Password!", Toast.LENGTH_SHORT).show()
                     progress_circular_signUp.visibility = View.GONE
-
+                }
             }
-            }
-
         })
-
-
-        mSignUpViewModel!!.signUpUserMutableLiveData.observe(
+        mViewModel!!.signUpUserMutableLiveData.observe(
             viewLifecycleOwner,
             Observer { loginUser ->
-                if (loginUser.validateEmailPassword() == false) {
+                if (!loginUser.validateEmailPassword()) {
                     Toast.makeText(
                         context,
                         "Invalid Email Or Password!",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    mSignUpViewModel!!.createUserFireBase()
+                    mViewModel!!.createUserFireBase()
                 }
             })
 
-        mSignUpViewModel!!.userName.observe(
+        mViewModel!!.userName.observe(
             viewLifecycleOwner,
             Observer { s ->
                 if (TextUtils.isEmpty(s)) {
-                    mFragmentSignUpBinding!!.editTextNameRegister.error = "REQUIRED"
+                    mViewDataBinding!!.editTextNameRegister.error = "REQUIRED"
                 }
             })
     }
 
-    fun eventEnableButton() {
+    private fun eventEnableButton() {
         val editTexts = arrayOf(
-            mFragmentSignUpBinding!!.editTextNameRegister,
-            mFragmentSignUpBinding!!.editTextEmailRegister,
-            mFragmentSignUpBinding!!.editTextPassRegister
+            mViewDataBinding.editTextNameRegister,
+            mViewDataBinding.editTextEmailRegister,
+            mViewDataBinding.editTextPassRegister
         )
         for (i in editTexts.indices) {
             editTexts[i].addTextChangedListener(object : TextWatcher {
@@ -136,48 +119,38 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding?, SignUpViewModel?>() 
                 ) {
                     setEnableButton()
                 }
+
                 override fun afterTextChanged(s: Editable) {}
             })
         }
-        mFragmentSignUpBinding!!.checkboxRegister.setOnClickListener { setEnableButton() }
+        mViewDataBinding.checkboxRegister.setOnClickListener { setEnableButton() }
     }
 
-    fun replaceFragment() {
-        val fragmentManager = fragmentManager
-        val fragmentTransaction =
-            requireFragmentManager().beginTransaction()
-        val login = LoginFragment()
-        fragmentTransaction.replace(R.id.FrameLayout, login, null)
-        fragmentTransaction.commit()
+    private fun replaceFragment() {
+        mViewDataBinding.editTextNameRegister.setText("")
+        mViewDataBinding.editTextPassRegister.setText("")
+        mViewDataBinding.checkboxRegister.isChecked=false
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
     }
 
     fun setEnableButton() {
-        if (mFragmentSignUpBinding!!.checkboxRegister.isChecked
+        if (mViewDataBinding.checkboxRegister.isChecked
             && !TextUtils.isEmpty(
-                mFragmentSignUpBinding!!.editTextNameRegister.text.toString()
+                mViewDataBinding.editTextNameRegister.text.toString()
             )
             && !TextUtils.isEmpty(
-                mFragmentSignUpBinding!!.editTextEmailRegister.text.toString()
+                mViewDataBinding.editTextEmailRegister.text.toString()
             )
             && !TextUtils.isEmpty(
-                mFragmentSignUpBinding!!.editTextPassRegister.text.toString()
+                mViewDataBinding.editTextPassRegister.text.toString()
             )
         ) {
-            mFragmentSignUpBinding!!.ButtonRegister.isEnabled = true
-            mFragmentSignUpBinding!!.ButtonRegister.setBackgroundResource(R.drawable.custom_button_enable)
+            mViewDataBinding.ButtonRegister.isEnabled = true
+            mViewDataBinding.ButtonRegister.setBackgroundResource(R.drawable.custom_button_enable)
         } else {
-            mFragmentSignUpBinding!!.ButtonRegister.isEnabled = false
-            mFragmentSignUpBinding!!.ButtonRegister.setBackgroundResource(R.drawable.custom_button_login)
-        }
-    }
-
-    companion object {
-        fun newInstance(): SignUpFragment {
-            val args = Bundle()
-            val fragment =
-                SignUpFragment()
-            fragment.arguments = args
-            return fragment
+            mViewDataBinding.ButtonRegister.isEnabled = false
+            mViewDataBinding.ButtonRegister.setBackgroundResource(R.drawable.custom_button_login)
         }
     }
 }

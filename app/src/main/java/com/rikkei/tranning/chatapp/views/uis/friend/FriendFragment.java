@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.rikkei.tranning.chatapp.BR;
@@ -23,9 +22,8 @@ import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriend
 import java.util.ArrayList;
 
 public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFriendViewModel> {
-    FragmentFriendBinding mFragmentFriendBinding;
-    private SharedFriendViewModel sharedFriendViewModel;
-    ArrayList<AllUserModel> allUserArrayList=new ArrayList<>();
+    ArrayList<AllUserModel> allUserArrayList = new ArrayList<>();
+
     @Override
     public int getBindingVariable() {
         return BR.viewModelFriend;
@@ -38,21 +36,19 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
 
     @Override
     public SharedFriendViewModel getViewModel() {
-        sharedFriendViewModel=ViewModelProviders.of(getActivity()).get(SharedFriendViewModel.class);
-        return sharedFriendViewModel;
+        return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentFriendBinding = getViewDataBinding();
-        MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getFragmentManager());
+        MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
         mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "Bạn bè");
         mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "Tất cả");
         mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), "Yêu cầu");
-        mFragmentFriendBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
-        mFragmentFriendBinding.tabLayoutFriend.setupWithViewPager(mFragmentFriendBinding.viewPagerFriend);
-        mFragmentFriendBinding.editTextSearchFriend.addTextChangedListener(new TextWatcher() {
+        mViewDataBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
+        mViewDataBinding.tabLayoutFriend.setupWithViewPager(mViewDataBinding.viewPagerFriend);
+        mViewDataBinding.editTextSearchFriend.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -60,29 +56,18 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sharedFriendViewModel.searchFriend(s.toString(),allUserArrayList);
+                mViewModel.searchFriend(s.toString(), allUserArrayList);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-//        mFragmentFriendBinding.imageViewSearchFriend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                addFragment();
-//            }
-//        });
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sharedFriendViewModel.getUserFromLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<AllUserModel>>() {
-            @Override
-            public void onChanged(ArrayList<AllUserModel> allUserModelArrayList) {
-                allUserArrayList=allUserModelArrayList;
-            }
-        });
+        mViewModel.getUserFromLiveData.observe(getViewLifecycleOwner(), allUserModelArrayList -> allUserArrayList = allUserModelArrayList);
     }
 }

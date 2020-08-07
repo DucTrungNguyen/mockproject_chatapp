@@ -34,6 +34,8 @@
     <string name="txt_login_failed_en">"Login failed"</string>
     <string name="txt_invalid_username_en">Not a valid username</string>
     <!--    Language Vietnam-->
+    <string name="txt_date_vi">Hôm nay</string>
+    <string name="txt_before_date_vi">Hôm qua</string>
     <string name="txt_friend_vi">Kết bạn</string>
     <string name="txt_save_vi">Lưu</string>
     <string name="txt_version_hint_vi">1.00</string>

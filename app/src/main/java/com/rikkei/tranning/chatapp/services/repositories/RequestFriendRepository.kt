@@ -6,14 +6,12 @@ import com.rikkei.tranning.chatapp.services.models.FriendsModel
 import com.rikkei.tranning.chatapp.services.models.UserModel
 import java.util.*
 
-class RequestFriendRepository private constructor(){
-
-//    var
+class RequestFriendRepository private constructor() {
     var friendType: String? = null
     private val friendArrayList = ArrayList<FriendsModel>()
 
-    private  var databaseReference: DatabaseReference? = null
-    private var fireUser  = FirebaseAuth.getInstance().currentUser
+    private var databaseReference: DatabaseReference? = null
+    private var fireUser = FirebaseAuth.getInstance().currentUser
 
 
     var friends: FriendsModel? = FriendsModel()
@@ -22,30 +20,30 @@ class RequestFriendRepository private constructor(){
     var requestUserArrayList = ArrayList<UserModel>()
     var sendUserArrayList = ArrayList<UserModel>()
     var friendsArrayList = ArrayList<FriendsModel>()
-    companion object{
+
+    companion object {
         val instance = RequestFriendRepository()
     }
+
     init {
         databaseReference = FirebaseDatabase.getInstance().reference
-//        fireUser = FirebaseAuth.getInstance().currentUser
     }
 
     interface DataStatus {
-        fun DataIsLoading(arrayList: ArrayList<UserModel>?)
+        fun dataIsLoading(arrayList: ArrayList<UserModel>?)
     }
 
-    interface typeFriend {
+    interface TypeFriend {
         fun typeFriendIsLoad(s: String?)
     }
 
-    fun getRequestFriend() : DatabaseReference? {
-//        val firebaseUser = FirebaseAuth.getInstance().currentUser
+    fun getRequestFriend(): DatabaseReference? {
         val userId = fireUser!!.uid
         return databaseReference?.child("friend")?.child(userId)
 
     }
 
-    fun getDocUser( friendId : String) : DatabaseReference? {
+    fun getDocUser(friendId: String): DatabaseReference? {
 
         return databaseReference?.child("user")?.child(friendId)
 
@@ -80,7 +78,7 @@ class RequestFriendRepository private constructor(){
                         override fun onCancelled(databaseError: DatabaseError) {}
                     })
                 }
-                dataStatus.DataIsLoading(userArrayList)
+                dataStatus.dataIsLoading(userArrayList)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -89,7 +87,7 @@ class RequestFriendRepository private constructor(){
 
     fun searchFriendType(
         user: UserModel,
-        type: typeFriend
+        type: TypeFriend
     ) {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val userId = firebaseUser!!.uid
@@ -102,12 +100,16 @@ class RequestFriendRepository private constructor(){
                         keyNode.getValue(FriendsModel::class.java)!!
                     if (account.friendId == user.userId) {
                         friendArrayList.add(account)
-                        if (account.type == "friend") {
-                            friendType = "friend"
-                        } else if (account.type == "sendRequest") {
-                            friendType = "sendRequest"
-                        } else if (account.type == "friendRequest") {
-                            friendType = "friendRequest"
+                        when (account.type) {
+                            "friend" -> {
+                                friendType = "friend"
+                            }
+                            "sendRequest" -> {
+                                friendType = "sendRequest"
+                            }
+                            "friendRequest" -> {
+                                friendType = "friendRequest"
+                            }
                         }
                     }
                 }

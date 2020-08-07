@@ -1,4 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -8,28 +9,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
-import com.rikkei.tranning.chatapp.ViewModelProviderFactory;
-import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
 import com.squareup.picasso.Picasso;
@@ -37,25 +29,24 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel>{
-    FragmentEditprofileBinding mFragmentEditProfileBinding;
-    EditProfileViewModel mEditProfileViewModel;
-    private static final int IMAGE_REQUEST=1;
-    StorageReference storageReference= FirebaseStorage.getInstance().getReference("uploads");
+public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
+    private static final int IMAGE_REQUEST = 1;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads");
     private Uri imageUri;
     String uriImage;
-    private StorageTask uploadTask;
+    private StorageTask<UploadTask.TaskSnapshot> uploadTask;
 
     final Calendar myCalendar = Calendar.getInstance();
 
-    //    EditText edittext= (EditText) findViewById(R.id.Birthday);
     @Override
     public int getBindingVariable() {
         return BR.viewModelEditProfile;
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_editprofile;
@@ -63,183 +54,148 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
 
     @Override
     public EditProfileViewModel getViewModel() {
-        mEditProfileViewModel= ViewModelProviders.of(this, new ViewModelProviderFactory()).get(EditProfileViewModel.class);
-        return mEditProfileViewModel;
+        return ViewModelProviders.of(requireActivity()).get(EditProfileViewModel.class);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentEditProfileBinding=getViewDataBinding();
-        mFragmentEditProfileBinding.ImageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeFragment();
+        mViewDataBinding.ImageViewBack.setOnClickListener(v -> removeFragment());
+        mViewDataBinding.ImageButtonCamera.setOnClickListener(v -> openImage());
+        mViewDataBinding.ButtonSave.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(uriImage)) {
+                mViewModel.updateInfoUser("userImgUrl", uriImage);
             }
-        });
-        mFragmentEditProfileBinding.ImageButtonCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImage();
+            String name = mViewDataBinding.editTextNameProfile.getText().toString().trim();
+            String phone = mViewDataBinding.editPhoneProfile.getText().toString().trim();
+            String date = mViewDataBinding.editDateOfBirthProfile.getText().toString().trim();
+            if (TextUtils.isEmpty(name)) {
+                name = "default";
             }
-        });
-        mFragmentEditProfileBinding.ButtonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!TextUtils.isEmpty(uriImage)){
-                    mEditProfileViewModel.updateInfoUser("userImgUrl",uriImage);
-                }
-                String name=mFragmentEditProfileBinding.editTextNameProfile.getText().toString().trim();
-                String phone=mFragmentEditProfileBinding.editPhoneProfile.getText().toString().trim();
-                String date=mFragmentEditProfileBinding.editDateOfBirthProfile.getText().toString().trim();
-                if(TextUtils.isEmpty(name)){
-                    name="default";
-                }
-                if(TextUtils.isEmpty(phone)){
-                    phone="default";
-                }
-                if(TextUtils.isEmpty(date)){
-                    date="default";
-                }
-                mEditProfileViewModel.updateInfoUser("userName",name);
-                mEditProfileViewModel.updateInfoUser("userPhone",phone);
-                mEditProfileViewModel.updateInfoUser("userDateOfBirth",date);
-                removeFragment();
+            if (TextUtils.isEmpty(phone)) {
+                phone = "default";
             }
+            if (TextUtils.isEmpty(date)) {
+                date = "default";
+            }
+            mViewModel.updateInfoUser("userName", name);
+            mViewModel.updateInfoUser("userPhone", phone);
+            mViewModel.updateInfoUser("userDateOfBirth", date);
+            removeFragment();
         });
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
+        final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         };
-        mFragmentEditProfileBinding.editDateOfBirthProfile.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        mViewDataBinding.editDateOfBirthProfile.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            new DatePickerDialog(requireContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
 
     }
+
     private void updateLabel() {
         String myFormat = "dd/mm/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        mFragmentEditProfileBinding.editDateOfBirthProfile.setText(sdf.format(myCalendar.getTime()));
+        mViewDataBinding.editDateOfBirthProfile.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mEditProfileViewModel.getInfoUser();
-        mEditProfileViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel user) {
-                mFragmentEditProfileBinding.editTextNameProfile.setText(user.getUserName());
-                if(user.getUserPhone().equals("default")){
-                    mFragmentEditProfileBinding.editPhoneProfile.setText("");
-                }
-                else{
-                    mFragmentEditProfileBinding.editPhoneProfile.setText(user.getUserPhone());
-                }
-                if(user.getUserDateOfBirth().equals("default")){
-                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText("");
-                }
-                else {
-                    mFragmentEditProfileBinding.editDateOfBirthProfile.setText(user.getUserDateOfBirth());
-                }
-                if(user.getUserImgUrl().equals("default")){
-                    mFragmentEditProfileBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
-                }
-                else{
-                    Picasso.with(getContext()).load(user.getUserImgUrl()).into(mFragmentEditProfileBinding.CircleImageUserEdit);
-                }
+        mViewModel.getInfoUser();
+        mViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
+            mViewDataBinding.editTextNameProfile.setText(user.getUserName());
+            if (user.getUserPhone().equals("default")) {
+                mViewDataBinding.editPhoneProfile.setText("");
+            } else {
+                mViewDataBinding.editPhoneProfile.setText(user.getUserPhone());
+            }
+            if (user.getUserDateOfBirth().equals("default")) {
+                mViewDataBinding.editDateOfBirthProfile.setText("");
+            } else {
+                mViewDataBinding.editDateOfBirthProfile.setText(user.getUserDateOfBirth());
+            }
+            if (user.getUserImgUrl().equals("default")) {
+                mViewDataBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                Picasso.with(getContext()).load(user.getUserImgUrl()).into(mViewDataBinding.CircleImageUserEdit);
             }
         });
     }
 
-    //    @Override
     public void removeFragment() {
-        FragmentManager fragmentManager=getFragmentManager();
-        Fragment fragment=fragmentManager.findFragmentById(R.id.frameLayoutChat);
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        assert fragment != null;
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
+
     public void openImage() {
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,IMAGE_REQUEST);
+        startActivityForResult(intent, IMAGE_REQUEST);
     }
-    private String getFileExtension(Uri uri){
-        ContentResolver contentResolver=getContext().getContentResolver();
-        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = requireContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-    private  void uploadImage(){
-        final ProgressDialog progressDialog=new ProgressDialog(getContext());
+
+    private void uploadImage() {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Uploading");
         progressDialog.show();
-        if(imageUri!=null){
-            final  StorageReference fileReference=storageReference.child(System.currentTimeMillis()
-                    +"."+getFileExtension(imageUri));
-            uploadTask=fileReference.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
+        if (imageUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+                    + "." + getFileExtension(imageUri));
+            uploadTask = fileReference.putFile(imageUri);
+            uploadTask.continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw Objects.requireNonNull(task.getException());
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        Uri downloadUri=task.getResult();
-                        String mUri=downloadUri.toString();
-                        uriImage=mUri;
-                        Glide.with(getContext()).load(mUri).into(mFragmentEditProfileBinding.CircleImageUserEdit);
-                        progressDialog.dismiss();
-                    }
-                    else{
-                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
+                return fileReference.getDownloadUrl();
+
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    String mUri = downloadUri.toString();
+                    uriImage = mUri;
+                    Glide.with(requireContext()).load(mUri).into(mViewDataBinding.CircleImageUserEdit);
+                    progressDialog.dismiss();
+                } else {
+                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
             });
-        }
-        else{
+        } else {
             Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==IMAGE_REQUEST && resultCode== RESULT_OK && data!=null && data.getData()!=null){
-            imageUri=data.getData();
-            if(uploadTask!=null && uploadTask.isInProgress()){
+        if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 uploadImage();
             }
         }

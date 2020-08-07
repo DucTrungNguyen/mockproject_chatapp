@@ -1,73 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeItemFriend"
-    android:weightSum="4"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="4">
+    <!--    fixme-->
     <ImageView
-        android:layout_below="@+id/textViewHeader"
-        android:layout_margin="10dp"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/imageViewCircleFriend"
+        android:foregroundGravity="center"
+        android:id="@+id/imageViewCircleChat"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_launcher" />
+
     <LinearLayout
         android:id="@+id/linearContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imageViewCircleFriend"
+        android:layout_toEndOf="@+id/imageViewCircleChat"
         android:orientation="vertical">
+
         <LinearLayout
-            android:layout_below="@+id/textViewHeader"
-            android:orientation="horizontal"
+            android:weightSum="5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:orientation="horizontal">
             <TextView
-                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:id="@+id/textViewUserChatName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
-                android:text="Ten toi la trung"
-                android:textStyle="bold"
+                android:layout_weight="3"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
             <TextView
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/textViewTime"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textAllCaps="false"
-                android:text="10:00"
+                android:gravity="right"
+                android:id="@+id/textViewTimeMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:textAllCaps="false"
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                tools:ignore="RtlHardcoded" />
         </LinearLayout>
         <TextView
-            android:text="Chao em, a dung day tu chieu"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="12dp"
-            android:textColor="#000000"
-            android:textSize="14sp"
             android:id="@+id/textViewLastMess"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-
-
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+        <View
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/iconMain" />
     </LinearLayout>
-    <View
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/linearContent"
-        android:layout_width="match_parent"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_height="1dp"
-        android:background="#D2D2D2" />
 
 </RelativeLayout>
