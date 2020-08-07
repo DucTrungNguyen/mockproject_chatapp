@@ -43,7 +43,10 @@ public class MessageAdapter extends ListAdapter<UserModel, MessageAdapter.ViewHo
         @Override
         public boolean areContentsTheSame(@NonNull UserModel oldItem, @NonNull UserModel newItem) {
             return oldItem.getUserName().equals(newItem.getUserName())
-                    && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl());
+                    && oldItem.getUserImgUrl().equals(newItem.getUserImgUrl())
+                    && oldItem.getUserEmail().equals(newItem.getUserName())
+                    && oldItem.getUserDateOfBirth().equals(newItem.getUserDateOfBirth())
+                    && oldItem.getUserPhone().equals(newItem.getUserPhone());
         }
     };
 

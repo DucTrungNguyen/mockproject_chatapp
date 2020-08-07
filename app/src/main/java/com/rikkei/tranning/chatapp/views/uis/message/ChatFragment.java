@@ -51,7 +51,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             String message = mViewDataBinding.editTextMessage.getText().toString().trim();
             mViewModel.sendMessage(iD, message);
             mViewDataBinding.editTextMessage.setText("");
-            mViewModel.displayMessage(id);
+            //mViewModel.displayMessage(id);
         });
         mViewDataBinding.imageButtonSend.setEnabled(false);
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
@@ -99,7 +99,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewModel.displayMessage(id);
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels ->
                 chatAdapter.submitList(messageModels));
-
     }
 
     public void removeFragment() {
