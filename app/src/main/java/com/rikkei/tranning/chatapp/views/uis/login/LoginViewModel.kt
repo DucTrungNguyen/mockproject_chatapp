@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rikkei.tranning.chatapp.services.models.LoginUserModel
 import com.rikkei.tranning.chatapp.services.repositories.AuthRepository
+import kotlin.math.log
 
 class LoginViewModel : ViewModel() {
     var loginStatus = MutableLiveData<LoginStatus>()
@@ -26,6 +27,13 @@ class LoginViewModel : ViewModel() {
         } else {
             loginFirebase()
         }
+    }
+    fun resetStatus(){
+//        loginStatus.value = LoginStatus.Register(true)
+        loginStatus.value = LoginStatus.ErrorPassAndEmail(false)
+//        loginStatus.value = LoginStatus.Loading(false)
+
+
     }
 
     private fun loginFirebase() {
@@ -52,6 +60,8 @@ class LoginViewModel : ViewModel() {
         data class Failure(var e: Throwable) : LoginStatus()
 
         data class ErrorPassAndEmail(var isError: Boolean) : LoginStatus()
+
+        data class Register (var  isRegister: Boolean) : LoginStatus()
     }
 
 

@@ -163,6 +163,7 @@
 
 
             <TextView
+
                 app:layout_constraintTop_toBottomOf="@+id/relativeLogin"
                 android:id="@+id/ButtonMoveRegister"
                 android:layout_width="match_parent"

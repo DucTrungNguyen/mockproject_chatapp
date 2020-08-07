@@ -55,7 +55,10 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewModel!!.signUpStatus.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is SignUpViewModel.SignUpStatus.Loading -> {
-                    progress_circular_signUp.visibility = View.VISIBLE
+                    if (it.loading)
+                        progress_circular_signUp.visibility = View.VISIBLE
+                    else
+                        progress_circular_signUp.visibility = View.GONE
                 }
                 is SignUpViewModel.SignUpStatus.IsOk -> {
                     progress_circular_signUp.visibility = View.GONE
@@ -72,21 +75,21 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
                 }
             }
         })
-        mViewModel!!.signUpUserMutableLiveData.observe(
-            viewLifecycleOwner,
-            Observer { loginUser ->
-                if (!loginUser.validateEmailPassword()) {
-                    Toast.makeText(
-                        context,
-                        "Invalid Email Or Password!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    mViewModel!!.createUserFireBase()
-                }
-            })
+//        mViewModel?.signUpUserMutableLiveData?.observe(
+//            viewLifecycleOwner,
+//            Observer { loginUser ->
+//                if (!loginUser.validateEmailPassword()) {
+//                    Toast.makeText(
+//                        context,
+//                        "Invalid Email Or Password!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//                    mViewModel?.createUserFireBase()
+//                }
+//            })
 
-        mViewModel!!.userName.observe(
+        mViewModel?.userName?.observe(
             viewLifecycleOwner,
             Observer { s ->
                 if (TextUtils.isEmpty(s)) {
@@ -129,7 +132,9 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
     private fun replaceFragment() {
         mViewDataBinding.editTextNameRegister.setText("")
         mViewDataBinding.editTextPassRegister.setText("")
+        mViewDataBinding.editTextEmailRegister.setText("")
         mViewDataBinding.checkboxRegister.isChecked=false
+        mViewModel.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
     }
