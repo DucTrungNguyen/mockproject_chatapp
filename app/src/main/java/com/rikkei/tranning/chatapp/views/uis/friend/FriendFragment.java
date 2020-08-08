@@ -3,12 +3,16 @@ package com.rikkei.tranning.chatapp.views.uis.friend;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.tabs.TabLayout;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
@@ -23,6 +27,10 @@ import java.util.ArrayList;
 
 public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFriendViewModel> {
     ArrayList<AllUserModel> allUserArrayList = new ArrayList<>();
+    TabLayout.Tab tabRequest;
+    TabLayout.Tab tabFriend;
+    TabLayout.Tab tabAll;
+    BadgeView badgeViewRequest;
 
     @Override
     public int getBindingVariable() {
@@ -43,8 +51,8 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
-        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "Bạn bè");
-        mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "Tất cả");
+        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "BẠN BÈ");
+        mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "TẤT CẢ");
         mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), "Yêu cầu");
         mViewDataBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
         mViewDataBinding.tabLayoutFriend.setupWithViewPager(mViewDataBinding.viewPagerFriend);
@@ -63,6 +71,34 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
             public void afterTextChanged(Editable s) {
             }
         });
+
+        View textFriend = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        TextView textNotifiFriend = textFriend.findViewById(R.id.text1);
+        textNotifiFriend.setText("BẠN BÈ");
+        tabFriend = mViewDataBinding.tabLayoutFriend.getTabAt(0);
+        tabFriend.setCustomView(textFriend);
+
+        View textAll = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        TextView textNotifiAll = textAll.findViewById(R.id.text1);
+        textNotifiAll.setText("TẤT CẢ");
+        tabAll = mViewDataBinding.tabLayoutFriend.getTabAt(1);
+        tabAll.setCustomView(textAll);
+
+
+        View textRequest = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        TextView textNotifiRequest = textRequest.findViewById(R.id.text1);
+        textNotifiRequest.setText("YÊU CẦU");
+        tabRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2);
+        tabRequest.setCustomView(textRequest);
+//        tabRequest.
+//        badgeViewRequest = new BadgeView(getContext(),textView );
+//        badgeViewRequest.setBadgeMargin(-10,0);
+//        badgeViewRequest.setText("10");
+//
+//        badgeViewRequest.show();
+
+
+
     }
 
     @Override
