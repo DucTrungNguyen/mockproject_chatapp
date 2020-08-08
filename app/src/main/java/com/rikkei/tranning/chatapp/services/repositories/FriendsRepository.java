@@ -22,6 +22,7 @@ public class FriendsRepository {
     ArrayList<UserModel> userModelArrayList = new ArrayList<>();
     ArrayList<FriendsModel> friendsModelsArray = new ArrayList<>();
     ArrayList<AllUserModel> allUserModelArray = new ArrayList<>();
+    Integer countNotiFi =0;
 
     MutableLiveData<Boolean> isLoadUser = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadFriend = new MutableLiveData<>(false);
@@ -34,7 +35,7 @@ public class FriendsRepository {
     }
 
     public interface InfoUser {
-        void InfoUserLoaded(ArrayList<AllUserModel> allUserModelArrayList);
+        void InfoUserLoaded(ArrayList<AllUserModel> allUserModelArrayList, Integer count);
     }
 
     public void getUser(final FriendsRepository.DataStatus dataStatus) {
@@ -98,6 +99,7 @@ public class FriendsRepository {
                             friendsModelsArray = friendsModels;
                             if (isLoadFriend.getValue() != null && isLoadFriend.getValue()) {
                                 allUserModelArray.clear();
+                                countNotiFi = 0;
                                 for (int i = 0; i < userModelArrayList.size(); i++) {
                                     AllUserModel allUserModel = new AllUserModel();
                                     allUserModel.setUserId(userModelArrayList.get(i).getUserId());
@@ -108,6 +110,8 @@ public class FriendsRepository {
                                         if (userModelArrayList.get(i).getUserId().equals(friendsModelsArray.get(j).getFriendId())) {
                                             sum++;
                                             allUserModel.setUserType(friendsModelsArray.get(j).getType());
+                                            if (friendsModelsArray.get(j).getType().equals("friendRequest") )
+                                                countNotiFi++;
                                         }
                                     }
                                     if (sum == 0) {
@@ -115,7 +119,7 @@ public class FriendsRepository {
                                     }
                                     allUserModelArray.add(allUserModel);
                                 }
-                                infoUser.InfoUserLoaded(allUserModelArray);
+                                infoUser.InfoUserLoaded(allUserModelArray, countNotiFi);
                             }
                         }
                     });

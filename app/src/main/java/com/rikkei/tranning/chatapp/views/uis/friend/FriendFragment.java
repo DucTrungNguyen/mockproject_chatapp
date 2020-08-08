@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.uis.friend;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +32,8 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
     TabLayout.Tab tabFriend;
     TabLayout.Tab tabAll;
     BadgeView badgeViewRequest;
+    TextView countNotifi;
+    View textRequest;
 
     @Override
     public int getBindingVariable() {
@@ -85,25 +88,40 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
         tabAll.setCustomView(textAll);
 
 
-        View textRequest = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        textRequest= LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiRequest = textRequest.findViewById(R.id.text1);
+        countNotifi = textNotifiFriend.findViewById(R.id.textNotifi);
         textNotifiRequest.setText("YÊU CẦU");
         tabRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2);
         tabRequest.setCustomView(textRequest);
-//        tabRequest.
-//        badgeViewRequest = new BadgeView(getContext(),textView );
-//        badgeViewRequest.setBadgeMargin(-10,0);
-//        badgeViewRequest.setText("10");
-//
-//        badgeViewRequest.show();
 
 
 
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel.getUserFromLiveData.observe(getViewLifecycleOwner(), allUserModelArrayList -> allUserArrayList = allUserModelArrayList);
+
+        mViewModel.countNotifiRequest.observe(getViewLifecycleOwner(), s -> {
+            View viewRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2).getCustomView();
+
+            TextView  count = (TextView)viewRequest.findViewById(R.id.textNotifi);
+
+
+            if (s.equals("0"))
+                count.setVisibility(View.GONE);
+            else {
+                count.setVisibility(View.VISIBLE);
+                count.setText(s);
+
+            }
+
+        });
+
+
+
     }
 }
