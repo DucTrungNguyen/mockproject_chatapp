@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+
+    android:layout_height="wrap_content">
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/selectedTab"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/background_notification_main_blue"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:paddingTop="10dp"
+        android:id="@+id/iconTabMain"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_friend"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:background="@drawable/background_notification_main_red"
+        android:text="1"
+        android:textSize="11dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/iconTabMain"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/textTabMain"
+        android:textColor="#999999"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:text="@string/txt_friends"
+        android:layout_below="@+id/iconTabMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
