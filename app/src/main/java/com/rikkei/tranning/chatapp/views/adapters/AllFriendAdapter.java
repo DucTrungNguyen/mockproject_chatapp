@@ -68,7 +68,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
                 holder.btnRequest.setText("Kết bạn");
                 break;
             case "friend":
-                holder.btnRequest.setText("Bạn bè");
+                holder.btnRequest.setText("Hủy bạn");
                 break;
             case "sendRequest":
                 holder.btnRequest.setText("Hủy");
@@ -91,13 +91,13 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
                     holder.btnRequest.setText("Hủy");
                     break;
                 case "Hủy":
-                case "Bạn bè":
+                case "Hủy bạn":
                     sharedFriendViewModel.deleteFriend(user);
                     holder.btnRequest.setText("Kết bạn");
                     break;
                 case "Đồng ý":
                     sharedFriendViewModel.updateFriend(user);
-                    holder.btnRequest.setText("Bạn bè");
+                    holder.btnRequest.setText("Hủy bạn");
                     break;
             }
         });

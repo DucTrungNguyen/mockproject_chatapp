@@ -50,10 +50,10 @@
     <string name="txt_register_vi">"Đăng ký"</string>
     <string name="txt_invalid_password_vi">"Mật khẩu cân dài hơn 6 ký tự"</string>
     <string name="txt_name_vi">"HỌ VÀ TÊN"</string>
-    <string name="txt_message_vi">"Tin nhắn"</string>
+    <string name="txt_message_vi">"TIN NHẮN"</string>
     <string name="txt_search_message_vi">"Tìm kiếm tin nhắn"</string>
-    <string name="txt_friends">"Bạn bè"</string>
-    <string name="txt_profile_vi">"Trang cá nhân"</string>
+    <string name="txt_friends">"BẠN BÈ"</string>
+    <string name="txt_profile_vi">"CÁ NHÂN"</string>
     <string name="txt_today_vi">"Hôm nay"</string>
     <string name="txt_yesterday_vi">"Hôm qua"</string>
     <string name="txt_cancel_vi">"Hủy"</string>

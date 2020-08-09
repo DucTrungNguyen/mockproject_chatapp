@@ -68,7 +68,7 @@ public class RequestFriendAdapter extends ListAdapter<AllUserModel, RequestFrien
                 holder.btnRequest.setText("Kết bạn");
                 break;
             case "friend":
-                holder.btnRequest.setText("Bạn bè");
+                holder.btnRequest.setText("Hủy bạn");
                 break;
             case "sendRequest":
                 holder.btnRequest.setText("Hủy");

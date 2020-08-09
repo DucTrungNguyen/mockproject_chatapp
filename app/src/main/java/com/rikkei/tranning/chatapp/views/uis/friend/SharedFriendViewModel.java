@@ -1,5 +1,8 @@
 package com.rikkei.tranning.chatapp.views.uis.friend;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,13 +17,32 @@ public class SharedFriendViewModel extends ViewModel {
     FriendsRepository friendRepository;
     public MutableLiveData<ArrayList<AllUserModel>> allUserListLiveData = new MutableLiveData<>();
     public MutableLiveData<ArrayList<AllUserModel>> getUserFromLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> countNotifiRequest = new MutableLiveData<>("0");
+    Integer count =0;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public SharedFriendViewModel() {
         friendRepository = new FriendsRepository();
-        friendRepository.getUserInfo(allUserModels -> {
+        friendRepository.getUserInfo((allUserModels, count) -> {
+
             allUserListLiveData.setValue(allUserModels);
             getUserFromLiveData.setValue(allUserModels);
             arrayAllFriend = allUserModels;
+
+
+//            allUserModels.forEach(user ->{
+//                if(user.getUserType().equals("friendRequest")){
+//                    count++;
+//                }
+//            });
+
+            if ( count > 10){
+                countNotifiRequest.setValue("9+");
+            }
+            else
+                countNotifiRequest.setValue(Integer.toString(count));
+            count = 0;
+
         });
     }
 

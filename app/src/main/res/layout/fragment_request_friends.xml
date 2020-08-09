@@ -13,31 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--        fixme-->
-        <LinearLayout
-            android:id="@+id/linearRequest"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerRequestFriend"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
 
-            android:baselineAligned="false"
-            android:orientation="vertical">
+            tools:listitem="@layout/item_friend" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RecyclerRequestFriend"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-
-                tools:listitem="@layout/item_friend" />
-
-            <!--            <androidx.recyclerview.widget.RecyclerView-->
-            <!--                android:id="@+id/RecyclerSendFriend"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                tools:listitem="@layout/item_friend" />-->
-
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/ImageViewNoResultMyFriend"

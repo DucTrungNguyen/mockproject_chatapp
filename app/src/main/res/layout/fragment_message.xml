@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -53,30 +53,27 @@
                 android:src="@drawable/ic_create_new_message" />
         </RelativeLayout>
 
-        <RelativeLayout
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/RelativeLayoutSearch"
+            android:layout_below="@id/RelativeLayoutSearch"
             android:layout_marginTop="50dp"
-            android:background="@drawable/fragment">
+            android:background="@drawable/fragment"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_friend_massage" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                android:id="@+id/recyclerMessage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/item_friend_massage" />
+        <ImageView
+            android:id="@+id/ImageViewNoResultChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center|center_vertical"
+            android:src="@drawable/ic_no_search"
+            android:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/ImageViewNoResultChat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center|center_vertical"
-                android:src="@drawable/ic_no_search"
-                android:visibility="visible" />
-
-        </RelativeLayout>
     </RelativeLayout>
+
 </layout>
