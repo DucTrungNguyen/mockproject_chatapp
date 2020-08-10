@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
     private static final int IMAGE_REQUEST = 1;
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads");
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile");
     private Uri imageUri;
     String uriImage;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;

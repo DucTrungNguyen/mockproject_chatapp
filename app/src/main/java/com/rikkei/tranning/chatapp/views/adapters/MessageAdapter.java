@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class MessageAdapter extends ListAdapter<UserModel, MessageAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserModel userModel = getItem(position);
@@ -67,13 +69,18 @@ public class MessageAdapter extends ListAdapter<UserModel, MessageAdapter.ViewHo
             Glide.with(context).load(userModel.getUserImgUrl()).circleCrop()
                     .into(holder.cImgUser);
         }
-        chatViewModel.getListMessage(userModel.getUserId(), (message, time, date) -> {
-            holder.txtLastMessage.setText(message);
+        chatViewModel.getListMessage(userModel.getUserId(), (message, time, date,type) -> {
+            if (type.equals("Text")){
+                holder.txtLastMessage.setText(message);
+            }
+            else {
+                holder.txtLastMessage.setText("Image");
+            }
             final Calendar calendar = Calendar.getInstance();
             SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String a = simpleDateFormatDate.format(calendar.getTime());
             calendar.add(Calendar.DATE, -1);
-            String before=simpleDateFormatDate.format(calendar.getTime());
+           // String before=simpleDateFormatDate.format(calendar.getTime());
             if(a.equals(date)){
                 holder.txtTime.setText(time);
             }

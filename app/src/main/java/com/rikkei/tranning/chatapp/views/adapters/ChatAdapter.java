@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolder> {
     Context context;
@@ -57,16 +62,34 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MessageModel messageModel = getItem(position);
-        holder.txtMessage.setText(messageModel.getMessage());
+        if (messageModel.getType().equals("Text")){
+            holder.txtMessage.setText(messageModel.getMessage());
+            holder.imgMessage.setVisibility(View.GONE);
+        }
+        else {
+            holder.txtMessage.setVisibility(View.GONE);
+            Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
+        }
         if (urlImage.equals("default")) {
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.imgUserChat);
         } else {
             Glide.with(context).load(urlImage).circleCrop().into(holder.imgUserChat);
         }
-        holder.txtDate.setText(messageModel.getTime());
+        final Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String a = simpleDateFormatDate.format(calendar.getTime());
+        if (messageModel.getDate().equals(a)){
+            holder.txtDate.setText(messageModel.getTime());
+            holder.txtChatDate.setText("Hôm nay");
+        }
+        else {
+            holder.txtChatDate.setText(messageModel.getDate());
+            holder.txtDate.setText(messageModel.getDate()+" "+messageModel.getTime());
+        }
         if (position > 0) {
             int i = position - 1;
             MessageModel message = getNoteAt(i);
@@ -74,6 +97,9 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
                     && messageModel.getIdReceiver().equals(message.getIdReceiver())) {
                 holder.imgUserChat.setVisibility(View.GONE);
                 holder.view.setVisibility(View.VISIBLE);
+            }
+            if (i <=this.getItemCount() && messageModel.getDate().equals(message.getDate())) {
+                holder.txtChatDate.setVisibility(View.GONE);
             }
         }
         if (position < this.getItemCount() - 1) {
@@ -86,25 +112,31 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
                 holder.txtDate.setVisibility(View.VISIBLE);
             }
         }
-        holder.txtMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.txtDate.getVisibility() == View.VISIBLE) {
-                    holder.txtDate.setVisibility(View.GONE);
-                } else {
-                    holder.txtDate.setVisibility(View.VISIBLE);
-                }
+        holder.txtMessage.setOnClickListener(v -> {
+            if (holder.txtDate.getVisibility() == View.VISIBLE) {
+                holder.txtDate.setVisibility(View.GONE);
+            } else {
+                holder.txtDate.setVisibility(View.VISIBLE);
+            }
+        });
+        holder.imgMessage.setOnClickListener(view -> {
+            if (holder.txtDate.getVisibility() == View.VISIBLE) {
+                holder.txtDate.setVisibility(View.GONE);
+            } else {
+                holder.txtDate.setVisibility(View.VISIBLE);
             }
         });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgUserChat;
-        TextView txtMessage, txtDate;
+        ImageView imgUserChat, imgMessage;
+        TextView txtMessage, txtDate, txtChatDate;
         View view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            txtChatDate=itemView.findViewById(R.id.textViewChatDate);
+            imgMessage=itemView.findViewById(R.id.imageViewMessage);
             imgUserChat = itemView.findViewById(R.id.imageViewUserChat);
             txtMessage = itemView.findViewById(R.id.textViewMessage);
             view = itemView.findViewById(R.id.view);

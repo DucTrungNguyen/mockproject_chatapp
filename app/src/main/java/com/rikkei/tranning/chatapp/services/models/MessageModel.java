@@ -1,6 +1,5 @@
 package com.rikkei.tranning.chatapp.services.models;
 
-import java.util.Date;
 
 public class MessageModel {
     private String idSender;
@@ -9,17 +8,27 @@ public class MessageModel {
     private String type;
     private String date;
     private String time;
+    private Boolean checkSeen;
 
-    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time) {
+    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time, Boolean checkSeen) {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
         this.message = message;
         this.type = type;
         this.date = date;
-        this.time=time;
+        this.time = time;
+        this.checkSeen = checkSeen;
     }
 
     public MessageModel() {
+    }
+
+    public Boolean getCheckSeen() {
+        return checkSeen;
+    }
+
+    public void setCheckSeen(Boolean checkSeen) {
+        this.checkSeen = checkSeen;
     }
 
     public String getIdSender() {

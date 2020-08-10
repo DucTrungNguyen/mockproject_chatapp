@@ -16,6 +16,7 @@ class SplashActivity : AppCompatActivity() {
         if (firebaseUser != null) {
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
         } else {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()

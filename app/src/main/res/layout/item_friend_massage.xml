@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeItemFriend"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
     android:weightSum="4">
-    <!--    fixme-->
     <ImageView
-
         android:id="@+id/imageViewCircleChat"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -32,10 +29,9 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Nguyen Nguyen Nguyen"/>
+        />
 
     <TextView
-        android:text="10:30"
         android:layout_alignParentEnd="true"
         android:id="@+id/textViewTimeMessage"
         android:layout_width="wrap_content"
@@ -48,7 +44,6 @@
          />
 
     <TextView
-        android:text="Xin chao, minh dung day tu chieu cac ban oi"
         android:layout_below="@+id/textViewUserChatName"
         android:layout_toEndOf="@+id/imageViewCircleChat"
         android:id="@+id/textViewLastMess"
