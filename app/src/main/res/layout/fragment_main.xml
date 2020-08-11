@@ -29,6 +29,7 @@
             android:background="@color/grey2" />
 
         <androidx.cardview.widget.CardView
+            android:elevation="5dp"
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,6 +50,7 @@
                 app:tabGravity="fill"
                 app:tabIndicatorHeight="0dp"
                 app:tabMode="fixed"
+
                 app:tabSelectedTextColor="#4356B4" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

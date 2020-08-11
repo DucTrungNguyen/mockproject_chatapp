@@ -11,11 +11,13 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg">
         <RelativeLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/RelativeLayoutSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,10 +56,11 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/recyclerMessage"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:layout_below="@id/RelativeLayoutSearch"
+            android:layout_height="0dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/fragment"
             android:orientation="vertical"
@@ -65,14 +68,16 @@
             tools:listitem="@layout/item_friend_massage" />
 
         <ImageView
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch"
             android:id="@+id/ImageViewNoResultChat"
             android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center|center_vertical"
             android:src="@drawable/ic_no_search"
             android:visibility="gone" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

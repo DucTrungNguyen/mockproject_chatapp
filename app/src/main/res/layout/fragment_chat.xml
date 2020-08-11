@@ -10,6 +10,8 @@
     </data>
 
     <RelativeLayout
+        android:focusable="true"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey2"
@@ -64,6 +66,7 @@
             android:layout_marginTop="30dp" />
 
         <RelativeLayout
+            android:layout_above="@id/sticker_pack_list"
             android:layout_centerVertical="true"
             android:id="@+id/relativeBottom"
             android:layout_marginRight="12dp"
@@ -122,9 +125,13 @@
 
 
         </RelativeLayout>
-        <fragment
-            android:layout_below="@id/relativeBottom"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/sticker_pack_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone"
+            android:layout_height="300dp" />
+
+
     </RelativeLayout>
 </layout>
