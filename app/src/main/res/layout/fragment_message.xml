@@ -21,6 +21,7 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/editTextSearchUserChat"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_marginLeft="20sp"
@@ -28,7 +29,6 @@
                 android:layout_marginRight="20sp"
                 android:background="@drawable/edittext"
                 android:drawableStart="@drawable/ic_baseline_search_24"
-                android:focusable="false"
                 android:hint="@string/txt_search_message_vi"
                 android:padding="5dp" />
 
@@ -56,7 +56,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
             android:layout_below="@id/RelativeLayoutSearch"
             android:layout_marginTop="50dp"
             android:background="@drawable/fragment"
@@ -71,7 +71,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center|center_vertical"
             android:src="@drawable/ic_no_search"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -17,8 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -27,8 +34,10 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentChatBinding;
+import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -40,7 +49,10 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("chat");
     private Uri imageUri;
     String uriImage;
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+    ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
+    int lastPosition;
 
     @Override
     public int getBindingVariable() {
@@ -77,7 +89,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             }
 
             @Override
@@ -113,14 +125,53 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             mViewDataBinding.textViewUserNameChat.setText(userModel.getUserName());
             mViewDataBinding.recyclerChat.setHasFixedSize(true);
+            SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerChat.getItemAnimator();
+            assert itemAnimator != null;
+            itemAnimator.setSupportsChangeAnimations(false);
             chatAdapter = new ChatAdapter(getContext(), userModel.getUserImgUrl());
             mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
         });
+        checkSeen(id);
         mViewModel.displayMessage(id);
-        mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> chatAdapter.submitList(messageModels));
+        mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
+            lastPosition=messageModels.size();
+            chatAdapter.submitList(messageModels);
+        });
+    }
+
+    public void checkSeen(String id){
+        String myId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        databaseReference=mViewModel.checkSeen(id);
+        listener=databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                    MessageModel message = keyNode.getValue(MessageModel.class);
+                    assert message != null;
+                    if (message.getIdReceiver().equals(myId) && message.getIdSender().equals(id)) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("checkSeen", true);
+                        keyNode.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(listener);
     }
 
     public void removeFragment() {
+        databaseReference.removeEventListener(listener);
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
         assert fragment != null;

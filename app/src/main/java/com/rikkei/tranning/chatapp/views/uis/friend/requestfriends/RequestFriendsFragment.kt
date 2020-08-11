@@ -5,6 +5,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentRequestFriendsBinding
@@ -45,6 +46,9 @@ class RequestFriendFragment :
 
         requestFriendAdapter = RequestFriendAdapter(context)
         mViewDataBinding!!.RecyclerRequestFriend.layoutManager = layoutManagerRequest
+        val itemAnimator =
+            (mViewDataBinding!!.RecyclerRequestFriend.itemAnimator as SimpleItemAnimator)
+        itemAnimator.supportsChangeAnimations = false
         mViewDataBinding!!.RecyclerRequestFriend.adapter = requestFriendAdapter
 
     }
