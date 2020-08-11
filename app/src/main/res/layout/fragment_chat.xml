@@ -64,13 +64,14 @@
             android:layout_marginTop="30dp" />
 
         <RelativeLayout
+            android:layout_centerVertical="true"
             android:id="@+id/relativeBottom"
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-          >
+            android:layout_height="60dp">
             <ImageButton
                 android:layout_marginBottom="15dp"
                 android:layout_alignParentBottom="true"
@@ -104,10 +105,26 @@
                 android:layout_toEndOf="@+id/imageButtonPhotoChat"
                 android:id="@+id/editTextMessage"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/custom_edittext"
                 android:hint="@string/txt_enterMessage_vi"
                 android:textSize="16sp" />
+            <ImageView
+
+                android:layout_toLeftOf="@id/imageButtonSend"
+                android:paddingRight="30dp"
+                android:layout_centerInParent="true"
+
+
+                android:src="@drawable/ic_smile_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
         </RelativeLayout>
+        <fragment
+            android:layout_below="@id/relativeBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </layout>

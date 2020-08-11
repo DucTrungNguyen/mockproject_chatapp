@@ -57,6 +57,8 @@
          />
 
     <TextView
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_below="@+id/textViewUserChatName"
         android:layout_toEndOf="@+id/imageViewCircleChat"
         android:id="@+id/textViewLastMess"
