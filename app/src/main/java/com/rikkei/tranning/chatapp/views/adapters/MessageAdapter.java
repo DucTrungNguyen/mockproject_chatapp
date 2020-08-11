@@ -89,6 +89,7 @@ public class MessageAdapter extends ListAdapter<ChatModel, MessageAdapter.ViewHo
             time=userModel.getMessageModelArrayList().get(i).getTime();
             type=userModel.getMessageModelArrayList().get(i).getType();
         }
+        assert idSender != null;
         if (idSender.equals(firebaseUser.getUid())){
             message="Bạn: "+ message;
         }

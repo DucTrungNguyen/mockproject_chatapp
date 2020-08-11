@@ -18,7 +18,6 @@ public class SharedFriendViewModel extends ViewModel {
     public MutableLiveData<ArrayList<AllUserModel>> allUserListLiveData = new MutableLiveData<>();
     public MutableLiveData<ArrayList<AllUserModel>> getUserFromLiveData = new MutableLiveData<>();
     public MutableLiveData<String> countNotifiRequest = new MutableLiveData<>("0");
-    Integer count =0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public SharedFriendViewModel() {
@@ -41,8 +40,6 @@ public class SharedFriendViewModel extends ViewModel {
             }
             else
                 countNotifiRequest.setValue(Integer.toString(count));
-            count = 0;
-
         });
     }
 

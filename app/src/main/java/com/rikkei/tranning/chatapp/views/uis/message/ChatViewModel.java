@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.database.DatabaseReference;
-import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;

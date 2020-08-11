@@ -67,10 +67,12 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MessageModel messageModel = getItem(position);
         if (messageModel.getType().equals("Text")){
+            holder.txtMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setText(messageModel.getMessage());
             holder.imgMessage.setVisibility(View.GONE);
         }
         else {
+            holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
         }
