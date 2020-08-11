@@ -38,13 +38,14 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     private static final DiffUtil.ItemCallback<MessageModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<MessageModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull MessageModel oldItem, @NonNull MessageModel newItem) {
-            return oldItem.getIdReceiver().equals(newItem.getIdReceiver())
-                    && oldItem.getIdSender().equals(newItem.getIdSender());
+            return oldItem.getTimeLong() == newItem.getTimeLong();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull MessageModel oldItem, @NonNull MessageModel newItem) {
-            return oldItem.getMessage().equals(newItem.getMessage())
+            return oldItem.getIdSender().equals(newItem.getIdSender())
+                    && oldItem.getIdReceiver().equals(newItem.getIdReceiver())
+                    && oldItem.getMessage().equals(newItem.getMessage())
                     && oldItem.getType().equals(newItem.getType())
                     && oldItem.getDate().equals(newItem.getDate());
         }

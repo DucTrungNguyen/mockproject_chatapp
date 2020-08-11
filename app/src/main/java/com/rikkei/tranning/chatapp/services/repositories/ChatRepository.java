@@ -1,6 +1,9 @@
 package com.rikkei.tranning.chatapp.services.repositories;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +19,7 @@ import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -48,6 +52,7 @@ public class ChatRepository {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void createMessage(String id, String message, String type) {
         final Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -58,7 +63,9 @@ public class ChatRepository {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             String idUser = firebaseUser.getUid();
-            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false);
+            Instant instant = Instant.now();
+
+            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false, instant.toEpochMilli());
             String key;
             if (id.compareTo(idUser) > 0) {
                 key = id + idUser;

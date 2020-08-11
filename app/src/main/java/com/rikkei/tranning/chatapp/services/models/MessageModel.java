@@ -8,15 +8,17 @@ public class MessageModel {
     private String type;
     private String date;
     private String time;
+    private long timeLong;
     private Boolean checkSeen;
 
-    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time, Boolean checkSeen) {
+    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time, Boolean checkSeen, long timeLong) {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
         this.message = message;
         this.type = type;
         this.date = date;
         this.time = time;
+        this.timeLong = timeLong;
         this.checkSeen = checkSeen;
     }
 
@@ -77,5 +79,13 @@ public class MessageModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public long getTimeLong() {
+        return timeLong;
+    }
+
+    public void setTimeLong(long timeLong) {
+        this.timeLong = timeLong;
     }
 }

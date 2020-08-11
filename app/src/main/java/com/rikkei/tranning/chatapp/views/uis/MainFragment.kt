@@ -37,14 +37,14 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
         tabLayout?.addTab(tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_friend))
         tabLayout?.addTab(tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_profile))
 
-        tabLayout?.get(0)?.alpha = 0.2f
-        tabLayout?.get(0)?.animate()?.apply {
-            interpolator = LinearInterpolator()
-            duration = 1500
-            alpha(1f)
-            startDelay = 2000
-            start()
-        }
+//        tabLayout?.get(0)?.alpha = 0.2f
+//        tabLayout?.get(0)?.animate()?.apply {
+//            interpolator = LinearInterpolator()
+//            duration = 1500
+//            alpha(1f)
+//            startDelay = 2000
+//            start()
+//        }
 
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 

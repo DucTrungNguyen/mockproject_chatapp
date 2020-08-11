@@ -76,6 +76,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
         mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> openImage());
         mViewDataBinding.imageButtonSend.setOnClickListener(v -> {
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             Bundle bundle = getArguments();
             String iD = null;
             if (bundle != null) {
@@ -89,7 +90,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             }
 
             @Override
