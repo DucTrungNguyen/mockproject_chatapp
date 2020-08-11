@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
@@ -38,6 +39,9 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.RecyclerAllFriend.getItemAnimator();
+        assert itemAnimator != null;
+        itemAnimator.setSupportsChangeAnimations(false);
         allFriendAdapter = new AllFriendAdapter(getContext());
         mViewDataBinding.RecyclerAllFriend.setAdapter(allFriendAdapter);
 //        allFriendAdapter.setOnItemClickListener(new AllFriendAdapter.OnItemClickListener() {

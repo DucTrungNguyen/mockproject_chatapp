@@ -3,6 +3,9 @@ package com.rikkei.tranning.chatapp.views.uis.message;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.database.DatabaseReference;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
+import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.ChatRepository;
@@ -12,13 +15,21 @@ import java.util.ArrayList;
 public class ChatViewModel extends ViewModel {
     MutableLiveData<UserModel> userChatLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<MessageModel>> messageListLiveData = new MutableLiveData<>();
-    MutableLiveData<ArrayList<UserModel>> arrayInfoUserChatLiveData=new MutableLiveData<>();
+    MutableLiveData<ArrayList<ChatModel>> arrayInfoUserChatLiveData=new MutableLiveData<>();
+    MutableLiveData<ArrayList<ChatModel>> arraySearchLiveData =new MutableLiveData<>();
 
     ChatRepository chatRepository;
 
     public ChatViewModel() {
         chatRepository = new ChatRepository();
-        chatRepository.getAllInfoUserChat(arrayInfoAllUserChat -> arrayInfoUserChatLiveData.setValue(arrayInfoAllUserChat));
+        chatRepository.getListMessage(listChatArray -> {
+            arrayInfoUserChatLiveData.setValue(listChatArray);
+            arraySearchLiveData.setValue(listChatArray);
+        });
+//        chatRepository.getAllInfoUserChat(arrayInfoAllUserChat -> {
+//            arrayInfoUserChatLiveData.setValue(arrayInfoAllUserChat);
+//            arraySearchLiveData.setValue(arrayInfoAllUserChat);
+//        });
     }
 
     public void getInfoUserChat(String id) {
@@ -29,23 +40,20 @@ public class ChatViewModel extends ViewModel {
         chatRepository.createMessage(idUser, message,type);
     }
     public void displayMessage(String idFriend) {
-        chatRepository.getSomeOfMessage(idFriend, messageArray -> messageListLiveData.setValue(messageArray));
+        chatRepository.getMessage(idFriend, messageArray -> messageListLiveData.setValue(messageArray));
     }
-    public void getListMessage(String id, LastMessage lastMessage){
-        chatRepository.getMessage(id, messageArray -> {
-            for (int i=0;i<messageArray.size();i++){
-                String message= messageArray.get(i).getMessage();
-                String time= messageArray.get(i).getTime();
-                String date= messageArray.get(i).getDate();
-                String type=messageArray.get(i).getType();
-                lastMessage.isLoad(message,time,date,type);
+    public DatabaseReference checkSeen(String id){
+        return chatRepository.checkSeen(id);
+    }
+
+    public void searchUserChat(final String s, ArrayList<ChatModel> getUserFromLiveData) {
+        ArrayList<ChatModel> allUserList = new ArrayList<>();
+        for (int i = 0; i < getUserFromLiveData.size(); i++) {
+            String a = getUserFromLiveData.get(i).getUserModel().getUserName();
+            if (a.contains(s)) {
+                allUserList.add(getUserFromLiveData.get(i));
             }
-        });
-    }
-    public void checkSeen(String id){
-        chatRepository.checkSeen(id);
-    }
-    public interface LastMessage{
-        void isLoad(String message, String time, String date,String type);
+        }
+        arrayInfoUserChatLiveData.setValue(allUserList);
     }
 }

@@ -11,13 +11,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class ChatRepository {
@@ -30,6 +30,7 @@ public class ChatRepository {
     MutableLiveData<Boolean> isOk = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadInfoUser = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadedMessage = new MutableLiveData<>(false);
+
 
     public void infoUserFromFirebase(String id, final DataStatus dataStatus) {
         databaseReference = FirebaseDatabase.getInstance().getReference("user").child(id);
@@ -119,7 +120,6 @@ public class ChatRepository {
                     MessageModel message = keyNode.getValue(MessageModel.class);
                     messageList.add(message);
                 }
-                isLoadedMessage.setValue(true);
                 messageStatus.DataIsLoaded(messageList);
             }
 
@@ -190,10 +190,7 @@ public class ChatRepository {
         });
     }
 
-    public void checkSeen(String idFriend) {
-        if (firebaseUser == null) {
-            return;
-        }
+    public DatabaseReference checkSeen(String idFriend) {
         String myId = firebaseUser.getUid();
         String key;
         if (idFriend.compareTo(myId) > 0) {
@@ -201,28 +198,32 @@ public class ChatRepository {
         } else {
             key = myId + idFriend;
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
-                    MessageModel message = keyNode.getValue(MessageModel.class);
-                    assert message != null;
-                    if (message.getIdReceiver().equals(myId) && message.getIdSender().equals(idFriend)) {
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("checkSeen", true);
-                        keyNode.getRef().updateChildren(hashMap);
-                    }
+        return databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
+    }
+    public void getListMessage(ListMessageStatus listMessageStatus) {
+        getAllInfoUserChat(arrayInfoAllUserChat -> {
+            if (isLoadInfoUser.getValue() != null && isLoadInfoUser.getValue()) {
+                ArrayList<ChatModel> listChat=new ArrayList<>();
+                listChat.clear();
+                for (int i = 0; i < arrayInfoAllUserChat.size(); i++) {
+                    ChatModel chatModel = new ChatModel();
+                    chatModel.setUserModel(arrayInfoAllUserChat.get(i));
+                    getSomeOfMessage(arrayInfoAllUserChat.get(i).getUserId(), messageArray -> {
+                        if (isLoadedMessage.getValue() != null && isLoadedMessage.getValue()) {
+                            chatModel.setMessageModelArrayList(messageArray);
+                            isLoadedMessage.setValue(false);
+                            listChat.add(chatModel);
+                            listMessageStatus.DataIsLoaded(listChat);
+                        }
+                    });
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
 
+        public interface ListMessageStatus{
+            void DataIsLoaded(ArrayList<ChatModel> listChatArray);
+        }
     public interface DataStatus {
         void DataIsLoaded(UserModel user);
     }

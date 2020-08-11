@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeItemFriend"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,19 @@
         android:layout_marginBottom="10dp"
         android:foregroundGravity="center"
         android:src="@mipmap/ic_launcher" />
-
+    <TextView
+        android:visibility="gone"
+        android:padding="3dp"
+        android:id="@+id/textViewSumUnRead"
+        android:background="@drawable/background_notification_main_red"
+        android:textSize="11sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:layout_marginStart="50dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        tools:ignore="SmallSp" />
     <TextView
         android:layout_toEndOf="@+id/imageViewCircleChat"
         android:id="@+id/textViewUserChatName"
