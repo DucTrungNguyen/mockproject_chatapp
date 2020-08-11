@@ -1,8 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -38,7 +35,6 @@ public class ChatViewModel extends ViewModel {
         chatRepository.infoUserFromFirebase(id, user -> userChatLiveData.setValue(user));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendMessage(String idUser, String message, String type) {
         chatRepository.createMessage(idUser, message,type);
     }
