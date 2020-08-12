@@ -19,10 +19,11 @@ import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatViewModel> {
     private MessageAdapter messageAdapter;
-    ArrayList<ChatModel> arraySearch=new ArrayList<>();
+    ArrayList<ChatModel> arraySearch = new ArrayList<>();
 
     @Override
     public int getBindingVariable() {
@@ -65,7 +66,7 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mViewModel.searchUserChat(charSequence.toString(),arraySearch);
+                mViewModel.searchUserChat(charSequence.toString(), arraySearch);
             }
 
             @Override
@@ -80,14 +81,24 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel.arrayInfoUserChatLiveData.observe(getViewLifecycleOwner(), chatModels -> {
+//            int size = chatModels.size();
+//            for (int i = 0; i < size - 1; i++) {
+//                for (int j = 0; j < size - i - 1; j++) {
+//                    int size1 = chatModels.get(j).getMessageModelArrayList().size() - 1;
+//                    int size2 = chatModels.get(j+1).getMessageModelArrayList().size() - 1;
+//                    if (chatModels.get(j).getMessageModelArrayList().get(size1).getTimeLong() <
+//                            chatModels.get(j + 1).getMessageModelArrayList().get(size2).getTimeLong()) {
+//                        Collections.swap(chatModels, j, j + 1);
+//                    }
+//                }
+//            }
             if (chatModels.isEmpty()) {
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
             }
             messageAdapter.submitList(chatModels);
         });
-        mViewModel.arraySearchLiveData.observe(getViewLifecycleOwner(), chatModels -> arraySearch=chatModels);
+        mViewModel.arraySearchLiveData.observe(getViewLifecycleOwner(), chatModels -> arraySearch = chatModels);
     }
 }

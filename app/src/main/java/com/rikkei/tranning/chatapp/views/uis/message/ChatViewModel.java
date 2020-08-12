@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class ChatViewModel extends ViewModel {
     MutableLiveData<UserModel> userChatLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<MessageModel>> messageListLiveData = new MutableLiveData<>();
-    MutableLiveData<ArrayList<ChatModel>> arrayInfoUserChatLiveData=new MutableLiveData<>();
-    MutableLiveData<ArrayList<ChatModel>> arraySearchLiveData =new MutableLiveData<>();
+    MutableLiveData<ArrayList<ChatModel>> arrayInfoUserChatLiveData = new MutableLiveData<>();
+    MutableLiveData<ArrayList<ChatModel>> arraySearchLiveData = new MutableLiveData<>();
 
     ChatRepository chatRepository;
 
@@ -25,10 +25,6 @@ public class ChatViewModel extends ViewModel {
             arrayInfoUserChatLiveData.setValue(listChatArray);
             arraySearchLiveData.setValue(listChatArray);
         });
-//        chatRepository.getAllInfoUserChat(arrayInfoAllUserChat -> {
-//            arrayInfoUserChatLiveData.setValue(arrayInfoAllUserChat);
-//            arraySearchLiveData.setValue(arrayInfoAllUserChat);
-//        });
     }
 
     public void getInfoUserChat(String id) {
@@ -36,12 +32,14 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void sendMessage(String idUser, String message, String type) {
-        chatRepository.createMessage(idUser, message,type);
+        chatRepository.createMessage(idUser, message, type);
     }
+
     public void displayMessage(String idFriend) {
         chatRepository.getMessage(idFriend, messageArray -> messageListLiveData.setValue(messageArray));
     }
-    public DatabaseReference checkSeen(String id){
+
+    public DatabaseReference checkSeen(String id) {
         return chatRepository.checkSeen(id);
     }
 
@@ -49,7 +47,7 @@ public class ChatViewModel extends ViewModel {
         ArrayList<ChatModel> allUserList = new ArrayList<>();
         for (int i = 0; i < getUserFromLiveData.size(); i++) {
             String a = getUserFromLiveData.get(i).getUserModel().getUserName();
-            if (a.contains(s)) {
+            if (a.toLowerCase().contains(s.toLowerCase())) {
                 allUserList.add(getUserFromLiveData.get(i));
             }
         }

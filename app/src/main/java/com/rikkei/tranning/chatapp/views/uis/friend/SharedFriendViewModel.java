@@ -63,7 +63,7 @@ public class SharedFriendViewModel extends ViewModel {
         ArrayList<AllUserModel> allUserList = new ArrayList<>();
         for (int i = 0; i < getUserFromLiveData.size(); i++) {
             String a = getUserFromLiveData.get(i).getUserName();
-            if (a.contains(s)) {
+            if (a.toLowerCase().contains(s.toLowerCase())) {
                 allUserList.add(getUserFromLiveData.get(i));
             }
         }

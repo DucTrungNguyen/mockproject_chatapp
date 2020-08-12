@@ -67,12 +67,11 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MessageModel messageModel = getItem(position);
-        if (messageModel.getType().equals("Text")){
+        if (messageModel.getType().equals("Text")) {
             holder.txtMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setText(messageModel.getMessage());
             holder.imgMessage.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
@@ -85,13 +84,12 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         final Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String a = simpleDateFormatDate.format(calendar.getTime());
-        if (messageModel.getDate().equals(a)){
+        if (messageModel.getDate().equals(a)) {
             holder.txtDate.setText(messageModel.getTime());
             holder.txtChatDate.setText("Hôm nay");
-        }
-        else {
+        } else {
             holder.txtChatDate.setText(messageModel.getDate());
-            holder.txtDate.setText(messageModel.getDate()+" "+messageModel.getTime());
+            holder.txtDate.setText(messageModel.getDate() + " " + messageModel.getTime());
         }
         if (position > 0) {
             int i = position - 1;
@@ -101,11 +99,11 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
                 holder.imgUserChat.setVisibility(View.GONE);
                 holder.view.setVisibility(View.VISIBLE);
             }
-            if (i <=this.getItemCount() && messageModel.getDate().equals(message.getDate())) {
+            if (i <= this.getItemCount() && messageModel.getDate().equals(message.getDate())) {
                 holder.txtChatDate.setVisibility(View.GONE);
             }
         }
-        if (position < this.getItemCount() - 1) {
+        if (position <this.getItemCount()-1) {
             int j = position + 1;
             MessageModel message2 = getNoteAt(j);
             if (j >= 0 && messageModel.getIdSender().equals(message2.getIdSender())
@@ -138,8 +136,8 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtChatDate=itemView.findViewById(R.id.textViewChatDate);
-            imgMessage=itemView.findViewById(R.id.imageViewMessage);
+            txtChatDate = itemView.findViewById(R.id.textViewChatDate);
+            imgMessage = itemView.findViewById(R.id.imageViewMessage);
             imgUserChat = itemView.findViewById(R.id.imageViewUserChat);
             txtMessage = itemView.findViewById(R.id.textViewMessage);
             view = itemView.findViewById(R.id.view);

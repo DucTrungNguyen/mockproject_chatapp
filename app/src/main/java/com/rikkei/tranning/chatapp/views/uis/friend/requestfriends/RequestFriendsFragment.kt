@@ -1,4 +1,6 @@
 package com.rikkei.tranning.chatapp.views.uis.friend.requestfriends
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
@@ -50,7 +52,17 @@ class RequestFriendFragment :
             (mViewDataBinding!!.RecyclerRequestFriend.itemAnimator as SimpleItemAnimator)
         itemAnimator.supportsChangeAnimations = false
         mViewDataBinding!!.RecyclerRequestFriend.adapter = requestFriendAdapter
-
+        requestFriendAdapter.setOnItemClickListener { userModel: AllUserModel ->
+            val dialog =
+                AlertDialog.Builder(context)
+            dialog.setTitle("Thông báo")
+            dialog.setIcon(R.drawable.icon_notification)
+            dialog.setMessage("Trở thành bạn bè với " + userModel.userName + " để có thể gửi tin nhắn cho nhau nhé :3")
+            dialog.setNegativeButton(
+                "OK"
+            ) { dialog1: DialogInterface, which: Int -> dialog1.dismiss() }
+            dialog.show()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

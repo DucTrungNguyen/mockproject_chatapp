@@ -53,7 +53,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     int lastPosition;
-
     @Override
     public int getBindingVariable() {
         return BR.viewModelChat;
@@ -76,7 +75,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
         mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> openImage());
         mViewDataBinding.imageButtonSend.setOnClickListener(v -> {
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             Bundle bundle = getArguments();
             String iD = null;
             if (bundle != null) {
@@ -84,6 +82,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             String message = mViewDataBinding.editTextMessage.getText().toString().trim();
             mViewModel.sendMessage(iD, message, "Text");
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             mViewDataBinding.editTextMessage.setText("");
         });
         mViewDataBinding.imageButtonSend.setEnabled(false);

@@ -68,7 +68,8 @@ public class ChatRepository {
             databaseReference.child(key).push().setValue(messageModel);
         }
     }
-    public void getSomeOfMessage(String idFriend, MessageStatus messageStatus){
+
+    public void getSomeOfMessage(String idFriend, MessageStatus messageStatus) {
         if (firebaseUser == null) {
             return;
         }
@@ -79,7 +80,7 @@ public class ChatRepository {
         } else {
             key = myId + idFriend;
         }
-        Query query=FirebaseDatabase.getInstance().getReference("chat").child(key).limitToLast(10);
+        Query query = FirebaseDatabase.getInstance().getReference("chat").child(key).limitToLast(10);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,6 +100,7 @@ public class ChatRepository {
             }
         });
     }
+
     public void getMessage(String idFriend, MessageStatus messageStatus) {
         if (firebaseUser == null) {
             return;
@@ -200,10 +202,11 @@ public class ChatRepository {
         }
         return databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
     }
+
     public void getListMessage(ListMessageStatus listMessageStatus) {
         getAllInfoUserChat(arrayInfoAllUserChat -> {
             if (isLoadInfoUser.getValue() != null && isLoadInfoUser.getValue()) {
-                ArrayList<ChatModel> listChat=new ArrayList<>();
+                ArrayList<ChatModel> listChat = new ArrayList<>();
                 listChat.clear();
                 for (int i = 0; i < arrayInfoAllUserChat.size(); i++) {
                     ChatModel chatModel = new ChatModel();
@@ -221,9 +224,10 @@ public class ChatRepository {
         });
     }
 
-        public interface ListMessageStatus{
-            void DataIsLoaded(ArrayList<ChatModel> listChatArray);
-        }
+    public interface ListMessageStatus {
+        void DataIsLoaded(ArrayList<ChatModel> listChatArray);
+    }
+
     public interface DataStatus {
         void DataIsLoaded(UserModel user);
     }

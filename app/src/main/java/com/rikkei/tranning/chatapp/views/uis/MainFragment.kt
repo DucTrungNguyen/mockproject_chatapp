@@ -4,11 +4,9 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.View
-import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -63,8 +61,8 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager!!.currentItem = tab.position
                 currentTab = tab.position
-                var tabView = tab.customView
-                var notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
+                val tabView = tab.customView
+                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
                 notifiMainBlue?.visibility = View.VISIBLE
 
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =
@@ -81,8 +79,8 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
 
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                var tabView = tab.customView
-                var notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
+                val tabView = tab.customView
+                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
                 notifiMainBlue?.visibility = View.GONE
 
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =

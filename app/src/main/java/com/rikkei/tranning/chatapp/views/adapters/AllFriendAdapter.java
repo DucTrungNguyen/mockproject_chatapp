@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
@@ -23,6 +25,7 @@ import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter.ViewHolder> {
     Context context;
     SharedFriendViewModel sharedFriendViewModel;
+    private OnItemClickListener listener;
 
     public AllFriendAdapter(Context context) {
         super(DIFF_CALLBACK);
@@ -51,6 +54,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final AllUserModel user = getItem(position);
@@ -66,15 +70,23 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         switch (user.getUserType()) {
             case "NoFriend":
                 holder.btnRequest.setText("Kết bạn");
+                holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "friend":
                 holder.btnRequest.setText("Hủy bạn");
+                holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "sendRequest":
                 holder.btnRequest.setText("Hủy");
+                holder.btnRequest.setBackgroundResource(R.drawable.custom_button_unfriend);
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.blue));
                 break;
             case "friendRequest":
                 holder.btnRequest.setText("Đồng ý");
+                holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
         }
         if (position > 0) {
@@ -107,7 +119,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         return getItem(position);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cimgUser;
         TextView txtUserName, txtSection;
         Button btnRequest;
@@ -118,6 +130,19 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             txtUserName = itemView.findViewById(R.id.TextViewNameUserItem);
             btnRequest = itemView.findViewById(R.id.ButtonRequestItem);
             txtSection = itemView.findViewById(R.id.textViewHeader);
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if ( listener!= null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(getItem(position));
+                }
+            });
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(AllUserModel userModel);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

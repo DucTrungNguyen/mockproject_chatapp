@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
+
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> {
     @Override
@@ -42,7 +44,15 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.ImageButtonEditProfile.setOnClickListener(v -> replaceFragment());
-        mViewDataBinding.RelativeLayoutLogout.setOnClickListener(v -> logout());
+        mViewDataBinding.RelativeLayoutLogout.setOnClickListener(view1 -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+            dialog.setTitle("Thông báo");
+            dialog.setIcon(R.drawable.icon_notification);
+            dialog.setMessage("Bạn có chắc chắn muốn đăng xuất không?");
+            dialog.setPositiveButton("Đăng xuất", (dialogInterface, i) -> logout());
+            dialog.setNegativeButton("Không", (dialog1, which) -> dialog1.dismiss());
+            dialog.show();
+        });
     }
 
     @Override
@@ -56,8 +66,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                 mViewDataBinding.ImageViewImageUser.setImageResource(R.mipmap.ic_launcher);
                 mViewDataBinding.CircleImageViewUser.setImageResource(R.mipmap.ic_launcher);
             } else {
-                Glide.with(getContext()).load(user.getUserImgUrl()).into(mViewDataBinding.ImageViewImageUser);
-                Glide.with(getContext()).load(user.getUserImgUrl()).circleCrop().into(mViewDataBinding.CircleImageViewUser);
+                Glide.with(requireContext()).load(user.getUserImgUrl()).into(mViewDataBinding.ImageViewImageUser);
+                Glide.with(requireContext()).load(user.getUserImgUrl()).circleCrop().into(mViewDataBinding.CircleImageViewUser);
             }
         });
     }
