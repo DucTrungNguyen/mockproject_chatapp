@@ -49,7 +49,8 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
         mViewDataBinding.RecyclerAllFriend.setAdapter(allFriendAdapter);
         allFriendAdapter.setOnItemClickListener(userModel -> {
            if (userModel.getUserType().equals("friend")){
-               FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+               FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                       .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
                ChatFragment chatFragment = new ChatFragment();
                Bundle bundle = new Bundle();
                bundle.putString("idUser", userModel.getUserId());

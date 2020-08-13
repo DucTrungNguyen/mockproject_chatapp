@@ -18,31 +18,24 @@ import com.rikkei.tranning.chatapp.databinding.FragmentMainBinding
 import com.rikkei.tranning.chatapp.views.adapters.ViewPagerAdapter
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
 
-
-class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>(){
+class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>()  {
 
     private var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
-    var currentTab = 0;
+    var currentTab = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val view: View? = inflater.inflate(R.layout.fragment_main, container, false)
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.viewPager)
 
-        tabLayout?.addTab(tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_message))
+        tabLayout?.addTab(
+            tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_message)
+        )
         tabLayout?.addTab(tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_friend))
-        tabLayout?.addTab(tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_profile))
-
-//        tabLayout?.get(0)?.alpha = 0.2f
-//        tabLayout?.get(0)?.animate()?.apply {
-//            interpolator = LinearInterpolator()
-//            duration = 1500
-//            alpha(1f)
-//            startDelay = 2000
-//            start()
-//        }
+        tabLayout?.addTab(
+            tabLayout!!.newTab().setCustomView(R.layout.custom_tablayout_main_profile)
+        )
 
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
@@ -56,8 +49,6 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
         viewPager?.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager!!.currentItem = tab.position
                 currentTab = tab.position
@@ -73,10 +64,10 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
                         ), PorterDuff.Mode.SRC_ATOP
                     )
 
-                tabView?.findViewById<TextView>(R.id.textTabMain)?.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                tabView?.findViewById<TextView>(R.id.textTabMain)
+                    ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
 
             }
-
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 val tabView = tab.customView
@@ -91,7 +82,8 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
                         ), PorterDuff.Mode.SRC_ATOP
                     )
 
-                tabView?.findViewById<TextView>(R.id.textTabMain)?.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+                tabView?.findViewById<TextView>(R.id.textTabMain)
+                    ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
 
             }
 
@@ -111,7 +103,7 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
                     mViewDataBinding.tabLayout.getTabAt(1)?.customView
                 val count = viewRequest?.findViewById<View>(R.id.notifiMain) as TextView
                 if (s == "0") count.visibility = View.GONE
-                else  {
+                else {
                     count.visibility = View.VISIBLE
                     count.text = s
                 }
@@ -120,15 +112,14 @@ class MainFragment :  BaseFragment<FragmentMainBinding, SharedFriendViewModel>()
     }
 
     override fun getBindingVariable(): Int {
-        return  BR.mainViewModel
+        return BR.mainViewModel
     }
 
     override fun getLayoutId(): Int {
-        return  R.layout.fragment_main
+        return R.layout.fragment_main
     }
 
     override fun getViewModel(): SharedFriendViewModel {
         return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
-
     }
 }

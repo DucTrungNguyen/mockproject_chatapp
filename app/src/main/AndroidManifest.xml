@@ -14,7 +14,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:theme="@style/AppTheme"
-            android:name=".views.uis.MainActivity" />
+            android:name=".views.uis.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
         <activity
             android:name=".views.uis.SplashActivity"
             android:theme="@style/SplashTheme"

@@ -1,7 +1,10 @@
 package com.rikkei.tranning.chatapp.views.uis
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
@@ -21,5 +24,10 @@ class SplashActivity : AppCompatActivity() {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()
         }
+    }
+    fun hideKeyBoard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

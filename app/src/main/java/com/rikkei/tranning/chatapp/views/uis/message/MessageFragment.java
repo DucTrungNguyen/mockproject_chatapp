@@ -1,9 +1,12 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +22,6 @@ import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatViewModel> {
     private MessageAdapter messageAdapter;
@@ -43,20 +45,27 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
         SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerMessage.getItemAnimator();
         assert itemAnimator != null;
         itemAnimator.setSupportsChangeAnimations(false);
         messageAdapter = new MessageAdapter(getContext());
         mViewDataBinding.recyclerMessage.setAdapter(messageAdapter);
         messageAdapter.setOnItemClickListener(userModel -> {
-            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                    .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ChatFragment chatFragment = new ChatFragment();
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserModel().getUserId());
             chatFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, null);
+            fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, null).commit();
+            fragmentTransaction.addToBackStack(null);
             mViewDataBinding.editTextSearchUserChat.setText(null);
-            fragmentTransaction.commit();
+        });
+        mViewDataBinding.imageButtonDelete.setOnClickListener(view1 -> {
+            mViewDataBinding.editTextSearchUserChat.setText(null);
+            mViewDataBinding.imageButtonDelete.setVisibility(View.GONE);
         });
         mViewDataBinding.editTextSearchUserChat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,6 +76,11 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 mViewModel.searchUserChat(charSequence.toString(), arraySearch);
+                if (TextUtils.isEmpty(charSequence.toString())) {
+                    mViewDataBinding.imageButtonDelete.setVisibility(View.GONE);
+                } else {
+                    mViewDataBinding.imageButtonDelete.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -81,21 +95,15 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel.arrayInfoUserChatLiveData.observe(getViewLifecycleOwner(), chatModels -> {
-//            int size = chatModels.size();
-//            for (int i = 0; i < size - 1; i++) {
-//                for (int j = 0; j < size - i - 1; j++) {
-//                    int size1 = chatModels.get(j).getMessageModelArrayList().size() - 1;
-//                    int size2 = chatModels.get(j+1).getMessageModelArrayList().size() - 1;
-//                    if (chatModels.get(j).getMessageModelArrayList().get(size1).getTimeLong() <
-//                            chatModels.get(j + 1).getMessageModelArrayList().get(size2).getTimeLong()) {
-//                        Collections.swap(chatModels, j, j + 1);
-//                    }
-//                }
-//            }
             if (chatModels.isEmpty()) {
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.VISIBLE);
+                mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
             } else {
+               // mViewModel.softArray(chatModels);
+                int count=mViewModel.getCountUnReadMessage(chatModels);
+                mViewModel.countUnReadMessage.setValue(count+"");
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
+                mViewDataBinding.textViewNoResultChat.setVisibility(View.GONE);
             }
             messageAdapter.submitList(chatModels);
         });

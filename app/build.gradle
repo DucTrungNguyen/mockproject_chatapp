@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: "kotlin-kapt"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     kotlinOptions {
         jvmTarget = "1.8"
     }

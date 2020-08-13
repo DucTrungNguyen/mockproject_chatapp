@@ -106,8 +106,9 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         if (position <this.getItemCount()-1) {
             int j = position + 1;
             MessageModel message2 = getNoteAt(j);
-            if (j >= 0 && messageModel.getIdSender().equals(message2.getIdSender())
-                    && messageModel.getIdReceiver().equals(message2.getIdReceiver())) {
+            if (messageModel.getIdSender().equals(message2.getIdSender())
+                    && messageModel.getIdReceiver().equals(message2.getIdReceiver())
+            && messageModel.getTimeLong()<message2.getTimeLong()) {
                 holder.txtDate.setVisibility(View.GONE);
             } else {
                 holder.txtDate.setVisibility(View.VISIBLE);

@@ -12,13 +12,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg">
+        android:onClick="hideKeyBoardMain">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@drawable/bg" />
 
         <RelativeLayout
             android:id="@+id/RelativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/frameLayoutChat">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/editTextSearchFriend"
@@ -31,6 +35,18 @@
                 android:drawableStart="@drawable/ic_baseline_search_24"
                 android:hint="@string/txt_search_friends_vi"
                 android:padding="5dp" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDeleteSearchFriend"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="25dp"
+                android:background="@null"
+                android:scaleType="center"
+                android:src="@drawable/ic_delete"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/title"

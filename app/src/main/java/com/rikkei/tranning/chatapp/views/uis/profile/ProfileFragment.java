@@ -73,8 +73,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     public void replaceFragment() {
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
         fragmentTransaction.add(R.id.frameLayoutChat, new EditProfileFragment(), null).commit();
+        fragmentTransaction.addToBackStack(null);
     }
 
     public void logout() {
@@ -83,4 +85,5 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
 }

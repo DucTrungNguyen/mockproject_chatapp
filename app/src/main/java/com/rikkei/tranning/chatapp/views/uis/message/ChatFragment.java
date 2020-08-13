@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -42,17 +44,18 @@ import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel> {
+public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel>{
     ChatAdapter chatAdapter;
     String id;
     private static final int IMAGE_REQUEST = 1;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("chat");
     private Uri imageUri;
     String uriImage;
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     int lastPosition;
+
     @Override
     public int getBindingVariable() {
         return BR.viewModelChat;
@@ -72,6 +75,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
         mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> openImage());
         mViewDataBinding.imageButtonSend.setOnClickListener(v -> {
@@ -134,15 +139,15 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         checkSeen(id);
         mViewModel.displayMessage(id);
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
-            lastPosition=messageModels.size();
+            lastPosition = messageModels.size();
             chatAdapter.submitList(messageModels);
         });
     }
 
-    public void checkSeen(String id){
-        String myId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        databaseReference=mViewModel.checkSeen(id);
-        listener=databaseReference.addValueEventListener(new ValueEventListener() {
+    public void checkSeen(String id) {
+        String myId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        databaseReference = mViewModel.checkSeen(id);
+        listener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
@@ -172,11 +177,12 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     public void removeFragment() {
         databaseReference.removeEventListener(listener);
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
         assert fragment != null;
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
+
     public void openImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -209,7 +215,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                     Uri downloadUri = task.getResult();
                     String mUri = downloadUri.toString();
                     uriImage = mUri;
-                    mViewModel.sendMessage(id, mUri,"Image");
+                    mViewModel.sendMessage(id, mUri, "Image");
                     progressDialog.dismiss();
                 } else {
                     Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
@@ -233,4 +239,5 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
         }
     }
+
 }

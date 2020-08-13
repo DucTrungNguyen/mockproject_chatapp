@@ -46,8 +46,8 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
             "Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>"
         mViewDataBinding.ButtonMoveLogin.text = Html.fromHtml(htmlContentButton)
         eventEnableButton()
-        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragment() }
-        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
+        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragmentBack() }
+        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragmentBack() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -62,15 +62,20 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
                 }
                 is SignUpViewModel.SignUpStatus.IsOk -> {
                     progress_circular_signUp.visibility = View.GONE
-                    Toast.makeText(context, "Sign Up Success!", Toast.LENGTH_SHORT).show()
-                    replaceFragment()
+                    replaceFragmentBack()
                 }
                 is SignUpViewModel.SignUpStatus.Failure -> {
                     Toast.makeText(context, "Sign up fail", Toast.LENGTH_SHORT).show()
+                    mViewDataBinding.editTextPassRegister.text = null
+                    mViewDataBinding.editTextEmailRegister.text = null
+                    mViewDataBinding.checkboxRegister.isChecked=false
                     progress_circular_signUp.visibility = View.GONE
                 }
                 is SignUpViewModel.SignUpStatus.ErrorPassAndEmail -> {
                     Toast.makeText(context, "Invalid Email Or Password!", Toast.LENGTH_SHORT).show()
+                    mViewDataBinding.editTextPassRegister.text = null
+                    mViewDataBinding.editTextEmailRegister.text = null
+                    mViewDataBinding.checkboxRegister.isChecked=false
                     progress_circular_signUp.visibility = View.GONE
                 }
             }
@@ -129,13 +134,12 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewDataBinding.checkboxRegister.setOnClickListener { setEnableButton() }
     }
 
-    private fun replaceFragment() {
-        mViewDataBinding.editTextNameRegister.setText("")
-        mViewDataBinding.editTextPassRegister.setText("")
-        mViewDataBinding.editTextEmailRegister.setText("")
+    private fun replaceFragmentBack() {
+        mViewDataBinding.editTextPassRegister.text = null
+        mViewDataBinding.editTextEmailRegister.text = null
         mViewDataBinding.checkboxRegister.isChecked=false
         mViewModel.resetStatus()
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        val fragmentTransaction = parentFragmentManager.beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left)
         fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
     }
 

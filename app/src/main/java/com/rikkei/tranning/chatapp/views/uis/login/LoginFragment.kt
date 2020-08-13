@@ -18,6 +18,7 @@ import com.rikkei.tranning.chatapp.views.uis.MainActivity
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
+
 class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -56,19 +57,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
                 }
                 is LoginViewModel.LoginStatus.IsOk -> {
                     progress_circular.visibility = View.GONE
-                    Toast.makeText(context, "Login success!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Login Success!",Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
-
+                    activity?.finish()
                 }
                 is LoginViewModel.LoginStatus.Failure -> {
                     Toast.makeText(context, "Login Failed!", Toast.LENGTH_SHORT).show()
+                    mViewDataBinding!!.editTextEmailLogin.text = null
+                    mViewDataBinding!!.editTextPassLogin.text = null
                     progress_circular.visibility = View.GONE
 
                 }
                 is LoginViewModel.LoginStatus.ErrorPassAndEmail -> {
                     if ( it.isError){
                         Toast.makeText(context, "Invalid Email Or Password! Login", Toast.LENGTH_SHORT).show()
+                        mViewDataBinding!!.editTextEmailLogin.text = null
+                        mViewDataBinding!!.editTextPassLogin.text = null
                         progress_circular.visibility = View.GONE
 
                     }
@@ -117,7 +122,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         mViewDataBinding!!.editTextEmailLogin.setText("")
         mViewDataBinding!!.editTextPassLogin.setText("")
         mViewModel?.resetStatus()
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        val fragmentTransaction = parentFragmentManager.beginTransaction().setCustomAnimations(R.anim.exit, R.anim.pop_exit)
         fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
     }
 

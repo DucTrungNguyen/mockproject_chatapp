@@ -52,4 +52,5 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends ViewMode
         super.onDestroyView();
         mViewDataBinding = null;
     }
+
 }

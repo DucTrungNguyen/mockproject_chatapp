@@ -44,7 +44,8 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding, Sha
         myFriendAdapter = new MyFriendAdapter(getContext());
         mViewDataBinding.RecyclerMyFriend.setAdapter(myFriendAdapter);
         myFriendAdapter.setOnItemClickListener(userModel -> {
-            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                    .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
             ChatFragment chatFragment = new ChatFragment();
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserId());

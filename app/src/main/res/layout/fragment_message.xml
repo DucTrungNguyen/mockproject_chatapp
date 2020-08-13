@@ -8,19 +8,26 @@
         <variable
             name="messageViewModel"
             type="com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg">
-        <RelativeLayout
+        android:onClick="hideKeyBoardMain">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@drawable/bg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
             android:id="@+id/RelativeLayoutSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/editTextSearchUserChat"
@@ -33,6 +40,18 @@
                 android:drawableStart="@drawable/ic_baseline_search_24"
                 android:hint="@string/txt_search_message_vi"
                 android:padding="5dp" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDelete"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="25dp"
+                android:background="@null"
+                android:scaleType="center"
+                android:src="@drawable/ic_delete"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/title"
@@ -54,10 +73,7 @@
                 android:src="@drawable/ic_create_new_message" />
         </RelativeLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/recyclerMessage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -65,19 +81,32 @@
             android:background="@drawable/fragment"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch"
             tools:listitem="@layout/item_friend_massage" />
 
         <ImageView
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch"
             android:id="@+id/ImageViewNoResultChat"
             android:layout_width="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_no_search"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/RelativeLayoutSearch" />
 
+        <TextView
+            android:id="@+id/textViewNoResultChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:gravity="center"
+            android:text="@string/txt_search_no_result_vi"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ImageViewNoResultChat" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

@@ -24,8 +24,6 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
-import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -86,7 +84,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             mViewModel.updateInfoUser("userName", name);
             mViewModel.updateInfoUser("userPhone", phone);
             mViewModel.updateInfoUser("userDateOfBirth", date);
-            removeFragment();
+            removeFragmentSave();
         });
 
         final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
@@ -131,17 +129,22 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             if (user.getUserImgUrl().equals("default")) {
                 mViewDataBinding.CircleImageUserEdit.setImageResource(R.mipmap.ic_launcher);
             } else {
-                Picasso.with(getContext()).load(user.getUserImgUrl()).into(mViewDataBinding.CircleImageUserEdit);
+                Glide.with(requireContext()).load(user.getUserImgUrl()).circleCrop().into(mViewDataBinding.CircleImageUserEdit);
             }
         });
     }
 
     public void removeFragment() {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
         assert fragment != null;
-        fragmentTransaction.remove(fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.remove(fragment).commit();
+    }
+    public void removeFragmentSave() {
+        Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        assert fragment != null;
+        fragmentTransaction.remove(fragment).commit();
     }
 
     public void openImage() {
@@ -176,7 +179,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                     Uri downloadUri = task.getResult();
                     String mUri = downloadUri.toString();
                     uriImage = mUri;
-                    Glide.with(requireContext()).load(mUri).into(mViewDataBinding.CircleImageUserEdit);
+                    Glide.with(requireContext()).load(mUri).circleCrop().into(mViewDataBinding.CircleImageUserEdit);
                     progressDialog.dismiss();
                 } else {
                     Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();

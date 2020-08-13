@@ -17,18 +17,19 @@
         android:background="@color/grey2"
         >
         <RelativeLayout
+            android:onClick="hideKeyBoardMain"
             android:id="@+id/relativeLayoutTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/ImageButtonBackChat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="34dp"
+                android:layout_marginTop="20dp"
                 android:background="@null"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/ic_back_blue" />
 
             <ImageView
@@ -88,19 +89,16 @@
                 android:src="@drawable/ic_photo" />
 
             <ImageButton
-                android:layout_marginBottom="15dp"
                 android:foregroundGravity="center"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/imageButtonSend"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@null"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/ic_send_unable" />
             <EditText
-                android:focusable="true"
-                android:clickable="true"
                 android:padding="15dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="20dp"
@@ -128,7 +126,5 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="300dp" />
-
-
     </RelativeLayout>
 </layout>

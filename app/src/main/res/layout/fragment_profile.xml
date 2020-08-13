@@ -37,7 +37,7 @@
                     android:id="@+id/CircleImageViewUser"
                     android:layout_width="69dp"
                     android:layout_height="96dp"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="18dp"
                     android:foregroundGravity="center_vertical"
                     android:src="@mipmap/ic_launcher" />
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="13dp"
                     android:layout_marginTop="38dp"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="80dp"
                     android:layout_toEndOf="@+id/CircleImageViewUser"
                     android:ellipsize="end"
                     android:lines="1"
@@ -69,13 +69,13 @@
 
                 <ImageButton
                     android:id="@+id/ImageButtonEditProfile"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="45dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="25dp"
                     android:background="@null"
-                    android:scaleType="fitXY"
+                    android:scaleType="center"
                     android:src="@drawable/ic_edit" />
 
                 <TextView

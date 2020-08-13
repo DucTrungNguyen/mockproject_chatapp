@@ -1,11 +1,14 @@
 package com.rikkei.tranning.chatapp.views.uis.friend;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.tabs.TabLayout;
-import com.readystatesoftware.viewbadger.BadgeView;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
@@ -25,13 +27,13 @@ import com.rikkei.tranning.chatapp.views.uis.friend.myfriends.MyFriendFragment;
 import com.rikkei.tranning.chatapp.views.uis.friend.requestfriends.RequestFriendFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFriendViewModel> {
     ArrayList<AllUserModel> allUserArrayList = new ArrayList<>();
     TabLayout.Tab tabRequest;
     TabLayout.Tab tabFriend;
     TabLayout.Tab tabAll;
-    BadgeView badgeViewRequest;
     TextView countNotifi;
     View textRequest;
 
@@ -50,15 +52,22 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
         return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel.class);
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
         mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "BẠN BÈ");
         mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "TẤT CẢ");
         mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), "Yêu cầu");
         mViewDataBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
         mViewDataBinding.tabLayoutFriend.setupWithViewPager(mViewDataBinding.viewPagerFriend);
+        mViewDataBinding.imageButtonDeleteSearchFriend.setOnClickListener(view1 -> {
+            mViewDataBinding.editTextSearchFriend.setText(null);
+            mViewDataBinding.imageButtonDeleteSearchFriend.setVisibility(View.GONE);
+        });
         mViewDataBinding.editTextSearchFriend.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,6 +77,11 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mViewModel.searchFriend(s.toString(), allUserArrayList);
+                if (TextUtils.isEmpty(s.toString())) {
+                    mViewDataBinding.imageButtonDeleteSearchFriend.setVisibility(View.GONE);
+                } else {
+                    mViewDataBinding.imageButtonDeleteSearchFriend.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -75,28 +89,26 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
             }
         });
 
-        View textFriend = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        View textFriend = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiFriend = textFriend.findViewById(R.id.text1);
         textNotifiFriend.setText("BẠN BÈ");
         tabFriend = mViewDataBinding.tabLayoutFriend.getTabAt(0);
+        assert tabFriend != null;
         tabFriend.setCustomView(textFriend);
 
-        View textAll = (View) LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        View textAll = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiAll = textAll.findViewById(R.id.text1);
         textNotifiAll.setText("TẤT CẢ");
         tabAll = mViewDataBinding.tabLayoutFriend.getTabAt(1);
+        assert tabAll != null;
         tabAll.setCustomView(textAll);
-
-
-        textRequest= LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
+        textRequest = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiRequest = textRequest.findViewById(R.id.text1);
         countNotifi = textNotifiFriend.findViewById(R.id.textNotifi);
         textNotifiRequest.setText("YÊU CẦU");
         tabRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2);
+        assert tabRequest != null;
         tabRequest.setCustomView(textRequest);
-
-
-
     }
 
     @SuppressLint("ResourceType")
@@ -106,9 +118,10 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
         mViewModel.getUserFromLiveData.observe(getViewLifecycleOwner(), allUserModelArrayList -> allUserArrayList = allUserModelArrayList);
 
         mViewModel.countNotifiRequest.observe(getViewLifecycleOwner(), s -> {
-            View viewRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2).getCustomView();
+            View viewRequest = Objects.requireNonNull(mViewDataBinding.tabLayoutFriend.getTabAt(2)).getCustomView();
 
-            TextView  count = (TextView)viewRequest.findViewById(R.id.textNotifi);
+            assert viewRequest != null;
+            TextView count = viewRequest.findViewById(R.id.textNotifi);
 
 
             if (s.equals("0"))
@@ -118,10 +131,6 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
                 count.setText(s);
 
             }
-
         });
-
-
-
     }
 }

@@ -23,28 +23,18 @@ public class SharedFriendViewModel extends ViewModel {
     public SharedFriendViewModel() {
         friendRepository = new FriendsRepository();
         friendRepository.getUserInfo((allUserModels, count) -> {
-
             allUserListLiveData.setValue(allUserModels);
             getUserFromLiveData.setValue(allUserModels);
             arrayAllFriend = allUserModels;
-
-
-//            allUserModels.forEach(user ->{
-//                if(user.getUserType().equals("friendRequest")){
-//                    count++;
-//                }
-//            });
-
-            if ( count > 10){
+            if (count > 10) {
                 countNotifiRequest.setValue("9+");
-            }
-            else
+            } else
                 countNotifiRequest.setValue(Integer.toString(count));
         });
     }
 
     public void collectionArray(ArrayList<AllUserModel> userArray) {
-        Collections.sort(userArray, (o1, o2) -> o1.getUserName().substring(0,1).compareTo(o2.getUserName().substring(0,1)));
+        Collections.sort(userArray, (o1, o2) -> o1.getUserName().substring(0, 1).compareTo(o2.getUserName().substring(0, 1)));
     }
 
     public void createFriend(AllUserModel userModel) {
