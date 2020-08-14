@@ -192,6 +192,9 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             chatAdapter.submitList(arrayList);
         });
+
+        mViewDataBinding.recyclerSticker.setAdapter(new StickerAdapter(Arrays.asList(stickerResource), getContext(), id));
+        mViewDataBinding.recyclerSticker.setHasFixedSize(true);
     }
 
     public void checkSeen(String id) {
