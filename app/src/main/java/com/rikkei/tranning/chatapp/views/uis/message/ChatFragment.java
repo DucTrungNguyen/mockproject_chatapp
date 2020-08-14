@@ -38,8 +38,10 @@ import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentChatBinding;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
+import com.rikkei.tranning.chatapp.views.adapters.StickerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import java.util.Objects;
