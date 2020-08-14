@@ -98,33 +98,54 @@
                 android:background="@null"
                 android:scaleType="center"
                 android:src="@drawable/ic_send_unable" />
-            <EditText
-                android:padding="15dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+            <RelativeLayout
+                android:id="@+id/relativeType"
+                android:background="@drawable/custom_edittext"
                 android:layout_toStartOf="@+id/imageButtonSend"
                 android:layout_toEndOf="@+id/imageButtonPhotoChat"
-                android:id="@+id/editTextMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext"
-                android:hint="@string/txt_enterMessage_vi"
-                android:textSize="16sp" />
-            <ImageView
-                android:layout_toStartOf="@id/imageButtonSend"
-                android:paddingEnd="30dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_smile_1"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="RtlSymmetry" />
+                android:padding="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:background="@drawable/custom_edittext"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/imageSendSticker"
+                    android:id="@+id/editTextMessage"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:hint="@string/txt_enterMessage_vi"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/imageSendSticker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_smile_1"
+                    tools:ignore="RtlSymmetry" />
+
+            </RelativeLayout>
         </RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_alignParentBottom="true"
-            android:id="@+id/sticker_pack_list"
+        <RelativeLayout
+            android:id="@+id/layoutBottom"
             android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="300dp" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSticker"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

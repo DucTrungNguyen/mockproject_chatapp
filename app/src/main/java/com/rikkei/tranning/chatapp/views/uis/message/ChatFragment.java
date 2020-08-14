@@ -139,6 +139,20 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             public void afterTextChanged(Editable s) {
             }
         });
+        mViewDataBinding.imageSendSticker.setOnClickListener( view1 -> {
+
+            if( mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE){
+                mViewDataBinding.recyclerSticker.setVisibility(View.GONE) ;
+                mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+            }else {
+//                InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
+                mViewDataBinding.recyclerSticker.setVisibility(View.VISIBLE);
+                mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_blue);
+            }
+
+
+        });
     }
 
     @Override

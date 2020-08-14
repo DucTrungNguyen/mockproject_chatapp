@@ -2,6 +2,7 @@ package com.rikkei.tranning.chatapp.views.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,15 +84,25 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
             holder.txtMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setText(messageModel.getMessage());
             holder.imgMessage.setVisibility(View.GONE);
+        } else if (messageModel.getType().equals("sticker")) {
+            holder.imgMessage.setVisibility(View.VISIBLE);
+            holder.txtMessage.setVisibility(View.GONE);
+            int resID = context.getResources().getIdentifier(messageModel.getMessage(), "drawable", context.getPackageName());
+            Log.d("sticler", resID + " + " + messageModel.getMessage());
+            //            String name = messageModel.getMessage();
+            holder.imgMessage.setImageResource(resID);
+//            Glide.with(context).load(resID).into(holder.imgMessage);
+
         } else {
             holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
         }
-        if (messageModel.getIsShow()){
+
+
+        if (messageModel.getIsShow()) {
             holder.txtDate.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             holder.txtDate.setVisibility(View.VISIBLE);
         }
         if (urlImage.equals("default")) {
