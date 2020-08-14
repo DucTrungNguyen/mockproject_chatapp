@@ -47,6 +47,26 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
 public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel> {
+    private Integer[] stickerResource = {
+            R.drawable.cuppy_hi,
+            R.drawable.cuppy_battery,
+            R.drawable.cuppy_bluescreen,
+            R.drawable.cuppy_bye,
+            R.drawable.cuppy_curious,
+            R.drawable.cuppy_disgusting,
+            R.drawable.cuppy_cry,
+            R.drawable.cuppy_hmm,
+            R.drawable.cuppy_love,
+            R.drawable.cuppy_lovewithcookie,
+            R.drawable.cuppy_phone,
+            R.drawable.cuppy_angry,
+            R.drawable.cuppy_angry1,
+            R.drawable.cuppy_lol,
+            R.drawable.cuppy_rofl,
+            R.drawable.cuppy_tired,
+            R.drawable.cuppy_upset
+
+    };
     ChatAdapter chatAdapter;
     String id;
     private static final int IMAGE_REQUEST = 1;
@@ -96,10 +116,15 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if( mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE){
+                    mViewDataBinding.recyclerSticker.setVisibility(View.GONE) ;
+                    mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 if (TextUtils.isEmpty(s.toString())) {
                     mViewDataBinding.imageButtonSend.setEnabled(false);
                     mViewDataBinding.imageButtonSend.setImageResource(R.drawable.ic_send_unable);
@@ -108,6 +133,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                     mViewDataBinding.imageButtonSend.setImageResource(R.drawable.ic_send);
                 }
             }
+
 
             @Override
             public void afterTextChanged(Editable s) {
