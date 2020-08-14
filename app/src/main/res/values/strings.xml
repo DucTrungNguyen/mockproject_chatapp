@@ -68,6 +68,7 @@
     <string name="txt_login_failed_vi">"Đăng nhập không thành công"</string>
     <string name="txt_invalid_username_vi">Người dùng không hợp lệ</string>
     <string name="txt_notification_friend_vi">Trở thành bạn bè để có thể gửi tin nhắn cho nhau nhé :3</string>
+    <string name="txt_not_allow_permission_vi">Bạn bị ngố hả bạn ơi! Không cấp quyền đọc ảnh thì gửi kiểu gì?</string>
     <string name="txt_notification_logout_vi">Bạn có chắc chắn muốn đăng xuất không?</string>
     <string name="txt_no_vi">Không</string>
     <string name="txt_ok_vi">OK</string>
