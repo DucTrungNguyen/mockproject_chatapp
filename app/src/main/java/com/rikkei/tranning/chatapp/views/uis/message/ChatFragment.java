@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
@@ -115,17 +117,43 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             mViewDataBinding.editTextMessage.setText("");
         });
         mViewDataBinding.imageButtonSend.setEnabled(false);
-        mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
+//        mViewDataBinding.editTextMessage.add
+        mViewDataBinding.editTextMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onFocusChange(View v, boolean hasFocus) {
                 if( mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE){
                     mViewDataBinding.recyclerSticker.setVisibility(View.GONE) ;
                     mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+
                 }
+
+
+            }
+        });
+
+        mViewDataBinding.editTextMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE){
+                    mViewDataBinding.recyclerSticker.setVisibility(View.GONE) ;
+                    mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+
+                }
+
+            }
+        });
+
+        mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+                mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
 
                 if (TextUtils.isEmpty(s.toString())) {
                     mViewDataBinding.imageButtonSend.setEnabled(false);
@@ -141,20 +169,34 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             public void afterTextChanged(Editable s) {
             }
         });
-        mViewDataBinding.imageSendSticker.setOnClickListener( view1 -> {
+        mViewDataBinding.imageSendSticker.setOnClickListener(view1 -> {
 
-            if( mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE){
-                mViewDataBinding.recyclerSticker.setVisibility(View.GONE) ;
+            if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
+                mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
                 mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
-            }else {
+            } else {
 //                InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
+                inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
                 mViewDataBinding.recyclerSticker.setVisibility(View.VISIBLE);
                 mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_blue);
             }
 
 
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+            mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+//            Toast.makeText(this, "keyboard visible", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+            mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+//            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

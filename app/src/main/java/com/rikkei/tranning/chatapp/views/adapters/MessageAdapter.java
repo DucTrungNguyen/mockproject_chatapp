@@ -92,9 +92,18 @@ public class MessageAdapter extends ListAdapter<ChatModel, MessageAdapter.ViewHo
         assert type != null;
         if (type.equals("Text")){
             holder.txtLastMessage.setText(message);
+        } else if ( type.equals("sticker")){
+
+            if (idSender.equals(firebaseUser.getUid())){
+                holder.txtLastMessage.setText("Bạn: Sticker");
+            }else
+            holder.txtLastMessage.setText("Sticker");
         }
         else {
-            holder.txtLastMessage.setText("Image");
+            if (idSender.equals(firebaseUser.getUid())){
+                holder.txtLastMessage.setText("Bạn: Image");
+            }else
+                holder.txtLastMessage.setText("Sticker");
         }
         if (count > 0) {
             holder.txtSumUnRead.setVisibility(View.VISIBLE);
