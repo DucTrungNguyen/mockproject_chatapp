@@ -1,7 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,12 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
-import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
 
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> {
@@ -45,13 +41,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.ImageButtonEditProfile.setOnClickListener(v -> replaceFragment());
         mViewDataBinding.RelativeLayoutLogout.setOnClickListener(view1 -> {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setTitle("Thông báo");
-            dialog.setIcon(R.drawable.icon_notification);
-            dialog.setMessage("Bạn có chắc chắn muốn đăng xuất không?");
-            dialog.setPositiveButton("Đăng xuất", (dialogInterface, i) -> logout());
-            dialog.setNegativeButton("Không", (dialog1, which) -> dialog1.dismiss());
-            dialog.show();
+            DialogLogoutFragment dialog = new DialogLogoutFragment();
+            dialog.show(getParentFragmentManager(), null);
         });
     }
 
@@ -74,16 +65,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     public void replaceFragment() {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
-                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.add(R.id.frameLayoutChat, new EditProfileFragment(), null).commit();
         fragmentTransaction.addToBackStack(null);
-    }
-
-    public void logout() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), SplashActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
 }

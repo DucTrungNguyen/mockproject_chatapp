@@ -36,17 +36,17 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentChatBinding;
-import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel>{
+public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel> {
     ChatAdapter chatAdapter;
     String id;
     private static final int IMAGE_REQUEST = 1;
@@ -143,6 +143,13 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             lastPosition = messageModels.size();
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
+            for (int i = 0; i < arrayList.size() - 1; i++) {
+                int j = i + 1;
+                if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
+                        && arrayList.get(i).getIdSender().equals(arrayList.get(j).getIdSender())) {
+                    arrayList.get(i).setIsShow(true);
+                }
+            }
             chatAdapter.submitList(arrayList);
         });
     }
@@ -242,5 +249,4 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
         }
     }
-
 }

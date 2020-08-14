@@ -1,14 +1,13 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.ChatRepository;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -18,6 +17,7 @@ public class ChatViewModel extends ViewModel {
     MutableLiveData<ArrayList<ChatModel>> arrayInfoUserChatLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<ChatModel>> arraySearchLiveData = new MutableLiveData<>();
     public MutableLiveData<String> countUnReadMessage = new MutableLiveData<>();
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     ChatRepository chatRepository;
 
     public ChatViewModel() {
@@ -68,12 +68,14 @@ public class ChatViewModel extends ViewModel {
             }
         }
     }
-    public int getCountUnReadMessage(ArrayList<ChatModel> chatModelArrayList){
-        int count=0;
+
+    public int getCountUnReadMessage(ArrayList<ChatModel> chatModelArrayList) {
+        int count = 0;
         int size = chatModelArrayList.size();
-        for (int i=0;i< size;i++){
-            int size2=chatModelArrayList.get(i).getMessageModelArrayList().size();
-            if (!chatModelArrayList.get(i).getMessageModelArrayList().get(size2-1).getCheckSeen()){
+        for (int i = 0; i < size; i++) {
+            int size2 = chatModelArrayList.get(i).getMessageModelArrayList().size();
+            if (!chatModelArrayList.get(i).getMessageModelArrayList().get(size2 - 1).getCheckSeen()
+                    && chatModelArrayList.get(i).getMessageModelArrayList().get(size2 - 1).getIdReceiver().equals(firebaseUser.getUid())) {
                 count++;
             }
         }

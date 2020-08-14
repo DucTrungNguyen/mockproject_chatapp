@@ -47,7 +47,8 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
                     && oldItem.getIdReceiver().equals(newItem.getIdReceiver())
                     && oldItem.getMessage().equals(newItem.getMessage())
                     && oldItem.getType().equals(newItem.getType())
-                    && oldItem.getDate().equals(newItem.getDate());
+                    && oldItem.getDate().equals(newItem.getDate())
+                    && oldItem.getIsShow().equals(newItem.getIsShow());
         }
     };
 
@@ -67,6 +68,17 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MessageModel messageModel = getItem(position);
+
+//        if (position < this.getItemCount() - 1) {
+//            int j = position + 1;
+//            MessageModel message2 = getNoteAt(j);
+//            if (messageModel.getIdReceiver().equals(message2.getIdReceiver())
+//                    && messageModel.getIdSender().equals(message2.getIdSender())) {
+//                holder.txtDate.setVisibility(View.GONE);
+//            } else {
+//                holder.txtDate.setVisibility(View.VISIBLE);
+//            }
+//        }
         if (messageModel.getType().equals("Text")) {
             holder.txtMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setText(messageModel.getMessage());
@@ -75,6 +87,12 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
             holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
+        }
+        if (messageModel.getIsShow()){
+            holder.txtDate.setVisibility(View.GONE);
+        }
+        else {
+            holder.txtDate.setVisibility(View.VISIBLE);
         }
         if (urlImage.equals("default")) {
             Glide.with(context).load(R.mipmap.ic_launcher).circleCrop().into(holder.imgUserChat);
@@ -101,17 +119,6 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
             }
             if (i <= this.getItemCount() && messageModel.getDate().equals(message.getDate())) {
                 holder.txtChatDate.setVisibility(View.GONE);
-            }
-        }
-        if (position <this.getItemCount()-1) {
-            int j = position + 1;
-            MessageModel message2 = getNoteAt(j);
-            if (messageModel.getIdSender().equals(message2.getIdSender())
-                    && messageModel.getIdReceiver().equals(message2.getIdReceiver())
-            && messageModel.getTimeLong()<message2.getTimeLong()) {
-                holder.txtDate.setVisibility(View.GONE);
-            } else {
-                holder.txtDate.setVisibility(View.VISIBLE);
             }
         }
         holder.txtMessage.setOnClickListener(v -> {

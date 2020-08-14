@@ -16,7 +16,7 @@
         />
     <TextView
         android:visibility="gone"
-       android:id="@+id/textNotifi"
+        android:id="@+id/textNotifi"
         android:textColor="@color/white"
         android:layout_toEndOf="@id/text1"
         android:text="9"

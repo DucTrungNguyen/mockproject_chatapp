@@ -99,9 +99,14 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.VISIBLE);
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
             } else {
-               // mViewModel.softArray(chatModels);
+                //mViewModel.softArray(chatModels);
                 int count=mViewModel.getCountUnReadMessage(chatModels);
-                mViewModel.countUnReadMessage.setValue(count+"");
+                if (count>9){
+                    mViewModel.countUnReadMessage.setValue("9+");
+                }
+                else {
+                    mViewModel.countUnReadMessage.setValue(count+"");
+                }
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.GONE);
             }

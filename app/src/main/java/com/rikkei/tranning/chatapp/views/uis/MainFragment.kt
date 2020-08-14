@@ -17,12 +17,15 @@ import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentMainBinding
 import com.rikkei.tranning.chatapp.views.adapters.ViewPagerAdapter
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
+import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>()  {
 
     private var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
     var currentTab = 0
+    var chatViewModel: ChatViewModel? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,6 +112,16 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
                 }
             }
         )
+        chatViewModel?.countUnReadMessage?.observe(viewLifecycleOwner, Observer { s: String ->
+            val viewRequest: View? =
+                mViewDataBinding.tabLayout.getTabAt(0)?.customView
+            val count = viewRequest?.findViewById<View>(R.id.notifiMain) as TextView
+            if (s == "0") count.visibility = View.GONE
+            else {
+                count.visibility = View.VISIBLE
+                count.text = s
+            }
+        })
     }
 
     override fun getBindingVariable(): Int {
@@ -120,6 +133,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
     }
 
     override fun getViewModel(): SharedFriendViewModel {
+        chatViewModel=
+            ViewModelProviders.of(requireActivity()).get(ChatViewModel::class.java)
         return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
     }
 }

@@ -58,7 +58,7 @@ public class ChatRepository {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             String idUser = firebaseUser.getUid();
-            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false, System.currentTimeMillis());
+            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false, System.currentTimeMillis(),false);
             String key;
             if (id.compareTo(idUser) > 0) {
                 key = id + idUser;
@@ -122,6 +122,7 @@ public class ChatRepository {
                     MessageModel message = keyNode.getValue(MessageModel.class);
                     messageList.add(message);
                 }
+
                 messageStatus.DataIsLoaded(messageList);
             }
 

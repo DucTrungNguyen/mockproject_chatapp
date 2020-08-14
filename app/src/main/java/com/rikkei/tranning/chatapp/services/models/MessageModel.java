@@ -10,8 +10,9 @@ public class MessageModel {
     private String time;
     private long timeLong;
     private Boolean checkSeen;
+    private Boolean isShow;
 
-    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time, Boolean checkSeen, long timeLong) {
+    public MessageModel(String idSender, String idReceiver, String message, String type, String date, String time, Boolean checkSeen, long timeLong, Boolean isShow) {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
         this.message = message;
@@ -20,9 +21,18 @@ public class MessageModel {
         this.time = time;
         this.timeLong = timeLong;
         this.checkSeen = checkSeen;
+        this.isShow=isShow;
     }
 
     public MessageModel() {
+    }
+
+    public Boolean getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Boolean isShow) {
+        this.isShow = isShow;
     }
 
     public Boolean getCheckSeen() {
