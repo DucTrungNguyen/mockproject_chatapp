@@ -36,9 +36,11 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentChatBinding;
+import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -140,7 +142,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewModel.displayMessage(id);
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             lastPosition = messageModels.size();
-            chatAdapter.submitList(messageModels);
+            ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
+            chatAdapter.submitList(arrayList);
         });
     }
 
