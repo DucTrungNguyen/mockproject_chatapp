@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-
     android:layout_height="wrap_content">
 
 
@@ -24,15 +23,15 @@
         android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
-
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/textTabMain"
         android:textColor="#999999"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:text="@string/txt_friend"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/iconTabMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

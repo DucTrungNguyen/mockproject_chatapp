@@ -19,7 +19,7 @@
             android:orientation="vertical"
             android:id="@+id/RecyclerMyFriend"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="match_parent" />
 
         <ImageView
             android:id="@+id/ImageViewNoResultMyFriend"

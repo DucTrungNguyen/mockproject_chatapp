@@ -78,6 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="50dp"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"
             android:background="@drawable/fragment"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
