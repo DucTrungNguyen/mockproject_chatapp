@@ -78,6 +78,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
     };
     ChatAdapter chatAdapter;
+    ImageAdapter  imageAdapter;
+    StickerAdapter  stickerAdapter;
     String id;
     private static final int IMAGE_REQUEST = 1;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("chat");
@@ -225,13 +227,34 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             chatAdapter.submitList(arrayList);
         });
-        mViewDataBinding.recyclerSticker.setAdapter(new StickerAdapter(Arrays.asList(stickerResource), getContext(), id));
+
+        stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), getContext(), id);
+        mViewDataBinding.recyclerSticker.setAdapter(stickerAdapter);
         mViewDataBinding.recyclerSticker.setHasFixedSize(true);
 
+        stickerAdapter.setOnItemClickListener(nameSticker -> {
+            mViewModel.sendMessage(id, nameSticker, "sticker");
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
+        });
+
+
+
         ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
-        mViewDataBinding.recyclerImage.setAdapter(new ImageAdapter(arrayImage, requireContext(), id));
+        imageAdapter = new ImageAdapter(arrayImage, requireContext(), id);
+        mViewDataBinding.recyclerImage.setAdapter(imageAdapter);
         mViewDataBinding.recyclerImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mViewDataBinding.recyclerImage.setHasFixedSize(true);
+
+        imageAdapter.setOnItemClickListener(uri ->{
+            imageUri = uri;
+            uploadImage();
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
+        } );
+
+
+
+
+
     }
 
     public void checkSeen(String id) {

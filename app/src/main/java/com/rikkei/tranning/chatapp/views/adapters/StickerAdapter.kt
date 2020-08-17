@@ -23,6 +23,7 @@ class StickerAdapter(private val itemList: List<Int>, val context: Context, val 
             ChatViewModel::class.java
         )
 
+    lateinit var listener : OnItemClickListener
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val imageSticker: ImageView = itemView.findViewById(R.id.sticker_preview)
@@ -46,12 +47,27 @@ class StickerAdapter(private val itemList: List<Int>, val context: Context, val 
         holder.imageSticker.setImageResource(currentItem)
         holder.imageSticker.setOnClickListener(View.OnClickListener {
             val name = it.resources.getResourceEntryName(currentItem)
-            chatViewModel.sendMessage(idUser, name, "sticker")
+
+            if ( listener != null){
+                listener?.onItemClick(name)
+            }
 
         })
 
 
     }
+
+    interface OnItemClickListener{
+        fun  onItemClick(nameSticker : String)
+    }
+
+
+    public  fun  setOnItemClickListener(_listener : OnItemClickListener){
+        this.listener = _listener
+
+    }
+
+
 
 
 }

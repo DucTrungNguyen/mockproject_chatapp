@@ -1,10 +1,13 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -22,7 +25,20 @@ public class DialogLogoutFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_logout,container,false);
+//        return
+
+        View view = inflater.inflate(R.layout.dialog_logout,container,false);
+        // Set transparent background and no title
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        return view;
+
+
+//        if (getDialog() != null && getDialog().getWindow() != null) {
+//
+//        }
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
