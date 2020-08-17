@@ -28,18 +28,18 @@ import java.io.File
 import java.util.*
 
 
-class ImageAdapter(private val itemList: List<String>, val context: Context, val idUser: String) :
+class ImageAdapter(private val itemList: List<String>, val context: Context, private val idUser: String) :
     RecyclerView.Adapter<ImageAdapter.ItemViewHolder>() {
 
 
-    val chatViewModel =
+    private val chatViewModel =
         ViewModelProviders.of((context as FragmentActivity)).get(
             ChatViewModel::class.java
         )
 
-    var uriImage: String? = null
+    private var uriImage: String? = null
     private var uploadTask: StorageTask<UploadTask.TaskSnapshot>? = null
-    var storageReference = FirebaseStorage.getInstance().getReference("chat")
+    private var storageReference = FirebaseStorage.getInstance().getReference("chat")
 
 
 
