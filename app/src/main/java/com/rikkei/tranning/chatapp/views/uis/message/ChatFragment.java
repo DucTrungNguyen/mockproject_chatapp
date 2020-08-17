@@ -228,7 +228,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             chatAdapter.submitList(arrayList);
         });
 
-        stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), getContext(), id);
+        stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
         mViewDataBinding.recyclerSticker.setAdapter(stickerAdapter);
         mViewDataBinding.recyclerSticker.setHasFixedSize(true);
 
@@ -240,7 +240,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
 
         ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
-        imageAdapter = new ImageAdapter(arrayImage, requireContext(), id);
+        imageAdapter = new ImageAdapter(arrayImage, requireContext());
         mViewDataBinding.recyclerImage.setAdapter(imageAdapter);
         mViewDataBinding.recyclerImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mViewDataBinding.recyclerImage.setHasFixedSize(true);
@@ -369,6 +369,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
+                    assert downloadUri != null;
                     String mUri = downloadUri.toString();
                     uriImage = mUri;
                     mViewModel.sendMessage(id, mUri, "Image");

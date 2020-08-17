@@ -51,6 +51,7 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding, Sha
             bundle.putString("idUser", userModel.getUserId());
             chatFragment.setArguments(bundle);
             fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, null);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
     }

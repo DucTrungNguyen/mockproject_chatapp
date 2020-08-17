@@ -44,8 +44,7 @@ public class MessageAdapter extends ListAdapter<ChatModel, MessageAdapter.ViewHo
 
         @Override
         public boolean areContentsTheSame(@NonNull ChatModel oldItem, @NonNull ChatModel newItem) {
-            return   oldItem.getMessageModelArrayList().get(oldItem.getMessageModelArrayList().size()-1).getTimeLong()
-                    <newItem.getMessageModelArrayList().get(newItem.getMessageModelArrayList().size()-1).getTimeLong();
+            return oldItem.getMessageModelArrayList().equals(newItem.getMessageModelArrayList());
         }
     };
 
