@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mockproject_chatapp</string>
+    <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
     <!--    login-->
     <string name="txt_login">Đăng nhập</string>

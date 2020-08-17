@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">mockproject_chatapp</string>
+    <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
     <!--    login-->
     <string name="txt_login">Login</string>
@@ -20,17 +20,17 @@
     <string name="txt_not_allow_permission_vi">Bạn bị ngố hả bạn ơi! Không cấp quyền đọc ảnh thì gửi kiểu gì?</string>
 
     <!--friend-->
-    <string name="txt_search_friend" >Search friend</string>
-    <string name="txt_friend" >Friend</string>
+    <string name="txt_search_friend">Search friend</string>
+    <string name="txt_friend" >Friends</string>
     <string name="txt_request">Request</string>
     <string name="txt_request_friend">Add Friend</string>
     <string name="txt_cancel_friend">UnFriend</string>
     <string name="txt_cancel">Cancel</string>
     <string name="txt_accept">Accept</string>
-    <string name="txt_list_request_friend">List Friend Request</string>
-    <string name="txt_list_send_friend">List Send Request</string>
-    <string name="txt_all_friend_title">AllFriend</string>
-    <string name="txt_request_friend_title">RequestFriend</string>
+    <string name="txt_list_request_friend">Friend Request</string>
+    <string name="txt_list_send_friend">Send Request</string>
+    <string name="txt_all_friend_title">All Friends</string>
+    <string name="txt_request_friend_title">Requests</string>
 
     <!--    profile-->
     <string name="txt_language">Language</string>

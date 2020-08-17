@@ -56,8 +56,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
                 viewPager!!.currentItem = tab.position
                 currentTab = tab.position
                 val tabView = tab.customView
-                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
-                notifiMainBlue?.visibility = View.VISIBLE
+//                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
+//                notifiMainBlue?.visibility = View.VISIBLE
 
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =
                     PorterDuffColorFilter(
@@ -74,8 +74,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 val tabView = tab.customView
-                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
-                notifiMainBlue?.visibility = View.GONE
+//                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
+//                notifiMainBlue?.visibility = View.GONE
 
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =
                     PorterDuffColorFilter(
