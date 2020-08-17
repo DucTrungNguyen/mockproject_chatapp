@@ -75,8 +75,8 @@ public class MessageAdapter extends ListAdapter<ChatModel, MessageAdapter.ViewHo
         int count=0;
         for (int i=0;i<userModel.getMessageModelArrayList().size();i++){
             if (userModel.getMessageModelArrayList().get(i).getIdReceiver().equals(firebaseUser.getUid())
-            && userModel.getMessageModelArrayList().get(i).getIdSender().equals(userModel.getUserModel().getUserId())
-            && !userModel.getMessageModelArrayList().get(i).getCheckSeen()){
+                    && userModel.getMessageModelArrayList().get(i).getIdSender().equals(userModel.getUserModel().getUserId())
+                    && !userModel.getMessageModelArrayList().get(i).getCheckSeen()){
                 count++;
             }
             idSender=userModel.getMessageModelArrayList().get(i).getIdSender();
@@ -97,7 +97,7 @@ public class MessageAdapter extends ListAdapter<ChatModel, MessageAdapter.ViewHo
             if (idSender.equals(firebaseUser.getUid())){
                 holder.txtLastMessage.setText("Bạn: Sticker");
             }else
-            holder.txtLastMessage.setText("Sticker");
+                holder.txtLastMessage.setText("Sticker");
         }
         else {
             if (idSender.equals(firebaseUser.getUid())){

@@ -1,7 +1,11 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,7 +53,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             DialogLogoutFragment dialog = new DialogLogoutFragment();
             dialog.show(getParentFragmentManager(), null);
         });
-      //  mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
+       // mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
     }
 
     @Override
@@ -95,7 +99,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 //        });
 //        popupMenu.show();
 //    }
-//    public  void onChangeLanguage(Locale locale){
+////    public  void onChangeLanguage(Locale locale){
 //        DisplayMetrics displayMetrics= getActivity().getResources().getDisplayMetrics();
 //        Configuration configuration=new Configuration();
 //        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
