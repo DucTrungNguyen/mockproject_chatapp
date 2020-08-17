@@ -20,6 +20,7 @@ import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.message.ChatFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, SharedFriendViewModel> {
     public AllFriendAdapter allFriendAdapter;
@@ -36,7 +37,7 @@ public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, S
 
     @Override
     public SharedFriendViewModel getViewModel() {
-        return ViewModelProviders.of(getActivity()).get(SharedFriendViewModel.class);
+        return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel.class);
     }
 
     @Override

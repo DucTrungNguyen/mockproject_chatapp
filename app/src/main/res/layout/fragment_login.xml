@@ -9,7 +9,6 @@
             name="viewModel"
             type="com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel" />
     </data>
-    <!--    fixme-->
     <ScrollView
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
@@ -46,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="@string/txt_titleApp_vi"
+                android:text="@string/txt_title_app"
                 android:textColor="#000000"
                 android:textSize="26sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:text="@string/txt_login_vi"
+                android:text="@string/txt_login"
                 android:textColor="@color/blue"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,7 @@
                         android:id="@+id/textViewEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_email_vi"
+                        android:text="@string/txt_email"
                         android:textColor="@color/grey"
                         android:textSize="14sp" />
 
@@ -90,7 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:hint="@string/txt_hintEmail_vi"
+                        android:hint="@string/txt_hint_email"
                         android:inputType="textEmailAddress"
                         android:text="@={viewModel.EmailAddress}" />
 
@@ -115,7 +114,7 @@
                         android:id="@+id/textViewPass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_password_vi"
+                        android:text="@string/txt_password"
                         android:textColor="@color/grey"
                         android:textSize="14sp" />
 
@@ -143,7 +142,7 @@
                     android:layout_below="@+id/layoutPass"
                     android:layout_marginTop="15dp"
                     android:gravity="right|top"
-                    android:text="@string/txt_forgot_password_vi"
+                    android:text="@string/txt_forgot_password"
                     android:textColor="@color/blue"
                     android:textSize="14sp"
                     tools:ignore="RtlHardcoded" />
@@ -157,7 +156,7 @@
                     android:layout_marginTop="47dp"
                     android:background="@drawable/custom_button_login"
                     android:onClick="@{()->viewModel.onClick()}"
-                    android:text="@string/txt_login_vi"
+                    android:text="@string/txt_login"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </RelativeLayout>

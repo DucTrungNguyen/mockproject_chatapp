@@ -12,15 +12,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--        fixme-->
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerRequestFriend"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             tools:listitem="@layout/item_friend" />
-
 
         <ImageView
             android:id="@+id/ImageViewNoResultMyFriend"
@@ -30,8 +27,5 @@
             android:layout_gravity="center|center_vertical"
             android:src="@drawable/ic_no_search"
             android:visibility="gone" />
-
     </RelativeLayout>
-
-
 </layout>

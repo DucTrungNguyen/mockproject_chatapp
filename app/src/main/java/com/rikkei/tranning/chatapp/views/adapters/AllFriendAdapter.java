@@ -69,22 +69,22 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
 
         switch (user.getUserType()) {
             case "NoFriend":
-                holder.btnRequest.setText("Kết bạn");
+                holder.btnRequest.setText(R.string.txt_request_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "friend":
-                holder.btnRequest.setText("Hủy bạn");
+                holder.btnRequest.setText(R.string.txt_cancel_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "sendRequest":
-                holder.btnRequest.setText("Hủy");
+                holder.btnRequest.setText(R.string.txt_cancel);
                 holder.btnRequest.setBackgroundResource(R.drawable.custom_button_unfriend);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.blue));
                 break;
             case "friendRequest":
-                holder.btnRequest.setText("Đồng ý");
+                holder.btnRequest.setText(R.string.txt_accept);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
@@ -100,16 +100,16 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             switch (holder.btnRequest.getText().toString()) {
                 case "Kết bạn":
                     sharedFriendViewModel.createFriend(user);
-                    holder.btnRequest.setText("Hủy");
+                    holder.btnRequest.setText(R.string.txt_cancel);
                     break;
                 case "Hủy":
                 case "Hủy bạn":
                     sharedFriendViewModel.deleteFriend(user);
-                    holder.btnRequest.setText("Kết bạn");
+                    holder.btnRequest.setText(R.string.txt_request_friend);
                     break;
                 case "Đồng ý":
                     sharedFriendViewModel.updateFriend(user);
-                    holder.btnRequest.setText("Hủy bạn");
+                    holder.btnRequest.setText(R.string.txt_cancel_friend);
                     break;
             }
         });

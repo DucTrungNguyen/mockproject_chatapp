@@ -70,36 +70,36 @@ public class RequestFriendAdapter extends ListAdapter<AllUserModel, RequestFrien
         holder.txtUserName.setText(user.getUserName());
         switch (user.getUserType()) {
             case "NoFriend":
-                holder.btnRequest.setText("Kết bạn");
+                holder.btnRequest.setText(R.string.txt_request_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "friend":
-                holder.btnRequest.setText("Hủy bạn");
+                holder.btnRequest.setText(R.string.txt_cancel_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
             case "sendRequest":
-                holder.btnRequest.setText("Hủy");
+                holder.btnRequest.setText(R.string.txt_cancel);
                 holder.btnRequest.setBackgroundResource(R.drawable.custom_button_unfriend);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.blue));
                 break;
             case "friendRequest":
-                holder.btnRequest.setText("Đồng ý");
+                holder.btnRequest.setText(R.string.txt_accept);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
                 holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
                 break;
         }
         if (position == 0 && user.getUserType().equals("friendRequest")) {
-            holder.txtSection.setText("Lời mời kết bạn");
+            holder.txtSection.setText(R.string.txt_list_request_friend);
         } else if (position == 0 && user.getUserType().equals("sendRequest")) {
-            holder.txtSection.setText("Đã gửi kết bạn");
+            holder.txtSection.setText(R.string.txt_list_send_friend);
         } else if (getItem(position - 1).getUserType().equals(user.getUserType())) {
             holder.txtSection.setVisibility(View.GONE);
 
 
         } else if (!getItem(position - 1).getUserType().equals(user.getUserType())) {
-            holder.txtSection.setText("Đã gửi kết bạn");
+            holder.txtSection.setText(R.string.txt_list_send_friend);
 
         }
         holder.btnRequest.setOnClickListener(v -> {

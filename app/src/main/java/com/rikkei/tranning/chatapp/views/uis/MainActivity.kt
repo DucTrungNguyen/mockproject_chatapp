@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.rikkei.tranning.chatapp.R
 
 class MainActivity : AppCompatActivity() {
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +20,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.add(R.id.frameLayoutChat, MainFragment(), null)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-
-
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
 
@@ -42,5 +39,4 @@ class MainActivity : AppCompatActivity() {
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 }

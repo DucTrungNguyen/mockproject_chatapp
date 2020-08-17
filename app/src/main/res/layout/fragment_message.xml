@@ -38,7 +38,7 @@
                 android:layout_marginRight="20sp"
                 android:background="@drawable/edittext"
                 android:drawableStart="@drawable/ic_baseline_search_24"
-                android:hint="@string/txt_search_message_vi"
+                android:hint="@string/txt_search_message"
                 android:padding="5dp" />
 
             <ImageButton
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/txt_message_vi"
+                android:text="@string/txt_message"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:gravity="center"
-            android:text="@string/txt_search_no_result_vi"
+            android:text="@string/txt_no_result"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="invisible"

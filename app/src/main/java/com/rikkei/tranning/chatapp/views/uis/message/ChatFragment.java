@@ -1,13 +1,11 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.pm.PackageManager;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -43,7 +40,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.rikkei.tranning.chatapp.BR;
-import com.rikkei.tranning.chatapp.BuildConfig;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentChatBinding;
@@ -91,6 +87,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     int lastPosition;
+    InputMethodManager inputMethodManager;
 
     @Override
     public int getBindingVariable() {
@@ -111,12 +108,15 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
+        mViewDataBinding.editTextMessage.requestFocus();
+        inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (mViewDataBinding.editTextMessage.requestFocus()) {
+            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
+        }
+
         mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
 
-            mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> buildRecyclerImage());
-//            mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> openImage());
+        mViewDataBinding.imageButtonPhotoChat.setOnClickListener(view12 -> buildRecyclerImage());
 
         mViewDataBinding.imageButtonSend.setOnClickListener(v -> {
             Bundle bundle = getArguments();
@@ -129,37 +129,27 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             mViewDataBinding.editTextMessage.setText("");
         });
-        mViewDataBinding.imageButtonSend.setEnabled(false);
-//        mViewDataBinding.editTextMessage.add
-        mViewDataBinding.editTextMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
-                    mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
-                    mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
-                    mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
-
-                }
-
-
+        mViewDataBinding.editTextMessage.setOnFocusChangeListener((v, hasFocus) -> {
+            if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE|| mViewDataBinding.recyclerImage.getVisibility()==View.VISIBLE) {
+                mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+                mViewDataBinding.recyclerImage.setVisibility(View.GONE);
+                mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+                mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
             }
         });
 
         mViewDataBinding.editTextMessage.setOnClickListener(v -> {
-            if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
-                mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
-                mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
-                mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
-
-            }
-
+            mViewDataBinding.editTextMessage.requestFocus();
+            mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+            mViewDataBinding.recyclerImage.setVisibility(View.GONE);
+            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
+            mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+            mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
         });
 
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
             }
 
             @Override
@@ -176,27 +166,27 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                 }
             }
 
-
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
         mViewDataBinding.imageSendSticker.setOnClickListener(view1 -> {
-
             if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
+                mViewDataBinding.editTextMessage.requestFocus();
+                mViewDataBinding.recyclerImage.setVisibility(View.GONE);
                 mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+                inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
                 mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
             } else {
-//                InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
                 inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
+                mViewDataBinding.editTextMessage.clearFocus();
+                mViewDataBinding.recyclerImage.setVisibility(View.GONE);
                 mViewDataBinding.recyclerSticker.setVisibility(View.VISIBLE);
                 mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_blue);
             }
-
-
         });
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -235,9 +225,13 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             chatAdapter.submitList(arrayList);
         });
-
         mViewDataBinding.recyclerSticker.setAdapter(new StickerAdapter(Arrays.asList(stickerResource), getContext(), id));
         mViewDataBinding.recyclerSticker.setHasFixedSize(true);
+
+        ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
+        mViewDataBinding.recyclerImage.setAdapter(new ImageAdapter(arrayImage, requireContext(), id));
+        mViewDataBinding.recyclerImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mViewDataBinding.recyclerImage.setHasFixedSize(true);
     }
 
     public void checkSeen(String id) {
@@ -271,6 +265,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     }
 
     private void removeFragment() {
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         databaseReference.removeEventListener(listener);
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
@@ -280,24 +275,20 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     }
 
     private void buildRecyclerImage() {
-        ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
-        mViewDataBinding.recyclerSticker.setAdapter(new ImageAdapter(arrayImage, getContext(), id));
-        mViewDataBinding.recyclerSticker.setLayoutManager(new GridLayoutManager(getContext(),3));
-        mViewDataBinding.recyclerSticker.setHasFixedSize(true);
-
-
-        if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
+        mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
+        if (mViewDataBinding.recyclerImage.getVisibility() == View.VISIBLE) {
+            mViewDataBinding.editTextMessage.requestFocus();
+            mViewDataBinding.recyclerImage.setVisibility(View.GONE);
             mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
             mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
+            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
         } else {
-
-            mViewDataBinding.recyclerSticker.setVisibility(View.VISIBLE);
-            mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo_blue);
-            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
+            mViewDataBinding.editTextMessage.clearFocus();
+            mViewDataBinding.recyclerImage.setVisibility(View.VISIBLE);
+            mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
+            mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo_blue);
         }
-
-
     }
 
     private ArrayList<String> getAllShownImagesPath(Activity activity) {
@@ -307,12 +298,12 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         ArrayList<String> listOfAllImages = new ArrayList<String>();
         String absolutePathOfImage = null;
 
-        if (ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-           mViewDataBinding.txtNotAllowPer.setVisibility(View.VISIBLE);
+            mViewDataBinding.txtNotAllowPer.setVisibility(View.VISIBLE);
 
-        }else {
+        } else {
             mViewDataBinding.txtNotAllowPer.setVisibility(View.GONE);
             uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
             String[] projection = {MediaStore.MediaColumns.DATA,
@@ -329,13 +320,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
         }
         return listOfAllImages;
-    }
-
-    private void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
     }
 
     private String getFileExtension(Uri uri) {
