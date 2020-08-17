@@ -2,6 +2,7 @@ package com.rikkei.tranning.chatapp.views.uis.profile;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,12 +14,14 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
+import com.rikkei.tranning.chatapp.helper.LocaleHelper;
 
 import java.util.Locale;
 
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> {
     Locale myLocale;
+
 
     @Override
     public int getBindingVariable() {
@@ -49,7 +52,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             DialogLogoutFragment dialog = new DialogLogoutFragment();
             dialog.show(getParentFragmentManager(), null);
         });
-      //  mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
+        mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
     }
 
     @Override
@@ -75,41 +78,39 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.add(R.id.frameLayoutChat, new EditProfileFragment(), null).commit();
         fragmentTransaction.addToBackStack(null);
     }
-//    private  void showMenu(){
-//        PopupMenu popupMenu=new PopupMenu(getActivity(),mViewDataBinding.imageButtonChangeLanguage);
-//        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_language,popupMenu.getMenu());
-//        popupMenu.setOnMenuItemClickListener(item -> {
-//            switch (item.getItemId()){
-//                case R.id.language_en:
-//                     myLocale=new Locale("en","US");
-//                    onChangeLanguage(myLocale);
-//                    mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_en);
-//                    break;
-//                case R.id.language_vi:
-//                     myLocale=new Locale("vi", "VN");
-//                    onChangeLanguage(myLocale);
-//                    mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_vi);
-//                    break;
-//            }
-//            return false;
-//        });
-//        popupMenu.show();
-//    }
-//    public  void onChangeLanguage(Locale locale){
-//        DisplayMetrics displayMetrics= getActivity().getResources().getDisplayMetrics();
-//        Configuration configuration=new Configuration();
-//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-//            configuration.locale=locale;
-//        }
-//        else {
-//            configuration.locale=locale;
-//        }
-//        getActivity().getResources().updateConfiguration(configuration,displayMetrics);
-//    }
-//    //    public void onChangeLanguage(Locale locale){
-////        Resources resources= MyAppOFFLINE.self().getResources();
-////        Configuration configuration=resources.getConfiguration();
-////        configuration.setLocale(locale);
-////        resources.updateConfiguration(configuration,resources.getDisplayMetrics());
-////    }
+
+    private void showMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), mViewDataBinding.imageButtonChangeLanguage);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_language, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.language_en:
+                    myLocale = new Locale("en", "US");
+                    if (!mViewDataBinding.TextViewLanguage.getText().equals("English")) {
+                        onChangeLanguage(myLocale, "en");
+                        mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_en);
+                    }
+                    break;
+                case R.id.language_vi:
+                    myLocale = new Locale("vi", "VN");
+                    if (!mViewDataBinding.TextViewLanguage.getText().equals("Tiếng Việt")) {
+                        onChangeLanguage(myLocale, "vi");
+                        mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_vi);
+                    }
+
+                    break;
+            }
+            return false;
+        });
+        popupMenu.show();
+    }
+
+    public void onChangeLanguage(Locale locale, String language) {
+        LocaleHelper.onReAttach(getContext(), language);
+        getActivity().finish();
+        startActivity(getActivity().getIntent());
+        getActivity().overridePendingTransition(R.anim.nope, R.anim.nope);
+
+    }
+
 }
