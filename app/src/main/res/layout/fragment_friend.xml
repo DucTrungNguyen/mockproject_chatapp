@@ -70,6 +70,7 @@
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
+            app:tabRippleColor="@null"
             android:id="@+id/tabLayoutFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +80,6 @@
             app:tabIndicatorColor="#4356B4"
             app:tabSelectedTextColor="#4356B4"
             app:tabTextColor="#999999" />
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPagerFriend"
             android:layout_width="match_parent"

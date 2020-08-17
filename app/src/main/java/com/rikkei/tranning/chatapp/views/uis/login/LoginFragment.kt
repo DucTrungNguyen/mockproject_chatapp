@@ -1,11 +1,10 @@
 package com.rikkei.tranning.chatapp.views.uis.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.Html
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
@@ -44,11 +43,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val htmlcontentbutton =
-            "Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>"
-        mViewDataBinding!!.ButtonMoveRegister.text = Html.fromHtml(
-            htmlcontentbutton
-        )
+//        val htmlcontentbutton =
+//            "Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>"
+//        mViewDataBinding!!.ButtonMoveRegister.text = Html.fromHtml(
+//            htmlcontentbutton
+//        )
+        val textSpan = mViewDataBinding!!.ButtonMoveRegister.text
+        var index = textSpan.indexOf('?')
+        val spannable = SpannableString(textSpan)
+        spannable.setSpan(ForegroundColorSpan(Color.BLUE), ++index , textSpan.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mViewDataBinding!!.ButtonMoveRegister.text = spannable
         eventEditText()
         mViewDataBinding!!.ButtonMoveRegister.setOnClickListener { replaceFragment() }
     }
@@ -62,7 +66,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
                 }
                 is LoginViewModel.LoginStatus.IsOk -> {
                     progress_circular.visibility = View.GONE
-                    Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()

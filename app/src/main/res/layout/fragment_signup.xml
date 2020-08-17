@@ -186,6 +186,7 @@
 
         <TextView
             android:layout_marginTop="50dp"
+            android:text="@string/txt_login_span"
             app:layout_constraintTop_toBottomOf="@+id/relativeSignUp"
             android:id="@+id/ButtonMoveLogin"
             android:layout_width="match_parent"

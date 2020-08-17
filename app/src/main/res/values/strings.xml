@@ -9,9 +9,11 @@
     <string name="txt_hint_email">youremail@gmail.com</string>
     <string name="txt_password">PASSWORD</string>
     <string name="txt_forgot_password">Forgot password?</string>
+    <string name="txt_register_span">Don\'t have account? Sign up now</string>
     <!--    register-->
     <string name="txt_register" >Register</string>
     <string name="txt_name">NAME</string>
+    <string name="txt_login_span">Have account? Login now</string>
     <!--    message-->
     <string name="txt_search_message">Search message</string>
     <string name="txt_message">Message</string>
