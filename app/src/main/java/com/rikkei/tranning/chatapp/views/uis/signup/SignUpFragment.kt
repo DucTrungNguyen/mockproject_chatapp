@@ -1,10 +1,9 @@
 package com.rikkei.tranning.chatapp.views.uis.signup
 
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.Html
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
@@ -42,9 +41,14 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewDataBinding.checkboxRegister.text = Html.fromHtml(
             htmlContentCheckBox
         )
-        val htmlContentButton =
-            "Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>"
-        mViewDataBinding.ButtonMoveLogin.text = Html.fromHtml(htmlContentButton)
+//        val htmlContentButton =
+//            "Đã có tài khoản? <font color=\"#4356B4\"> Đăng nhập ngay</font>"
+//        mViewDataBinding.ButtonMoveLogin.text = Html.fromHtml(htmlContentButton)
+        val textSpan = mViewDataBinding!!.ButtonMoveLogin.text
+        var index = textSpan.indexOf('?')
+        val spannable = SpannableString(textSpan)
+        spannable.setSpan(ForegroundColorSpan(Color.BLUE), ++index , textSpan.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mViewDataBinding!!.ButtonMoveLogin.text = spannable
         eventEnableButton()
         mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragmentBack() }
         mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragmentBack() }
