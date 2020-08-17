@@ -33,7 +33,7 @@
                 android:layout_marginRight="20sp"
                 android:background="@drawable/edittext"
                 android:drawableStart="@drawable/ic_baseline_search_24"
-                android:hint="@string/txt_search_friends_vi"
+                android:hint="@string/txt_search_friend"
                 android:padding="5dp" />
 
             <ImageButton
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/txt_friend_title_vi"
+                android:text="@string/txt_friend"
                 android:textColor="#ffffff"
                 android:textSize="30sp"
                 android:textStyle="bold" />

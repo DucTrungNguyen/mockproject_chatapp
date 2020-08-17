@@ -59,9 +59,9 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
         InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
-        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), "BẠN BÈ");
-        mainViewPaperAdaper.AddFragment(new AllFriendFragment(), "TẤT CẢ");
-        mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), "Yêu cầu");
+        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), String.valueOf(R.string.txt_friend));
+        mainViewPaperAdaper.AddFragment(new AllFriendFragment(), String.valueOf(R.string.txt_all_friend_title));
+        mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), String.valueOf(R.string.txt_request_friend_title));
         mViewDataBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
         mViewDataBinding.tabLayoutFriend.setupWithViewPager(mViewDataBinding.viewPagerFriend);
         mViewDataBinding.imageButtonDeleteSearchFriend.setOnClickListener(view1 -> {
@@ -91,21 +91,21 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
 
         View textFriend = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiFriend = textFriend.findViewById(R.id.text1);
-        textNotifiFriend.setText("BẠN BÈ");
+        textNotifiFriend.setText(R.string.txt_friend);
         tabFriend = mViewDataBinding.tabLayoutFriend.getTabAt(0);
         assert tabFriend != null;
         tabFriend.setCustomView(textFriend);
 
         View textAll = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiAll = textAll.findViewById(R.id.text1);
-        textNotifiAll.setText("TẤT CẢ");
+        textNotifiAll.setText(R.string.txt_all_friend_title);
         tabAll = mViewDataBinding.tabLayoutFriend.getTabAt(1);
         assert tabAll != null;
         tabAll.setCustomView(textAll);
         textRequest = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiRequest = textRequest.findViewById(R.id.text1);
         countNotifi = textNotifiFriend.findViewById(R.id.textNotifi);
-        textNotifiRequest.setText("YÊU CẦU");
+        textNotifiRequest.setText(R.string.txt_request_friend_title);
         tabRequest = mViewDataBinding.tabLayoutFriend.getTabAt(2);
         assert tabRequest != null;
         tabRequest.setCustomView(textRequest);

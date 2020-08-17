@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">mockproject_chatapp</string>
     <string name="txt_app">Awesome Chat</string>
@@ -30,6 +31,7 @@
     <string name="txt_list_send_friend">Đã gửi kết bạn</string>
     <string name="txt_all_friend_title">Tất cả</string>
     <string name="txt_request_friend_title">Yêu cầu</string>
+
     <!--    profile-->
     <string name="txt_language">Ngôn ngữ</string>
     <string name="txt_notification" >Thông báo</string>

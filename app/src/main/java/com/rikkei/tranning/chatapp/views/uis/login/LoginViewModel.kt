@@ -29,11 +29,7 @@ class LoginViewModel : ViewModel() {
         }
     }
     fun resetStatus(){
-//        loginStatus.value = LoginStatus.Register(true)
         loginStatus.value = LoginStatus.ErrorPassAndEmail(false)
-//        loginStatus.value = LoginStatus.Loading(false)
-
-
     }
 
     private fun loginFirebase() {

@@ -62,10 +62,7 @@ class ImageAdapter(private val itemList: List<String>, val context: Context, val
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = itemList[position]
-
-
         Glide.with(context).load(currentItem).into(holder.imageSticker);
-
         holder.imageSticker.setOnClickListener(View.OnClickListener {
 
             val uriImageContentProvider = Uri.fromFile( File(currentItem))
@@ -101,9 +98,6 @@ class ImageAdapter(private val itemList: List<String>, val context: Context, val
                 })
 
         })
-
-
-
     }
     private fun getFileExtension(uri: Uri): String? {
         val contentResolver: ContentResolver = context.contentResolver

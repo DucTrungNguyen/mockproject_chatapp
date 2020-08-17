@@ -122,8 +122,8 @@
                     android:layout_width="0dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_marginLeft="10dp"
-                    android:hint="@string/txt_enterMessage_vi"
+                    android:layout_marginStart="10dp"
+                    android:hint="@string/txt_enter_message"
                     android:textSize="16sp" />
                 <ImageView
                     android:id="@+id/imageSendSticker"
@@ -142,8 +142,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
-
-
             <TextView
                 android:id="@+id/txtNotAllowPer"
                 android:text="@string/txt_not_allow_permission_vi"
@@ -156,6 +154,14 @@
                 android:layout_height="wrap_content"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSticker"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/recyclerSticker"
+                android:id="@+id/recyclerImage"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:visibility="gone"

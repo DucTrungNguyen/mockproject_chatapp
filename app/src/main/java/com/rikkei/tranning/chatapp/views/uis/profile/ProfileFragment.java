@@ -2,6 +2,7 @@ package com.rikkei.tranning.chatapp.views.uis.profile;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +15,11 @@ import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
 
+import java.util.Locale;
+
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> {
+    Locale myLocale;
     @Override
     public int getBindingVariable() {
         return BR.viewModelProfile;
@@ -44,6 +48,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             DialogLogoutFragment dialog = new DialogLogoutFragment();
             dialog.show(getParentFragmentManager(), null);
         });
+        mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
     }
 
     @Override
@@ -69,5 +74,40 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentTransaction.add(R.id.frameLayoutChat, new EditProfileFragment(), null).commit();
         fragmentTransaction.addToBackStack(null);
     }
-
+    private  void showMenu(){
+        PopupMenu popupMenu=new PopupMenu(getActivity(),mViewDataBinding.imageButtonChangeLanguage);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_language,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()){
+                case R.id.language_en:
+                    myLocale=new Locale("en","US");
+                    mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_en);
+                    break;
+                case R.id.language_vi:
+                    myLocale=new Locale("vi", "VN");
+                    mViewDataBinding.TextViewLanguage.setText(R.string.txt_language_vi);
+                    break;
+            }
+           // onChangeLanguage(myLocale);
+            return false;
+        });
+        popupMenu.show();
+    }
+//    public  void onChangeLanguage(Locale locale){
+//        DisplayMetrics displayMetrics= getContext().getResources().getDisplayMetrics();
+//        Configuration configuration=new Configuration();
+//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+//            configuration.locale=locale;
+//        }
+//        else {
+//            configuration.locale=locale;
+//        }
+//        getContext().getResources().updateConfiguration(configuration,displayMetrics);
+//    }
+//    public void onChangeLanguage(Locale locale){
+//        Resources resources= MyAppOFFLINE.self().getResources();
+//        Configuration configuration=resources.getConfiguration();
+//        configuration.setLocale(locale);
+//        resources.updateConfiguration(configuration,resources.getDisplayMetrics());
+//    }
 }
