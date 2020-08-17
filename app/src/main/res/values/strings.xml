@@ -1,53 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">mockproject_chatapp</string>
+    <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
     <!--    login-->
-    <string name="txt_login">Đăng nhập</string>
-    <string name="txt_title_app">Trải nghiệm Awesome chat</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_title_app">Awesome Chat Experience</string>
     <string name="txt_email">EMAIL</string>
-    <string name="txt_hint_email">abc@gmail.com</string>
-    <string name="txt_password">MẬT KHẨU</string>
-    <string name="txt_forgot_password">Quên mật khẩu?</string>
+    <string name="txt_hint_email">youremail@gmail.com</string>
+    <string name="txt_password">PASSWORD</string>
+    <string name="txt_forgot_password">Forgot password?</string>
     <!--    register-->
-    <string name="txt_register" >Đăng ký</string>
-    <string name="txt_name">HỌ VÀ TÊN</string>
+    <string name="txt_register" >Register</string>
+    <string name="txt_name">NAME</string>
     <!--    message-->
-    <string name="txt_search_message">Tìm kiếm tin nhắn</string>
-    <string name="txt_message">Tin nhắn</string>
-    <string name="txt_no_result">Không tìm thấy kết quả phù hợp</string>
-    <string name="txt_enter_message">Nhập tin nhắn</string>
+    <string name="txt_search_message">Search message</string>
+    <string name="txt_message">Message</string>
+    <string name="txt_no_result">No result</string>
+    <string name="txt_enter_message">Enter message</string>
     <string name="txt_not_allow_permission_vi">Bạn bị ngố hả bạn ơi! Không cấp quyền đọc ảnh thì gửi kiểu gì?</string>
 
     <!--friend-->
-    <string name="txt_search_friend" >Tìm kiếm bạn bè</string>
-    <string name="txt_friend" >Bạn bè</string>
-    <string name="txt_request">Yêu cầu</string>
-    <string name="txt_request_friend">Kết bạn</string>
-    <string name="txt_cancel_friend">Hủy bạn</string>
-    <string name="txt_cancel">Hủy</string>
-    <string name="txt_accept">Đồng ý</string>
-    <string name="txt_list_request_friend">Lời mời kết bạn</string>
-    <string name="txt_list_send_friend">Đã gửi kết bạn</string>
-    <string name="txt_all_friend_title">Tất cả</string>
-    <string name="txt_request_friend_title">Yêu cầu</string>
-    <!--    profile-->
-    <string name="txt_language">Ngôn ngữ</string>
-    <string name="txt_notification" >Thông báo</string>
-    <string name="txt_version">Phiên bản ứng dụng</string>
-    <string name="txt_hint_version">1.00</string>
-    <string name="txt_logout">Đăng xuất</string>
-    <string name="txt_edit_profile">Chỉnh sửa thông tin</string>
-    <string name="txt_save">Lưu</string>
-    <string name="txt_phone">SỐ ĐIỆN THOẠI</string>
-    <string name="txt_date_of_birth">NGÀY SINH</string>
-    <string name="txt_profile">Cá nhân</string>
-    <string name="txt_language_vi">Tiếng Việt</string>
-    <string name="txt_language_en">Tiếng Anh</string>
+    <string name="txt_search_friend">Search friend</string>
+    <string name="txt_friend" >Friends</string>
+    <string name="txt_request">Request</string>
+    <string name="txt_request_friend">Add Friend</string>
+    <string name="txt_cancel_friend">UnFriend</string>
+    <string name="txt_cancel">Cancel</string>
+    <string name="txt_accept">Accept</string>
+    <string name="txt_list_request_friend">Friend Request</string>
+    <string name="txt_list_send_friend">Send Request</string>
+    <string name="txt_all_friend_title">All Friends</string>
+    <string name="txt_request_friend_title">Requests</string>
 
+    <!--    profile-->
+    <string name="txt_language">Language</string>
+    <string name="txt_notification" >Notification</string>
+    <string name="txt_version">Version app</string>
+    <string name="txt_hint_version">1.00</string>
+    <string name="txt_logout">Logout</string>
+    <string name="txt_edit_profile">Edit profile</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_phone">PHONE NUMBER</string>
+    <string name="txt_date_of_birth">DATE OF BIRTH</string>
+    <string name="txt_profile">Profile</string>
+    <string name="txt_language_vi">Vietnamese</string>
+    <string name="txt_language_en">English</string>
     <!--    dialog-->
-    <string name="txt_notification_dialog">Thông báo</string>
-    <string name="txt_description_dialog">Bạn có chắc chắn muốn đăng xuất không?</string>
-    <string name="txt_no">Không</string>
-    <string name="txt_description_dialog_friend">Trở thành bạn bè để có thể gửi tin nhắn cho nhau nhé :3</string>
+    <string name="txt_notification_dialog">Notification</string>
+    <string name="txt_description_dialog">Are you sure you want to log out?</string>
+    <string name="txt_no">No</string>
+    <string name="txt_description_dialog_friend">Become a friend to be able to send a message to each other :3</string>
     <string name="txt_ok">OK</string>
 </resources>
