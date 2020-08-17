@@ -37,6 +37,8 @@ class ImageAdapter(private val itemList: List<String>, val context: Context, pri
             ChatViewModel::class.java
         )
 
+    private var listener: OnItemClickListener?= null
+
     private var uriImage: String? = null
     private var uploadTask: StorageTask<UploadTask.TaskSnapshot>? = null
     private var storageReference = FirebaseStorage.getInstance().getReference("chat")
@@ -65,37 +67,10 @@ class ImageAdapter(private val itemList: List<String>, val context: Context, pri
         Glide.with(context).load(currentItem).into(holder.imageSticker);
         holder.imageSticker.setOnClickListener(View.OnClickListener {
 
-            val uriImageContentProvider = Uri.fromFile( File(currentItem))
-            val progressDialog = ProgressDialog(context)
-            progressDialog.setMessage("Sending")
-            progressDialog.show()
-            val fileReference: StorageReference = storageReference.child(
-                System.currentTimeMillis()
-                    .toString() + "." + getFileExtension(uriImageContentProvider)
-            )
-            Log.d("Uri in adapter", currentItem)
-            uploadTask = fileReference.putFile(uriImageContentProvider)
-            (uploadTask as UploadTask).continueWithTask(
-                Continuation { task: Task<UploadTask.TaskSnapshot?> ->
-                    if (!task.isSuccessful) {
-                        throw Objects.requireNonNull(task.exception)!!
-                    }
-                    fileReference.downloadUrl
-                }
-            )
-                .addOnCompleteListener(OnCompleteListener { task: Task<Uri> ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        val mUri = downloadUri.toString()
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener!!.onItemClick( Uri.fromFile( File(currentItem)))
+            }
 
-                        uriImage = mUri
-                        chatViewModel.sendMessage(idUser, mUri, "Image")
-                        progressDialog.dismiss()
-                    } else {
-                        Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
-                    }
-                    progressDialog.dismiss()
-                })
 
         })
     }
@@ -103,6 +78,14 @@ class ImageAdapter(private val itemList: List<String>, val context: Context, pri
         val contentResolver: ContentResolver = context.contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+    }
+
+    interface OnItemClickListener{
+        fun  onItemClick(uri : Uri)
+    }
+
+    fun  setOnItemClickListener(_listener :OnItemClickListener){
+        listener = _listener
     }
 
 
