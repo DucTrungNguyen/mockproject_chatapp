@@ -26,14 +26,14 @@ public class LocaleHelper {
         basecontex = _baseContex;
     }
 
-    public static Context onReAttach(Context context, String changeLanguage ) {
+    public static Context onReAttach(Context context, String changeLanguage) {
 //        String lang = getPersistedData(context, Locale.getDefault().getLanguage());
         return setLocale(context, changeLanguage);
     }
 
 
     public static Context onAttach(Context context, String defaultLanguage) {
-      //  String lang = getPersistedData(context, defaultLanguage);
+        //  String lang = getPersistedData(context, defaultLanguage);
         return setLocale(context, defaultLanguage);
     }
 

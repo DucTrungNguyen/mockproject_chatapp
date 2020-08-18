@@ -8,17 +8,12 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding
-import com.rikkei.tranning.chatapp.services.models.AllUserModel
-import com.rikkei.tranning.chatapp.views.adapters.AllFriendAdapter
 import com.rikkei.tranning.chatapp.views.uis.MainActivity
-import com.rikkei.tranning.chatapp.views.uis.friend.DialogFriendFragment
-import com.rikkei.tranning.chatapp.views.uis.message.ChatFragment
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -43,11 +38,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-//        val htmlcontentbutton =
-//            "Chưa có tài khoản? <font color=\"#4356B4\"> Đăng ký ngay</font>"
-//        mViewDataBinding!!.ButtonMoveRegister.text = Html.fromHtml(
-//            htmlcontentbutton
-//        )
         val textSpan = mViewDataBinding!!.ButtonMoveRegister.text
         var index = textSpan.indexOf('?')
         val spannable = SpannableString(textSpan)

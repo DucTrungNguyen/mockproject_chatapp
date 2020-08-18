@@ -71,22 +71,22 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             case "NoFriend":
                 holder.btnRequest.setText(R.string.txt_request_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
-                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context, R.color.white));
                 break;
             case "friend":
                 holder.btnRequest.setText(R.string.txt_cancel_friend);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
-                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context, R.color.white));
                 break;
             case "sendRequest":
                 holder.btnRequest.setText(R.string.txt_cancel);
                 holder.btnRequest.setBackgroundResource(R.drawable.custom_button_unfriend);
-                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.blue));
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context, R.color.blue));
                 break;
             case "friendRequest":
                 holder.btnRequest.setText(R.string.txt_accept);
                 holder.btnRequest.setBackgroundResource(R.drawable.button_custom);
-                holder.btnRequest.setTextColor(ContextCompat.getColor(context,R.color.white));
+                holder.btnRequest.setTextColor(ContextCompat.getColor(context, R.color.white));
                 break;
         }
         if (position > 0) {
@@ -99,15 +99,19 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         holder.btnRequest.setOnClickListener(v -> {
             switch (holder.btnRequest.getText().toString()) {
                 case "Kết bạn":
+                case "Add Friend":
                     sharedFriendViewModel.createFriend(user);
                     holder.btnRequest.setText(R.string.txt_cancel);
                     break;
                 case "Hủy":
                 case "Hủy bạn":
+                case "UnFriend":
+                case "Cancel":
                     sharedFriendViewModel.deleteFriend(user);
                     holder.btnRequest.setText(R.string.txt_request_friend);
                     break;
                 case "Đồng ý":
+                case "Accept":
                     sharedFriendViewModel.updateFriend(user);
                     holder.btnRequest.setText(R.string.txt_cancel_friend);
                     break;
@@ -132,12 +136,13 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             txtSection = itemView.findViewById(R.id.textViewHeader);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                if ( listener!= null && position != RecyclerView.NO_POSITION) {
+                if (listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(getItem(position));
                 }
             });
         }
     }
+
     public interface OnItemClickListener {
         void onItemClick(AllUserModel userModel);
     }
