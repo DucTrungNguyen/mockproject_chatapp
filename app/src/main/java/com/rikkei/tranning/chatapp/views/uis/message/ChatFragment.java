@@ -118,9 +118,9 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.editTextMessage.requestFocus();
         inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (mViewDataBinding.editTextMessage.requestFocus()) {
-            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
-        }
+//        if (mViewDataBinding.editTextMessage.requestFocus()) {
+//            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
+//        }
 
         mViewDataBinding.ImageButtonBackChat.setOnClickListener(v -> removeFragment());
 
@@ -265,10 +265,10 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
         mViewModel.isShowProcessLoadMessage.observe(getViewLifecycleOwner(), aBoolean -> {
             if (!aBoolean) {
-                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.INVISIBLE);
+//                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.INVISIBLE);
 
             } else {
-                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
+//                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
 
 
             }

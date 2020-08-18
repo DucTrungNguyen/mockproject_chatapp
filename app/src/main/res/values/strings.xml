@@ -2,11 +2,13 @@
 <resources>
     <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
+    <string name="txt_save_profile_success">Save profile success</string>
     <!--    login-->
     <string name="txt_login">Login</string>
     <string name="txt_title_app">Awesome Chat Experience</string>
     <string name="txt_email">EMAIL</string>
-    <string name="txt_hint_email">youremail@gmail.com</string>
+    <string name="txt_hint_email">yourmail@gmail.com</string>
+    <string name="txt_hint_pass">********</string>
     <string name="txt_password">PASSWORD</string>
     <string name="txt_forgot_password">Forgot password?</string>
     <string name="txt_register_span">Don\'t have account? Sign up now</string>

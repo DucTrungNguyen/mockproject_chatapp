@@ -2,8 +2,10 @@
 <resources>
     <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
+    <string name="txt_save_profile_success">Save profile success</string>
     <!--    login-->
     <string name="txt_login">Đăng nhập</string>
+    <string name="txt_hint_pass">********</string>
     <string name="txt_title_app">Trải nghiệm Awesome chat</string>
     <string name="txt_email">EMAIL</string>
     <string name="txt_hint_email">abc@gmail.com</string>

@@ -81,6 +81,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     private void showMenu() {
         PopupMenu popupMenu = new PopupMenu(getActivity(), mViewDataBinding.imageButtonChangeLanguage);
+
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu_language, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
@@ -102,6 +103,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             }
             return false;
         });
+
         popupMenu.show();
     }
 
