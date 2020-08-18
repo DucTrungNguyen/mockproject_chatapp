@@ -28,6 +28,7 @@ public class ChatViewModel extends ViewModel {
         });
     }
 
+
     public void getInfoUserChat(String id) {
         chatRepository.infoUserFromFirebase(id, user -> userChatLiveData.setValue(user));
     }

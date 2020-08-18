@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +20,14 @@ import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.databinding.FragmentMessageBinding;
 import com.rikkei.tranning.chatapp.services.models.ChatModel;
-import com.rikkei.tranning.chatapp.views.adapters.MessageAdapter;
+import com.rikkei.tranning.chatapp.views.adapters.MessagesAdapter;
 
 import java.util.ArrayList;
 
 public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatViewModel> {
-    private MessageAdapter messageAdapter;
     ArrayList<ChatModel> arraySearch = new ArrayList<>();
+    ArrayList<ChatModel> messageArrayList = new ArrayList<>();
+    MessagesAdapter messagesAdapter;
 
     @Override
     public int getBindingVariable() {
@@ -45,16 +47,16 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerMessage.getItemAnimator();
         assert itemAnimator != null;
         itemAnimator.setSupportsChangeAnimations(false);
-        messageAdapter = new MessageAdapter(getContext());
-        mViewDataBinding.recyclerMessage.setAdapter(messageAdapter);
-        messageAdapter.setOnItemClickListener(userModel -> {
+        messagesAdapter = new MessagesAdapter(getContext(), messageArrayList);
+        mViewDataBinding.recyclerMessage.setAdapter(messagesAdapter);
+        messagesAdapter.setOnItemClickListener(userModel -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
-                    .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ChatFragment chatFragment = new ChatFragment();
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserModel().getUserId());
@@ -95,23 +97,28 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel.arrayInfoUserChatLiveData.observe(getViewLifecycleOwner(), chatModels -> {
+            messageArrayList.clear();
             if (chatModels.isEmpty()) {
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.VISIBLE);
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
+                messagesAdapter.notifyDataSetChanged();
             } else {
-                //mViewModel.softArray(chatModels);
-                int count=mViewModel.getCountUnReadMessage(chatModels);
-                if (count>9){
+                mViewModel.softArray(chatModels);
+                int count = mViewModel.getCountUnReadMessage(chatModels);
+                if (count > 9) {
                     mViewModel.countUnReadMessage.setValue("9+");
-                }
-                else {
-                    mViewModel.countUnReadMessage.setValue(count+"");
+                } else {
+                    mViewModel.countUnReadMessage.setValue(count + "");
                 }
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.GONE);
             }
-            messageAdapter.submitList(chatModels);
+            if (messageArrayList.isEmpty()) {
+                messageArrayList.addAll(chatModels);
+            }
+            messagesAdapter.notifyDataSetChanged();
         });
         mViewModel.arraySearchLiveData.observe(getViewLifecycleOwner(), chatModels -> arraySearch = chatModels);
+
     }
 }

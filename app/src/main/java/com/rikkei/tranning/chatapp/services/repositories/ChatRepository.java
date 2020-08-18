@@ -210,13 +210,18 @@ public class ChatRepository {
                 ArrayList<ChatModel> listChat = new ArrayList<>();
                 listChat.clear();
                 for (int i = 0; i < arrayInfoAllUserChat.size(); i++) {
+                    int finalI = i;
                     ChatModel chatModel = new ChatModel();
-                    chatModel.setUserModel(arrayInfoAllUserChat.get(i));
+                    int finalI1 = i;
                     getSomeOfMessage(arrayInfoAllUserChat.get(i).getUserId(), messageArray -> {
                         if (isLoadedMessage.getValue() != null && isLoadedMessage.getValue()) {
+                            listChat.remove(chatModel);
+                            chatModel.setUserModel(arrayInfoAllUserChat.get(finalI));
                             chatModel.setMessageModelArrayList(messageArray);
                             isLoadedMessage.setValue(false);
-                            listChat.add(chatModel);
+                        }
+                        listChat.add(chatModel);
+                        if(finalI1 ==arrayInfoAllUserChat.size()-1) {
                             listMessageStatus.DataIsLoaded(listChat);
                         }
                     });
