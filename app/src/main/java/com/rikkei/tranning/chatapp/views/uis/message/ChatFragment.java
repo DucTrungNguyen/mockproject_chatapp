@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.bumptech.glide.Glide;
@@ -81,6 +83,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ImageAdapter  imageAdapter;
     StickerAdapter  stickerAdapter;
     String id;
+    long lastPositionChat = 0;
+
     private static final int IMAGE_REQUEST = 1;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("chat");
     private Uri imageUri;
@@ -89,7 +93,9 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     int lastPosition;
+    int loadPosition =0;
     InputMethodManager inputMethodManager;
+    LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 
     @Override
     public int getBindingVariable() {
@@ -198,6 +204,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             id = bundle.getString("idUser");
         }
         mViewModel.getInfoUserChat(id);
+        mViewDataBinding.recyclerChat.setLayoutManager(layoutManager);
         mViewModel.userChatLiveData.observe(getViewLifecycleOwner(), userModel -> {
             if (userModel.getUserImgUrl().equals("default")) {
                 Glide.with(requireContext()).load(R.mipmap.ic_launcher).circleCrop().into(mViewDataBinding.imageViewTitleChat);
@@ -214,10 +221,36 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
         });
         checkSeen(id);
-        mViewModel.displayMessage(id);
+
+
+        mViewModel.displayMessage(id, lastPositionChat);
+//        RecyclerView.LayoutManager  layoutManager = mViewDataBinding.recyclerChat.getLayoutManager();
+        mViewDataBinding.recyclerChat.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                loadPosition = recyclerView.getChildCount();
+
+                int position = layoutManager.findFirstVisibleItemPosition();
+//                Log.d("pos", position + "");
+//                Log.d("last time", lastPositionChat + "");
+                if ( position == 0){
+//                    mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
+                    mViewModel.displayMessage(id, lastPositionChat);
+
+                }
+
+            }
+
+        });
+//        mViewDataBinding.recyclerChat.
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             lastPosition = messageModels.size();
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
+
+            lastPositionChat = arrayList.get(0).getTimeLong();
+
             for (int i = 0; i < arrayList.size() - 1; i++) {
                 int j = i + 1;
                 if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
@@ -226,7 +259,21 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                 }
             }
             chatAdapter.submitList(arrayList);
+
         });
+
+        mViewModel.isShowProcessLoadMessage.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (!aBoolean){
+                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.INVISIBLE);
+
+            }else  {
+                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
+
+
+            }
+        });
+
+
 
         stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
         mViewDataBinding.recyclerSticker.setAdapter(stickerAdapter);

@@ -54,6 +54,7 @@
                 android:textSize="18sp" />
         </RelativeLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
 
 
@@ -68,6 +69,15 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/relativeLayoutTitle"
             android:layout_marginTop="30dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular_loadMessage"
+            android:visibility="invisible"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/relativeLayoutTitle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
         <RelativeLayout
             android:layout_above="@+id/layoutBottom"

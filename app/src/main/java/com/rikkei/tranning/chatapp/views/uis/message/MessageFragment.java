@@ -45,8 +45,8 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerMessage.getItemAnimator();
         assert itemAnimator != null;
         itemAnimator.setSupportsChangeAnimations(false);
@@ -54,7 +54,7 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
         mViewDataBinding.recyclerMessage.setAdapter(messageAdapter);
         messageAdapter.setOnItemClickListener(userModel -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
-                    .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ChatFragment chatFragment = new ChatFragment();
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserModel().getUserId());
@@ -100,12 +100,11 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
             } else {
                 //mViewModel.softArray(chatModels);
-                int count=mViewModel.getCountUnReadMessage(chatModels);
-                if (count>9){
+                int count = mViewModel.getCountUnReadMessage(chatModels);
+                if (count > 9) {
                     mViewModel.countUnReadMessage.setValue("9+");
-                }
-                else {
-                    mViewModel.countUnReadMessage.setValue(count+"");
+                } else {
+                    mViewModel.countUnReadMessage.setValue(count + "");
                 }
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.GONE);

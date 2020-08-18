@@ -88,7 +88,7 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
             holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             int resID = context.getResources().getIdentifier(messageModel.getMessage(), "drawable", context.getPackageName());
-            Log.d("sticler", resID + " + " + messageModel.getMessage());
+//            Log.d("sticler", resID + " + " + messageModel.getMessage());
             //            String name = messageModel.getMessage();
             holder.imgMessage.setImageResource(resID);
 //            Glide.with(context).load(resID).into(holder.imgMessage);

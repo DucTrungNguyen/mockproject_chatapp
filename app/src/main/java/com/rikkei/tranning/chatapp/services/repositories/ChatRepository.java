@@ -1,5 +1,7 @@
 package com.rikkei.tranning.chatapp.services.repositories;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -18,6 +20,7 @@ import com.rikkei.tranning.chatapp.services.models.UserModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class ChatRepository {
@@ -27,9 +30,11 @@ public class ChatRepository {
     ArrayList<String> listIdChat = new ArrayList<>();
     ArrayList<UserModel> arrayAllUserChat = new ArrayList<>();
 
+
     MutableLiveData<Boolean> isOk = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadInfoUser = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadedMessage = new MutableLiveData<>(false);
+    final Integer numberMessageToGet = 15;
 
 
     public void infoUserFromFirebase(String id, final DataStatus dataStatus) {
@@ -101,7 +106,7 @@ public class ChatRepository {
         });
     }
 
-    public void getMessage(String idFriend, MessageStatus messageStatus) {
+    public void getMessage(String idFriend, long lastPositionChat , MessageStatus messageStatus) {
         if (firebaseUser == null) {
             return;
         }
@@ -113,24 +118,71 @@ public class ChatRepository {
             key = myId + idFriend;
         }
         databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<MessageModel> messageList = new ArrayList<>();
-                messageList.clear();
-                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
-                    MessageModel message = keyNode.getValue(MessageModel.class);
-                    messageList.add(message);
+
+        if ( lastPositionChat == 0){
+            databaseReference.limitToLast(15).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList<MessageModel> messageList = new ArrayList<>();
+                    messageList.clear();
+                    for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                        MessageModel message = keyNode.getValue(MessageModel.class);
+                        messageList.add(message);
+                    }
+
+                    messageStatus.DataIsLoaded(messageList);
+
                 }
 
-                messageStatus.DataIsLoaded(messageList);
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }else {
+            Log.d("last time repo", lastPositionChat + "");
+            databaseReference.orderByChild("timeLong").endAt(lastPositionChat).limitToLast(15).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList<MessageModel> messageList = new ArrayList<>();
+//                    messageList.clear();
+                    for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                        MessageModel message = keyNode.getValue(MessageModel.class);
 
-            }
-        });
+                        messageList.add(message);
+                    }
+
+                    messageStatus.DataIsLoaded(messageList);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+
+
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ArrayList<MessageModel> messageList = new ArrayList<>();
+//                messageList.clear();
+//                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+//                    MessageModel message = keyNode.getValue(MessageModel.class);
+//                    messageList.add(message);
+//                }
+//
+//                messageStatus.DataIsLoaded(messageList);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     public void getAllIdListChat(ListIdChatStatus listIdChatStatus) {
@@ -234,7 +286,7 @@ public class ChatRepository {
     }
 
     public interface MessageStatus {
-        void DataIsLoaded(ArrayList<MessageModel> messageArray);
+        void DataIsLoaded(List<MessageModel> messageArray);
     }
 
     public interface ListIdChatStatus {

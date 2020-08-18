@@ -1,10 +1,11 @@
 package com.rikkei.tranning.chatapp.services.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatModel {
     private UserModel userModel;
-    private ArrayList<MessageModel> messageModelArrayList;
+    private List<MessageModel> messageModelArrayList;
 
     public ChatModel() {
     }
@@ -22,11 +23,11 @@ public class ChatModel {
         this.userModel = userModel;
     }
 
-    public ArrayList<MessageModel> getMessageModelArrayList() {
+    public List<MessageModel> getMessageModelArrayList() {
         return messageModelArrayList;
     }
 
-    public void setMessageModelArrayList(ArrayList<MessageModel> messageModelArrayList) {
+    public void setMessageModelArrayList(List<MessageModel> messageModelArrayList) {
         this.messageModelArrayList = messageModelArrayList;
     }
 }

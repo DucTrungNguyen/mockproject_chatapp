@@ -10,12 +10,14 @@ import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.ChatRepository;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ChatViewModel extends ViewModel {
     MutableLiveData<UserModel> userChatLiveData = new MutableLiveData<>();
-    MutableLiveData<ArrayList<MessageModel>> messageListLiveData = new MutableLiveData<>();
+    MutableLiveData<List<MessageModel>> messageListLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<ChatModel>> arrayInfoUserChatLiveData = new MutableLiveData<>();
     MutableLiveData<ArrayList<ChatModel>> arraySearchLiveData = new MutableLiveData<>();
+    MutableLiveData<Boolean> isShowProcessLoadMessage = new MutableLiveData<>(false);
     public MutableLiveData<String> countUnReadMessage = new MutableLiveData<>();
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     ChatRepository chatRepository;
@@ -36,8 +38,39 @@ public class ChatViewModel extends ViewModel {
         chatRepository.createMessage(idUser, message, type);
     }
 
-    public void displayMessage(String idFriend) {
-        chatRepository.getMessage(idFriend, messageArray -> messageListLiveData.setValue(messageArray));
+    public void displayMessage(String idFriend, long lastPositionChat) {
+        isShowProcessLoadMessage.setValue(true);
+        chatRepository.getMessage(idFriend,lastPositionChat, messageArray -> {
+
+
+            if( lastPositionChat == 0){
+                messageListLiveData.setValue(messageArray);
+            }else {
+                List<MessageModel> newList = new ArrayList<>();
+                List<MessageModel> oldList = messageListLiveData.getValue();
+
+
+
+                if ( oldList.get(0).getTimeLong() != messageArray.get(0).getTimeLong()){
+
+                    newList.addAll(messageArray);
+                    newList.addAll(oldList);
+                    messageListLiveData.setValue(newList);
+                    isShowProcessLoadMessage.setValue(false);
+
+                }else {
+                    isShowProcessLoadMessage.setValue(false);
+
+                }
+
+
+            }
+
+
+
+
+
+        } );//setValue(messageArray));
     }
 
     public DatabaseReference checkSeen(String id) {
