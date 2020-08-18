@@ -16,6 +16,8 @@
     <string name="txt_login_span">Have account? Login now</string>
     <!--    message-->
     <string name="txt_search_message">Search message</string>
+    <string name="txt_status_online">Online</string>
+    <string name="txt_status_offline">Offline</string>
     <string name="txt_message">Message</string>
     <string name="txt_no_result">No result</string>
     <string name="txt_enter_message">Enter message</string>

@@ -46,11 +46,11 @@
         android:textSize="16sp" />
 
     <Button
+        android:layout_centerHorizontal="true"
         android:id="@+id/buttonDialogFriendOk"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_below="@+id/textViewNotificationFriend"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"

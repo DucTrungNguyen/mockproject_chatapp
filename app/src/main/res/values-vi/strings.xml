@@ -15,6 +15,8 @@
     <string name="txt_name">HỌ VÀ TÊN</string>
     <string name="txt_login_span">Đã có tài khoản? Đăng nhập ngay</string>
     <!--    message-->
+    <string name="txt_status_online">Hoạt động</string>
+    <string name="txt_status_offline">Không hoạt động</string>
     <string name="txt_search_message">Tìm kiếm tin nhắn</string>
     <string name="txt_message">Tin nhắn</string>
     <string name="txt_no_result">Không tìm thấy kết quả phù hợp</string>

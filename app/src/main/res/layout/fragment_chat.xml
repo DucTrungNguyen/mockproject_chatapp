@@ -52,6 +52,7 @@
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+
         </RelativeLayout>
 
 

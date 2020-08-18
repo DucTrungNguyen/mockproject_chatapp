@@ -80,8 +80,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
     };
     ChatAdapter chatAdapter;
-    ImageAdapter  imageAdapter;
-    StickerAdapter  stickerAdapter;
+    ImageAdapter imageAdapter;
+    StickerAdapter stickerAdapter;
     String id;
     long lastPositionChat = 0;
 
@@ -93,9 +93,9 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     int lastPosition;
-    int loadPosition =0;
+    int loadPosition = 0;
     InputMethodManager inputMethodManager;
-    LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 
     @Override
     public int getBindingVariable() {
@@ -138,7 +138,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             mViewDataBinding.editTextMessage.setText("");
         });
         mViewDataBinding.editTextMessage.setOnFocusChangeListener((v, hasFocus) -> {
-            if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE|| mViewDataBinding.recyclerImage.getVisibility()==View.VISIBLE) {
+            if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE || mViewDataBinding.recyclerImage.getVisibility() == View.VISIBLE) {
                 mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
                 mViewDataBinding.recyclerImage.setVisibility(View.GONE);
                 mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
@@ -235,7 +235,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                 int position = layoutManager.findFirstVisibleItemPosition();
 //                Log.d("pos", position + "");
 //                Log.d("last time", lastPositionChat + "");
-                if ( position == 0){
+                if (position == 0) {
 //                    mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
                     mViewModel.displayMessage(id, lastPositionChat);
 
@@ -249,7 +249,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             lastPosition = messageModels.size();
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
 
-            lastPositionChat = arrayList.get(0).getTimeLong();
+            if (arrayList.size() > 0)
+                lastPositionChat = arrayList.get(0).getTimeLong();
 
             for (int i = 0; i < arrayList.size() - 1; i++) {
                 int j = i + 1;
@@ -263,16 +264,15 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         });
 
         mViewModel.isShowProcessLoadMessage.observe(getViewLifecycleOwner(), aBoolean -> {
-            if (!aBoolean){
+            if (!aBoolean) {
                 mViewDataBinding.progressCircularLoadMessage.setVisibility(View.INVISIBLE);
 
-            }else  {
+            } else {
                 mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
 
 
             }
         });
-
 
 
         stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
@@ -285,21 +285,17 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         });
 
 
-
         ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
         imageAdapter = new ImageAdapter(arrayImage, requireContext());
         mViewDataBinding.recyclerImage.setAdapter(imageAdapter);
         mViewDataBinding.recyclerImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mViewDataBinding.recyclerImage.setHasFixedSize(true);
 
-        imageAdapter.setOnItemClickListener(uri ->{
+        imageAdapter.setOnItemClickListener(uri -> {
             imageUri = uri;
             uploadImage();
             mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
-        } );
-
-
-
+        });
 
 
     }
