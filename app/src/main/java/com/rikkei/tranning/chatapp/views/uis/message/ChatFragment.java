@@ -116,7 +116,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewDataBinding.editTextMessage.requestFocus();
+       // mViewDataBinding.editTextMessage.requestFocus();
         inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
 //        if (mViewDataBinding.editTextMessage.requestFocus()) {
 //            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);

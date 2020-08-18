@@ -51,6 +51,8 @@
     <string name="txt_profile">Profile</string>
     <string name="txt_language_vi">Vietnamese</string>
     <string name="txt_language_en">English</string>
+    <string name="txt_camera">Take photo</string>
+    <string name="txt_choose_photo">Choose photo from your photo library</string>
     <!--    dialog-->
     <string name="txt_notification_dialog">Notification</string>
     <string name="txt_description_dialog">Are you sure you want to log out?</string>

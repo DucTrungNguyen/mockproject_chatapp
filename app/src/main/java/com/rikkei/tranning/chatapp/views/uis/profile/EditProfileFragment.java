@@ -3,19 +3,24 @@ package com.rikkei.tranning.chatapp.views.uis.profile;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.DatePicker;
+import android.widget.PopupMenu;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -25,6 +30,8 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
+
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +42,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
     private static final int IMAGE_REQUEST = 1;
+    int CAMERA_REQUEST = 123;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile");
     private Uri imageUri;
     String uriImage;
@@ -66,7 +74,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.ImageViewBack.setOnClickListener(v -> removeFragment());
-        mViewDataBinding.ImageButtonCamera.setOnClickListener(v -> openImage());
+        mViewDataBinding.ImageButtonCamera.setOnClickListener(v -> showMenu());
         mViewDataBinding.ButtonSave.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(uriImage)) {
                 mViewModel.updateInfoUser("userImgUrl", uriImage);
@@ -86,7 +94,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             mViewModel.updateInfoUser("userName", name);
             mViewModel.updateInfoUser("userPhone", phone);
             mViewModel.updateInfoUser("userDateOfBirth", date);
-            Toast.makeText(getContext(),R.string.txt_save_profile_success, Toast.LENGTH_SHORT ).show();
+            Toast.makeText(getContext(), R.string.txt_save_profile_success, Toast.LENGTH_SHORT).show();
             removeFragmentSave();
         });
 
@@ -149,6 +157,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         assert fragment != null;
         fragmentTransaction.remove(fragment).commit();
     }
+
     public void removeFragmentSave() {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -186,6 +195,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             }).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
+                    assert downloadUri != null;
                     String mUri = downloadUri.toString();
                     uriImage = mUri;
                     Glide.with(requireContext()).load(mUri).circleCrop().into(mViewDataBinding.CircleImageUserEdit);
@@ -200,11 +210,51 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         }
     }
 
+    public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_REQUEST);
+    }
+
+    private void showMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), mViewDataBinding.ImageButtonCamera);
+
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_profile_image, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.camera:
+                    takePhoto();
+                    break;
+                case R.id.choosePhoto:
+                    openImage();
+                    break;
+            }
+            return false;
+        });
+
+        popupMenu.show();
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
+            if (uploadTask != null && uploadTask.isInProgress()) {
+                Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadImage();
+            }
+        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null) {
+            Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            assert bitmap != null;
+            imageUri = getImageUri(requireContext(), bitmap);
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
             } else {

@@ -51,7 +51,8 @@
     <string name="txt_profile">Cá nhân</string>
     <string name="txt_language_vi">Tiếng Việt</string>
     <string name="txt_language_en">Tiếng Anh</string>
-
+    <string name="txt_camera">Chụp ảnh</string>
+    <string name="txt_choose_photo">Chọn ảnh từ thư viện ảnh</string>
     <!--    dialog-->
     <string name="txt_notification_dialog">Thông báo</string>
     <string name="txt_description_dialog">Bạn có chắc chắn muốn đăng xuất không?</string>
