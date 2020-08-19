@@ -20,7 +20,6 @@ import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 import com.rikkei.tranning.chatapp.views.uis.message.ChatFragment;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AllFriendFragment extends BaseFragment<FragmentAllFriendsBinding, SharedFriendViewModel> {
     public AllFriendAdapter allFriendAdapter;

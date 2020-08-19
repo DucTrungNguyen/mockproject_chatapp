@@ -110,7 +110,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_toLeftOf="@+id/imageButtonChangeLanguage"
+                    android:layout_toStartOf="@+id/imageButtonChangeLanguage"
                     android:text="@string/txt_language_vi"
                     android:id="@+id/TextViewLanguage"
                     android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     android:id="@+id/imageButtonChangeLanguage"
                     android:scaleType="center"
                     android:background="@null"
-                    android:layout_width="20dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="12.4dp"
@@ -164,7 +164,7 @@
                 <ImageButton
                     android:scaleType="center"
                     android:background="@null"
-                    android:layout_width="20dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="12.4dp"
@@ -204,7 +204,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="36dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="12dp"

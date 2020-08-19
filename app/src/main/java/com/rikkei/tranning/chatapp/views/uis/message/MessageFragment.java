@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,10 +102,7 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
                 mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
                 messagesAdapter.notifyDataSetChanged();
             } else {
-                //mViewModel.softArray(chatModels);
-
                 mViewModel.softArray(chatModels);
-
                 int count = mViewModel.getCountUnReadMessage(chatModels);
                 if (count > 9) {
                     mViewModel.countUnReadMessage.setValue("9+");
@@ -122,6 +118,5 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
             messagesAdapter.notifyDataSetChanged();
         });
         mViewModel.arraySearchLiveData.observe(getViewLifecycleOwner(), chatModels -> arraySearch = chatModels);
-
     }
 }

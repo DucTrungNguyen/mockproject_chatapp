@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.auth.FirebaseAuth
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentSignupBinding
@@ -157,6 +158,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewModel.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left)
+        FirebaseAuth.getInstance().signOut()
         fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
     }
 

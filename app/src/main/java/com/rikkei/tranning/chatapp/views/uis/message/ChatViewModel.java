@@ -1,6 +1,8 @@
 package com.rikkei.tranning.chatapp.views.uis.message;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -8,6 +10,7 @@ import com.rikkei.tranning.chatapp.services.models.ChatModel;
 import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.services.models.UserModel;
 import com.rikkei.tranning.chatapp.services.repositories.ChatRepository;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,37 +44,23 @@ public class ChatViewModel extends ViewModel {
 
     public void displayMessage(String idFriend, long lastPositionChat) {
         isShowProcessLoadMessage.setValue(true);
-        chatRepository.getMessage(idFriend,lastPositionChat, messageArray -> {
-
-
-            if( lastPositionChat == 0){
+        chatRepository.getMessage(idFriend, lastPositionChat, messageArray -> {
+            if (lastPositionChat == 0) {
                 messageListLiveData.setValue(messageArray);
-            }else {
+            } else {
                 List<MessageModel> newList = new ArrayList<>();
                 List<MessageModel> oldList = messageListLiveData.getValue();
-
-
-
-                if ( oldList.get(0).getTimeLong() != messageArray.get(0).getTimeLong()){
-
+                assert oldList != null;
+                if (oldList.get(0).getTimeLong() != messageArray.get(0).getTimeLong()) {
                     newList.addAll(messageArray);
                     newList.addAll(oldList);
                     messageListLiveData.setValue(newList);
                     isShowProcessLoadMessage.setValue(false);
-
-                }else {
+                } else {
                     isShowProcessLoadMessage.setValue(false);
-
                 }
-
-
             }
-
-
-
-
-
-        } );//setValue(messageArray));
+        });
     }
 
     public DatabaseReference checkSeen(String id) {

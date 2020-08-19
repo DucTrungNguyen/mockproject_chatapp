@@ -18,18 +18,14 @@ class SignUpViewModel : ViewModel() {
 
     fun signUpButtonOnClick() {
         val user = LoginUserModel(userEmail.value!!, userPass.value!!)
-//        if (user.isEmailValid)
-//            signUpUserMutableLiveData.value = user
-
         if (!user.validateEmailPassword()) {
             signUpStatus.value = SignUpStatus.ErrorPassAndEmail(true)
         } else {
             createUserFireBase()
         }
-
     }
 
-    fun resetStatus(){
+    fun resetStatus() {
         signUpStatus.value = SignUpStatus.Loading(false)
     }
 
@@ -56,14 +52,11 @@ class SignUpViewModel : ViewModel() {
                 signUpSuccess.value = true
                 signUpStatus.value = SignUpStatus.IsOk(true)
                 signUpStatus.value = SignUpStatus.Loading(false)
-
-
             }
             .addOnFailureListener {
                 signUpStatus.value = SignUpStatus.Failure(it)
                 signUpStatus.value = SignUpStatus.IsOk(false)
                 signUpStatus.value = SignUpStatus.Loading(false)
-
             }
     }
 

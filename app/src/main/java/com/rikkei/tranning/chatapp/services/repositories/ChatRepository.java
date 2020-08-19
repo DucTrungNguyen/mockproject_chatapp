@@ -34,8 +34,6 @@ public class ChatRepository {
     MutableLiveData<Boolean> isOk = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadInfoUser = new MutableLiveData<>(false);
     MutableLiveData<Boolean> isLoadedMessage = new MutableLiveData<>(false);
-    final Integer numberMessageToGet = 15;
-
 
     public void infoUserFromFirebase(String id, final DataStatus dataStatus) {
         databaseReference = FirebaseDatabase.getInstance().getReference("user").child(id);
@@ -63,7 +61,7 @@ public class ChatRepository {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             String idUser = firebaseUser.getUid();
-            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false, System.currentTimeMillis(),false);
+            MessageModel messageModel = new MessageModel(idUser, id, message, type, date, hour, false, System.currentTimeMillis(), false);
             String key;
             if (id.compareTo(idUser) > 0) {
                 key = id + idUser;
@@ -106,7 +104,7 @@ public class ChatRepository {
         });
     }
 
-    public void getMessage(String idFriend, long lastPositionChat , MessageStatus messageStatus) {
+    public void getMessage(String idFriend, long lastPositionChat, MessageStatus messageStatus) {
         if (firebaseUser == null) {
             return;
         }
@@ -119,7 +117,7 @@ public class ChatRepository {
         }
         databaseReference = FirebaseDatabase.getInstance().getReference("chat").child(key);
 
-        if ( lastPositionChat == 0){
+        if (lastPositionChat == 0) {
             databaseReference.limitToLast(15).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,7 +137,7 @@ public class ChatRepository {
 
                 }
             });
-        }else {
+        } else {
             Log.d("last time repo", lastPositionChat + "");
             databaseReference.orderByChild("timeLong").endAt(lastPositionChat).limitToLast(15).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -273,7 +271,7 @@ public class ChatRepository {
                             isLoadedMessage.setValue(false);
                         }
                         listChat.add(chatModel);
-                        if(finalI1 ==arrayInfoAllUserChat.size()-1) {
+                        if (finalI1 == arrayInfoAllUserChat.size() - 1) {
                             listMessageStatus.DataIsLoaded(listChat);
                         }
                     });

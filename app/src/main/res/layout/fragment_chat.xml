@@ -57,8 +57,6 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-
-
             app:stackFromEnd="true"
             android:nestedScrollingEnabled="true"
             android:orientation="vertical"

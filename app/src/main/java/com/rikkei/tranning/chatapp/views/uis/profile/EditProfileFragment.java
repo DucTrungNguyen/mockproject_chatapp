@@ -91,11 +91,16 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             if (TextUtils.isEmpty(date)) {
                 date = "default";
             }
-            mViewModel.updateInfoUser("userName", name);
-            mViewModel.updateInfoUser("userPhone", phone);
-            mViewModel.updateInfoUser("userDateOfBirth", date);
-            Toast.makeText(getContext(), R.string.txt_save_profile_success, Toast.LENGTH_SHORT).show();
-            removeFragmentSave();
+            if (mViewModel.validatePhoneNumber(phone)){
+                mViewModel.updateInfoUser("userName", name);
+                mViewModel.updateInfoUser("userPhone", phone);
+                mViewModel.updateInfoUser("userDateOfBirth", date);
+                Toast.makeText(getContext(), R.string.txt_save_profile_success, Toast.LENGTH_SHORT).show();
+                removeFragmentSave();
+            }
+            else {
+                Toast.makeText(getContext(), R.string.txt_notification_phone_number, Toast.LENGTH_SHORT).show();
+            }
         });
 
         final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {

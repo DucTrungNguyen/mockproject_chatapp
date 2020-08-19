@@ -56,8 +56,8 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        InputMethodManager inputMethodManager=(InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
         mainViewPaperAdaper.AddFragment(new MyFriendFragment(), String.valueOf(R.string.txt_friend));
         mainViewPaperAdaper.AddFragment(new AllFriendFragment(), String.valueOf(R.string.txt_all_friend_title));

@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Awesome Chat</string>
     <string name="txt_app">Awesome Chat</string>
-    <string name="txt_save_profile_success">Save profile success</string>
     <!--    login-->
     <string name="txt_login">Đăng nhập</string>
     <string name="txt_hint_pass">********</string>
@@ -13,7 +12,7 @@
     <string name="txt_forgot_password">Quên mật khẩu?</string>
     <string name="txt_register_span">Chưa có tài khỏan? Đăng ký ngay</string>
     <!--    register-->
-    <string name="txt_register" >Đăng ký</string>
+    <string name="txt_register">Đăng ký</string>
     <string name="txt_name">HỌ VÀ TÊN</string>
     <string name="txt_login_span">Đã có tài khoản? Đăng nhập ngay</string>
     <!--    message-->
@@ -26,8 +25,8 @@
     <string name="txt_not_allow_permission_vi">Bạn bị ngố hả bạn ơi! Không cấp quyền đọc ảnh thì gửi kiểu gì?</string>
 
     <!--friend-->
-    <string name="txt_search_friend" >Tìm kiếm bạn bè</string>
-    <string name="txt_friend" >Bạn bè</string>
+    <string name="txt_search_friend">Tìm kiếm bạn bè</string>
+    <string name="txt_friend">Bạn bè</string>
     <string name="txt_request">Yêu cầu</string>
     <string name="txt_request_friend">Kết bạn</string>
     <string name="txt_cancel_friend">Hủy bạn</string>
@@ -40,7 +39,7 @@
 
     <!--    profile-->
     <string name="txt_language">Ngôn ngữ</string>
-    <string name="txt_notification" >Thông báo</string>
+    <string name="txt_notification">Thông báo</string>
     <string name="txt_version">Phiên bản ứng dụng</string>
     <string name="txt_hint_version">1.00</string>
     <string name="txt_logout">Đăng xuất</string>
@@ -53,6 +52,11 @@
     <string name="txt_language_en">Tiếng Anh</string>
     <string name="txt_camera">Chụp ảnh</string>
     <string name="txt_choose_photo">Chọn ảnh từ thư viện ảnh</string>
+    <string name="txt_hint_phone_number">0999999999</string>
+    <string name="txt_hint_date">Chọn ngày sinh</string>
+    <string name="txt_save_profile_success">Cập nhật trang cá nhân thành công</string>
+    <string name="txt_notification_phone_number">Số điện thoại của bạn phải bao gồm 10 chữ số</string>
+
     <!--    dialog-->
     <string name="txt_notification_dialog">Thông báo</string>
     <string name="txt_description_dialog">Bạn có chắc chắn muốn đăng xuất không?</string>

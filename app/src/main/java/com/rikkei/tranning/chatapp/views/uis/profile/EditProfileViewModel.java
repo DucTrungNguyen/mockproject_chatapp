@@ -16,4 +16,12 @@ public class EditProfileViewModel extends ViewModel {
     public void updateInfoUser(String key, String value) {
         new ProfileRepository().updateInforFromFirebase(key, value);
     }
+    public Boolean validatePhoneNumber(String a){
+        if (a.length()==10|| a.equals("default")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

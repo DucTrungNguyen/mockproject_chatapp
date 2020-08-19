@@ -12,29 +12,15 @@ import java.util.Locale;
 
 
 public class LocaleHelper {
-
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
-    private static Context basecontex;
-
-    public static Context onAttach(Context context) {
-        String lang = getPersistedData(context, Locale.getDefault().getLanguage());
-        return setLocale(context, lang);
-    }
-
+    private static Context baseContext;
 
     public static void setBaseContex(Context _baseContex) {
-        basecontex = _baseContex;
+        baseContext = _baseContex;
     }
 
     public static Context onReAttach(Context context, String changeLanguage) {
-//        String lang = getPersistedData(context, Locale.getDefault().getLanguage());
         return setLocale(context, changeLanguage);
-    }
-
-
-    public static Context onAttach(Context context, String defaultLanguage) {
-        //  String lang = getPersistedData(context, defaultLanguage);
-        return setLocale(context, defaultLanguage);
     }
 
     public static String getLanguage(Context context) {
@@ -45,7 +31,7 @@ public class LocaleHelper {
         persist(context, language);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, language);
+            return updateResources(language);
         }
 
         return updateResourcesLegacy(context, language);
@@ -53,8 +39,6 @@ public class LocaleHelper {
 
     private static String getPersistedData(Context context, String defaultLanguage) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-//        String  a =
         return preferences.getString(SELECTED_LANGUAGE, defaultLanguage);
     }
 
@@ -67,23 +51,16 @@ public class LocaleHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String language) {
-//        Locale locale = new Locale(language);
-//        Locale.setDefault(locale);
-//
-//        Configuration configuration = basecontex.getResources().getConfiguration();
-//        configuration.setLocale(locale);
-//        configuration.setLayoutDirection(locale);
-
+    private static Context updateResources(String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        basecontex.getResources().updateConfiguration(config,
-                basecontex.getResources().getDisplayMetrics());
+        baseContext.getResources().updateConfiguration(config,
+                baseContext.getResources().getDisplayMetrics());
 
 
-        return basecontex.createConfigurationContext(config);
+        return baseContext.createConfigurationContext(config);
     }
 
     @SuppressWarnings("deprecation")

@@ -22,32 +22,28 @@ import java.util.Objects;
 
 public class DialogLogoutFragment extends DialogFragment {
     Button btnLogout, btnNo;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return
-
-        View view = inflater.inflate(R.layout.dialog_logout,container,false);
+        View view = inflater.inflate(R.layout.dialog_logout, container, false);
         // Set transparent background and no title
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
         return view;
-
-
-//        if (getDialog() != null && getDialog().getWindow() != null) {
-//
-//        }
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnLogout=view.findViewById(R.id.buttonDialogLogout);
-        btnNo=view.findViewById(R.id.buttonDialogNo);
+        btnLogout = view.findViewById(R.id.buttonDialogLogout);
+        btnNo = view.findViewById(R.id.buttonDialogNo);
         btnNo.setOnClickListener(view1 -> Objects.requireNonNull(getDialog()).dismiss());
         btnLogout.setOnClickListener(v -> logout());
     }
+
     public void logout() {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), SplashActivity.class);

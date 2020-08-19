@@ -92,7 +92,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ValueEventListener listener;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
-    int lastPosition;
     int loadPosition = 0;
     InputMethodManager inputMethodManager;
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -116,7 +115,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       // mViewDataBinding.editTextMessage.requestFocus();
+        // mViewDataBinding.editTextMessage.requestFocus();
         inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
 //        if (mViewDataBinding.editTextMessage.requestFocus()) {
 //            inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
@@ -134,7 +133,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             }
             String message = mViewDataBinding.editTextMessage.getText().toString().trim();
             mViewModel.sendMessage(iD, message, "Text");
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
             mViewDataBinding.editTextMessage.setText("");
         });
         mViewDataBinding.editTextMessage.setOnFocusChangeListener((v, hasFocus) -> {
@@ -150,9 +148,12 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             mViewDataBinding.editTextMessage.requestFocus();
             mViewDataBinding.recyclerSticker.setVisibility(View.GONE);
             mViewDataBinding.recyclerImage.setVisibility(View.GONE);
+            Log.d("Vao show key", chatAdapter.getItemCount() + "");
             inputMethodManager.showSoftInput(mViewDataBinding.editTextMessage, InputMethodManager.SHOW_IMPLICIT);
             mViewDataBinding.imageSendSticker.setImageResource(R.drawable.ic_smile_1);
             mViewDataBinding.imageButtonPhotoChat.setImageResource(R.drawable.ic_photo);
+            Log.d("Count mess", chatAdapter.getItemCount() + "");
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(chatAdapter.getItemCount());
         });
 
         mViewDataBinding.editTextMessage.addTextChangedListener(new TextWatcher() {
@@ -205,6 +206,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         }
         mViewModel.getInfoUserChat(id);
         mViewDataBinding.recyclerChat.setLayoutManager(layoutManager);
+        mViewDataBinding.recyclerChat.setHasFixedSize(true);
         mViewModel.userChatLiveData.observe(getViewLifecycleOwner(), userModel -> {
             if (userModel.getUserImgUrl().equals("default")) {
                 Glide.with(requireContext()).load(R.mipmap.ic_launcher).circleCrop().into(mViewDataBinding.imageViewTitleChat);
@@ -218,7 +220,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             itemAnimator.setSupportsChangeAnimations(false);
             chatAdapter = new ChatAdapter(getContext(), userModel.getUserImgUrl());
             mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
         });
         checkSeen(id);
 
@@ -238,20 +239,14 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                 if (position == 0) {
 //                    mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
                     mViewModel.displayMessage(id, lastPositionChat);
-
                 }
-
             }
-
         });
 //        mViewDataBinding.recyclerChat.
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
-            lastPosition = messageModels.size();
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
-
             if (arrayList.size() > 0)
                 lastPositionChat = arrayList.get(0).getTimeLong();
-
             for (int i = 0; i < arrayList.size() - 1; i++) {
                 int j = i + 1;
                 if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
@@ -260,30 +255,14 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                 }
             }
             chatAdapter.submitList(arrayList);
-
+            mViewDataBinding.recyclerChat.smoothScrollToPosition(chatAdapter.getItemCount());
         });
-
-        mViewModel.isShowProcessLoadMessage.observe(getViewLifecycleOwner(), aBoolean -> {
-            if (!aBoolean) {
-//                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.INVISIBLE);
-
-            } else {
-//                mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
-
-
-            }
-        });
-
 
         stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
         mViewDataBinding.recyclerSticker.setAdapter(stickerAdapter);
         mViewDataBinding.recyclerSticker.setHasFixedSize(true);
 
-        stickerAdapter.setOnItemClickListener(nameSticker -> {
-            mViewModel.sendMessage(id, nameSticker, "sticker");
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
-        });
-
+        stickerAdapter.setOnItemClickListener(nameSticker -> mViewModel.sendMessage(id, nameSticker, "sticker"));
 
         ArrayList<String> arrayImage = getAllShownImagesPath(getActivity());
         imageAdapter = new ImageAdapter(arrayImage, requireContext());
@@ -294,7 +273,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         imageAdapter.setOnItemClickListener(uri -> {
             imageUri = uri;
             uploadImage();
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(lastPosition);
         });
 
 

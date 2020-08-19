@@ -19,7 +19,7 @@ import com.rikkei.tranning.chatapp.views.adapters.ViewPagerAdapter
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
 import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel
 
-class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>()  {
+class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() {
 
     private var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
@@ -56,9 +56,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
                 viewPager!!.currentItem = tab.position
                 currentTab = tab.position
                 val tabView = tab.customView
-//                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
-//                notifiMainBlue?.visibility = View.VISIBLE
-
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =
                     PorterDuffColorFilter(
                         ContextCompat.getColor(
@@ -74,8 +71,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 val tabView = tab.customView
-//                val notifiMainBlue = tabView?.findViewById<ImageView>(R.id.selectedTab)
-//                notifiMainBlue?.visibility = View.GONE
 
                 tabView?.findViewById<ImageView>(R.id.iconTabMain)?.colorFilter =
                     PorterDuffColorFilter(
@@ -87,7 +82,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
 
                 tabView?.findViewById<TextView>(R.id.textTabMain)
                     ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
-
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
@@ -133,7 +127,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
     }
 
     override fun getViewModel(): SharedFriendViewModel {
-        chatViewModel=
+        chatViewModel =
             ViewModelProviders.of(requireActivity()).get(ChatViewModel::class.java)
         return ViewModelProviders.of(requireActivity()).get(SharedFriendViewModel::class.java)
     }

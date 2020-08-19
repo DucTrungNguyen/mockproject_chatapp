@@ -41,7 +41,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         val textSpan = mViewDataBinding!!.ButtonMoveRegister.text
         var index = textSpan.indexOf('?')
         val spannable = SpannableString(textSpan)
-        spannable.setSpan(ForegroundColorSpan(Color.BLUE), ++index , textSpan.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(
+            ForegroundColorSpan(Color.BLUE),
+            ++index,
+            textSpan.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         mViewDataBinding!!.ButtonMoveRegister.text = spannable
         eventEditText()
         mViewDataBinding!!.ButtonMoveRegister.setOnClickListener { replaceFragment() }

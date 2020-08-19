@@ -145,6 +145,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                        android:hint="@string/txt_hint_phone_number"
                         android:id="@+id/editPhoneProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,7 +182,8 @@
                         android:textColor="#999999"
                         android:textSize="12sp" />
 
-                    <TextView
+                    <EditText
+                        android:hint="@string/txt_hint_date"
                         android:focusable="false"
                         android:id="@+id/editDateOfBirthProfile"
                         android:layout_width="match_parent"
@@ -191,13 +193,6 @@
                         android:shadowColor="@color/grey3"
                         android:textColor="#000000"
                         android:textSize="16sp" />
-                    <TextView
-                        android:layout_below="@+id/editDateOfBirthProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="@color/grey" />
 
                     <ImageView
                         android:layout_width="16dp"

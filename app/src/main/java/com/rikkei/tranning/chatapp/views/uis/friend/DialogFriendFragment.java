@@ -1,7 +1,5 @@
 package com.rikkei.tranning.chatapp.views.uis.friend;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +17,24 @@ import java.util.Objects;
 
 public class DialogFriendFragment extends DialogFragment {
     Button btnOk;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.dialog_fragment_friend,container,false);
+        View view = inflater.inflate(R.layout.dialog_fragment_friend, container, false);
 
-        if ( getDialog() != null && getDialog().getWindow() != null){
-            getDialog().getWindow().setBackgroundDrawableResource (R.drawable.background_dialog);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawableResource(R.drawable.background_dialog);
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
 
-        return  view;
+        return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnOk=view.findViewById(R.id.buttonDialogFriendOk);
+        btnOk = view.findViewById(R.id.buttonDialogFriendOk);
         btnOk.setOnClickListener(view1 -> Objects.requireNonNull(getDialog()).dismiss());
     }
 }
