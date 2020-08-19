@@ -30,6 +30,7 @@ import com.rikkei.tranning.chatapp.BR;
 import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
+import com.rikkei.tranning.chatapp.views.uis.message.ZoomImageFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -47,7 +48,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     private Uri imageUri;
     String uriImage;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
-
+    String image;
     final Calendar myCalendar = Calendar.getInstance();
 
     @Override
@@ -91,21 +92,19 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             if (TextUtils.isEmpty(date)) {
                 date = "default";
             }
-            if (mViewModel.validatePhoneNumber(phone)){
+            if (mViewModel.validatePhoneNumber(phone)) {
                 mViewModel.updateInfoUser("userName", name);
                 mViewModel.updateInfoUser("userPhone", phone);
                 mViewModel.updateInfoUser("userDateOfBirth", date);
                 Toast.makeText(getContext(), R.string.txt_save_profile_success, Toast.LENGTH_SHORT).show();
                 removeFragmentSave();
-            }
-            else {
+            } else {
                 Toast.makeText(getContext(), R.string.txt_notification_phone_number, Toast.LENGTH_SHORT).show();
             }
         });
 
         final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
             // TODO Auto-generated method stub
-
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -113,17 +112,22 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         };
         mViewDataBinding.editDateOfBirthProfile.setOnClickListener(v -> {
             // TODO Auto-generated method stub
-//            new
             DatePickerDialog datePicker = new DatePickerDialog(requireContext(), date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
             datePicker.getDatePicker().setMaxDate(new Date().getTime());
-
             datePicker.show();
-
         });
-
-
+        mViewDataBinding.CircleImageUserEdit.setOnClickListener(v -> {
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("image", image);
+            zoomImageFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
+            fragmentTransaction.addToBackStack(null);
+        });
     }
 
     private void updateLabel() {
@@ -153,6 +157,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             } else {
                 Glide.with(requireContext()).load(user.getUserImgUrl()).circleCrop().into(mViewDataBinding.CircleImageUserEdit);
             }
+            image = user.getUserImgUrl();
         });
     }
 
@@ -203,6 +208,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                     assert downloadUri != null;
                     String mUri = downloadUri.toString();
                     uriImage = mUri;
+                    image = uriImage;
                     Glide.with(requireContext()).load(mUri).circleCrop().into(mViewDataBinding.CircleImageUserEdit);
                     progressDialog.dismiss();
                 } else {
@@ -222,7 +228,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
 
     private void showMenu() {
         PopupMenu popupMenu = new PopupMenu(getActivity(), mViewDataBinding.ImageButtonCamera);
-
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu_profile_image, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
@@ -235,7 +240,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             }
             return false;
         });
-
         popupMenu.show();
     }
 

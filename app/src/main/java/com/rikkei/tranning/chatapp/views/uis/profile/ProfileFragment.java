@@ -15,13 +15,14 @@ import com.rikkei.tranning.chatapp.base.BaseFragment;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentProfileBinding;
 import com.rikkei.tranning.chatapp.helper.LocaleHelper;
+import com.rikkei.tranning.chatapp.views.uis.message.ZoomImageFragment;
 
 import java.util.Locale;
 
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> {
     Locale myLocale;
-
+    String image;
 
     @Override
     public int getBindingVariable() {
@@ -53,6 +54,26 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             dialog.show(getParentFragmentManager(), null);
         });
         mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
+        mViewDataBinding.CircleImageViewUser.setOnClickListener(v -> {
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("image", image);
+            zoomImageFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
+            fragmentTransaction.addToBackStack(null);
+        });
+        mViewDataBinding.ImageViewImageUser.setOnClickListener(v -> {
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("image", image);
+            zoomImageFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
+            fragmentTransaction.addToBackStack(null);
+        });
     }
 
     @Override
@@ -62,6 +83,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         mViewModel.userMutableLiveData.observe(getViewLifecycleOwner(), user -> {
             mViewDataBinding.TextViewNameUser.setText(user.getUserName());
             mViewDataBinding.TextViewEmailUser.setText(user.getUserEmail());
+            image = user.getUserImgUrl();
             if (user.getUserImgUrl().equals("default")) {
                 mViewDataBinding.ImageViewImageUser.setImageResource(R.mipmap.ic_launcher);
                 mViewDataBinding.CircleImageViewUser.setImageResource(R.mipmap.ic_launcher);
@@ -112,6 +134,5 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         requireActivity().finish();
         startActivity(requireActivity().getIntent());
         requireActivity().overridePendingTransition(R.anim.nope, R.anim.nope);
-
     }
 }

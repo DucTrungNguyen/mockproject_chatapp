@@ -28,6 +28,7 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     public int TITLE_LEFT = 0;
     public int TITLE_RIGHT = 1;
     public String urlImage;
+    private OnItemClickListener listener;
 
     public ChatAdapter(Context context, String urlImage) {
         super(DIFF_CALLBACK);
@@ -68,36 +69,23 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MessageModel messageModel = getItem(position);
-
-//        if (position < this.getItemCount() - 1) {
-//            int j = position + 1;
-//            MessageModel message2 = getNoteAt(j);
-//            if (messageModel.getIdReceiver().equals(message2.getIdReceiver())
-//                    && messageModel.getIdSender().equals(message2.getIdSender())) {
-//                holder.txtDate.setVisibility(View.GONE);
-//            } else {
-//                holder.txtDate.setVisibility(View.VISIBLE);
-//            }
-//        }
         if (messageModel.getType().equals("Text")) {
             holder.txtMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setText(messageModel.getMessage());
             holder.imgMessage.setVisibility(View.GONE);
+            holder.imgSticker.setVisibility(View.GONE);
         } else if (messageModel.getType().equals("sticker")) {
-            holder.imgMessage.setVisibility(View.VISIBLE);
+            holder.imgMessage.setVisibility(View.GONE);
             holder.txtMessage.setVisibility(View.GONE);
+            holder.imgSticker.setVisibility(View.VISIBLE);
             int resID = context.getResources().getIdentifier(messageModel.getMessage(), "drawable", context.getPackageName());
-//            Log.d("sticler", resID + " + " + messageModel.getMessage());
-            //            String name = messageModel.getMessage();
-            holder.imgMessage.setImageResource(resID);
-//            Glide.with(context).load(resID).into(holder.imgMessage);
-
+            holder.imgSticker.setImageResource(resID);
         } else {
+            holder.imgSticker.setVisibility(View.GONE);
             holder.imgMessage.setVisibility(View.VISIBLE);
             holder.txtMessage.setVisibility(View.GONE);
             Glide.with(context).load(messageModel.getMessage()).into(holder.imgMessage);
         }
-
 
         if (messageModel.getIsShow()) {
             holder.txtDate.setVisibility(View.GONE);
@@ -138,17 +126,24 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
                 holder.txtDate.setVisibility(View.VISIBLE);
             }
         });
-        holder.imgMessage.setOnClickListener(view -> {
+        holder.imgSticker.setOnClickListener(view -> {
             if (holder.txtDate.getVisibility() == View.VISIBLE) {
                 holder.txtDate.setVisibility(View.GONE);
             } else {
                 holder.txtDate.setVisibility(View.VISIBLE);
             }
         });
+//        if (messageModel.getType().equals("Image")) {
+//            holder.imgMessage.setOnClickListener(v -> {
+//                if (listener != null && position != RecyclerView.NO_POSITION) {
+//                    listener.onItemClick(getItem(position));
+//                }
+//            });
+//        }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgUserChat, imgMessage;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imgUserChat, imgMessage, imgSticker;
         TextView txtMessage, txtDate, txtChatDate;
         View view;
 
@@ -158,8 +153,15 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
             imgMessage = itemView.findViewById(R.id.imageViewMessage);
             imgUserChat = itemView.findViewById(R.id.imageViewUserChat);
             txtMessage = itemView.findViewById(R.id.textViewMessage);
+            imgSticker = itemView.findViewById(R.id.imageViewSticker);
             view = itemView.findViewById(R.id.view);
             txtDate = itemView.findViewById(R.id.textViewDate);
+            imgMessage.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(getItem(position));
+                }
+            });
         }
     }
 
@@ -179,5 +181,13 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         } else {
             return TITLE_LEFT;
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(MessageModel messageModel);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

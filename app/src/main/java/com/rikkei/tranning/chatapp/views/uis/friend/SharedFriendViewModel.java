@@ -34,7 +34,7 @@ public class SharedFriendViewModel extends ViewModel {
     }
 
     public void collectionArray(ArrayList<AllUserModel> userArray) {
-        Collections.sort(userArray, (o1, o2) -> o1.getUserName().substring(0, 1).compareTo(o2.getUserName().substring(0, 1)));
+        Collections.sort(userArray, (o1, o2) -> o1.getUserName().substring(0, 1).toLowerCase().compareTo(o2.getUserName().substring(0, 1).toLowerCase()));
     }
 
     public void createFriend(AllUserModel userModel) {

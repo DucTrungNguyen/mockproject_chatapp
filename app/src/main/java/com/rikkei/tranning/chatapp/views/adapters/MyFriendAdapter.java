@@ -60,12 +60,12 @@ public class MyFriendAdapter extends ListAdapter<AllUserModel, MyFriendAdapter.V
             Glide.with(context).load(user.getUserImage()).circleCrop()
                     .into(holder.cImgUser);
         }
-        holder.txtSection.setText(user.getUserName().substring(0, 1));
+        holder.txtSection.setText(user.getUserName().substring(0, 1).toUpperCase());
         holder.txtUserName.setText(user.getUserName());
         if (position > 0) {
             int i = position - 1;
-            if (i <= this.getItemCount() && user.getUserName().substring(0, 1)
-                    .equals(getNoteAt(i).getUserName().substring(0, 1))) {
+            if (i <= this.getItemCount() && user.getUserName().substring(0, 1).toUpperCase()
+                    .equals(getNoteAt(i).getUserName().substring(0, 1).toUpperCase())) {
                 holder.txtSection.setVisibility(View.GONE);
             }
         }

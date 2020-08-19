@@ -220,9 +220,20 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             itemAnimator.setSupportsChangeAnimations(false);
             chatAdapter = new ChatAdapter(getContext(), userModel.getUserImgUrl());
             mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
+            chatAdapter.setOnItemClickListener(messageModel -> {
+                if (messageModel.getType().equals("Image")) {
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("image", messageModel.getMessage());
+                    zoomImageFragment.setArguments(bundle1);
+                    fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
+                    fragmentTransaction.addToBackStack(null);
+                }
+            });
         });
         checkSeen(id);
-
 
         mViewModel.displayMessage(id, lastPositionChat);
 //        RecyclerView.LayoutManager  layoutManager = mViewDataBinding.recyclerChat.getLayoutManager();

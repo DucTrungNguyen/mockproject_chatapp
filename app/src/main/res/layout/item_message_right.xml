@@ -44,12 +44,24 @@
             android:layout_toEndOf="@+id/view"
             android:padding="8dp"
             android:textSize="16sp" />
+        <ImageView
+            android:layout_below="@+id/imageViewMessage"
+            android:scaleType="fitXY"
+            android:id="@+id/imageViewSticker"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/view"
+            android:padding="8dp"
+            android:textSize="16sp" />
+
 
         <TextView
             android:id="@+id/textViewMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewMessage"
+            android:layout_below="@+id/imageViewSticker"
             android:layout_alignParentEnd="true"
             android:background="@drawable/message_background_right"
             android:padding="8dp"

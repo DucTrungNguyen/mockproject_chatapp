@@ -64,7 +64,7 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
             Glide.with(context).load(user.getUserImage()).circleCrop()
                     .into(holder.cimgUser);
         }
-        holder.txtSection.setText(user.getUserName().substring(0, 1));
+        holder.txtSection.setText(user.getUserName().substring(0, 1).toUpperCase());
         holder.txtUserName.setText(user.getUserName());
 
         switch (user.getUserType()) {
@@ -91,8 +91,8 @@ public class AllFriendAdapter extends ListAdapter<AllUserModel, AllFriendAdapter
         }
         if (position > 0) {
             int i = position - 1;
-            if (i <= this.getItemCount() && user.getUserName().substring(0, 1)
-                    .equals(getNoteAt(i).getUserName().substring(0, 1))) {
+            if (i <= this.getItemCount() && user.getUserName().substring(0, 1).toUpperCase()
+                    .equals(getNoteAt(i).getUserName().substring(0, 1).toUpperCase())) {
                 holder.txtSection.setVisibility(View.GONE);
             }
         }
