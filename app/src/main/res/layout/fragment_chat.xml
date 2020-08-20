@@ -52,6 +52,23 @@
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/status_chat"
+                android:layout_toEndOf="@+id/imageViewTitleChat"
+                android:layout_below="@id/textViewUserNameChat"
+                android:src="@drawable/status_online"
+                android:layout_marginStart="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/string_status_chat"
+                android:text="@string/txt_status_online"
+                android:layout_marginStart="7dp"
+                android:layout_below="@id/textViewUserNameChat"
+                android:layout_toEndOf="@+id/status_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

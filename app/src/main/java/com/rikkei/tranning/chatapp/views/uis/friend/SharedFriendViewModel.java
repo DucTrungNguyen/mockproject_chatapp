@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModel;
 
 import com.rikkei.tranning.chatapp.services.models.AllUserModel;
 import com.rikkei.tranning.chatapp.services.repositories.FriendsRepository;
+import com.rikkei.tranning.chatapp.services.repositories.ProfileRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class SharedFriendViewModel extends ViewModel {
+
+
+
     public ArrayList<AllUserModel> arrayAllFriend = new ArrayList<>();
     FriendsRepository friendRepository;
     public MutableLiveData<ArrayList<AllUserModel>> allUserListLiveData = new MutableLiveData<>();
@@ -58,5 +62,10 @@ public class SharedFriendViewModel extends ViewModel {
             }
         }
         allUserListLiveData.setValue(allUserList);
+    }
+
+
+    public void updateStatus(String key, String value) {
+        new ProfileRepository().updateInforFromFirebase(key, value);
     }
 }

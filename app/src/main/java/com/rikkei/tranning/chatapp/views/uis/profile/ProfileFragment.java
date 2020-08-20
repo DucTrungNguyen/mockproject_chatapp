@@ -1,5 +1,6 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -132,7 +133,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onChangeLanguage(String language) {
         LocaleHelper.onReAttach(getContext(), language);
         requireActivity().finish();
-        startActivity(requireActivity().getIntent());
+        Intent intent = requireActivity().getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         requireActivity().overridePendingTransition(R.anim.nope, R.anim.nope);
     }
 }

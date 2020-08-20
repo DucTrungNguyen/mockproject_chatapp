@@ -36,6 +36,11 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         this.urlImage = urlImage;
     }
 
+    public void setImage(String urlImage){
+        this.urlImage = urlImage;
+
+    }
+
     private static final DiffUtil.ItemCallback<MessageModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<MessageModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull MessageModel oldItem, @NonNull MessageModel newItem) {

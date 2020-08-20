@@ -7,17 +7,19 @@ public class UserModel {
     private String userImgUrl;
     private String userPhone;
     private String userDateOfBirth;
+    private String status;
 
     public UserModel() {
     }
 
-    public UserModel(String userId, String userName, String userEmail, String userImgUrl, String userPhone, String userDateOfBirth) {
+    public UserModel(String userId, String userName, String userEmail, String userImgUrl, String userPhone, String userDateOfBirth, String status) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userImgUrl = userImgUrl;
         this.userPhone = userPhone;
         this.userDateOfBirth = userDateOfBirth;
+        this.status= status;
     }
 
     public String getUserId() {
@@ -66,5 +68,13 @@ public class UserModel {
 
     public void setUserDateOfBirth(String userDateOfBirth) {
         this.userDateOfBirth = userDateOfBirth;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

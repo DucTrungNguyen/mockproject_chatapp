@@ -45,7 +45,8 @@ class SignUpViewModel : ViewModel() {
                     userEmail.value,
                     "default",
                     "default",
-                    "default"
+                    "default",
+                    "offline"
                 )
                 SignUpRepository()
                     .createUserFromFirebase(user, userId)

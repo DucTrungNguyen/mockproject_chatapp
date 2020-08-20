@@ -179,6 +179,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             public void afterTextChanged(Editable s) {
             }
         });
+
         mViewDataBinding.imageSendSticker.setOnClickListener(view1 -> {
             if (mViewDataBinding.recyclerSticker.getVisibility() == View.VISIBLE) {
                 mViewDataBinding.editTextMessage.requestFocus();
@@ -207,7 +208,42 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewModel.getInfoUserChat(id);
         mViewDataBinding.recyclerChat.setLayoutManager(layoutManager);
         mViewDataBinding.recyclerChat.setHasFixedSize(true);
+
+//
+
+
+
+        chatAdapter = new ChatAdapter(getContext(),"");
+
+        chatAdapter.setOnItemClickListener(messageModel -> {
+            if (messageModel.getType().equals("Image")) {
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("image", messageModel.getMessage());
+                zoomImageFragment.setArguments(bundle1);
+                fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
+                fragmentTransaction.addToBackStack(null);
+            }
+        });
+        mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
         mViewModel.userChatLiveData.observe(getViewLifecycleOwner(), userModel -> {
+
+            chatAdapter.setImage(userModel.getUserImgUrl());
+
+
+            if (userModel.getStatus().equals("offline")){
+                mViewDataBinding.stringStatusChat.setText(R.string.txt_status_offline);
+                mViewDataBinding.statusChat.setImageResource(R.drawable.status_offline);
+
+            }else {
+
+                mViewDataBinding.stringStatusChat.setText(R.string.txt_status_online);
+                mViewDataBinding.statusChat.setImageResource(R.drawable.status_online);
+
+            }
+
             if (userModel.getUserImgUrl().equals("default")) {
                 Glide.with(requireContext()).load(R.mipmap.ic_launcher).circleCrop().into(mViewDataBinding.imageViewTitleChat);
             } else {
@@ -218,22 +254,13 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerChat.getItemAnimator();
             assert itemAnimator != null;
             itemAnimator.setSupportsChangeAnimations(false);
-            chatAdapter = new ChatAdapter(getContext(), userModel.getUserImgUrl());
-            mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
-            chatAdapter.setOnItemClickListener(messageModel -> {
-                if (messageModel.getType().equals("Image")) {
-                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ZoomImageFragment zoomImageFragment = new ZoomImageFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("image", messageModel.getMessage());
-                    zoomImageFragment.setArguments(bundle1);
-                    fragmentTransaction.add(R.id.frameLayoutChat, zoomImageFragment, null).commit();
-                    fragmentTransaction.addToBackStack(null);
-                }
-            });
+
+//            mViewModel.displayMessage(id, lastPositionChat);
         });
+
         checkSeen(id);
+
+
 
         mViewModel.displayMessage(id, lastPositionChat);
 //        RecyclerView.LayoutManager  layoutManager = mViewDataBinding.recyclerChat.getLayoutManager();

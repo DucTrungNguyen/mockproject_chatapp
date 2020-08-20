@@ -118,6 +118,32 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.updateStatus("status", "offline");
+    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        mViewModel.updateStatus("status", "offline");
+//    }
+
+    override fun onStart() {
+        super.onStart()
+        mViewModel.updateStatus("status", "online");
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mViewModel.updateStatus("status", "offline");
+
+    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        mViewModel.updateStatus("status", "online");
+//    }
+
     override fun getBindingVariable(): Int {
         return BR.mainViewModel
     }
