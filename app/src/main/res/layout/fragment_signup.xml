@@ -11,10 +11,13 @@
     </data>
 
     <ScrollView
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -189,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkboxRegister"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     android:background="@drawable/custom_button_login"
                     android:onClick="@{()->viewModels.signUpButtonOnClick()}"
                     android:text="@string/txt_register"

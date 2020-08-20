@@ -38,6 +38,18 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        eventEnableButton()
+        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragment() }
+        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
+
+
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         if (LocaleHelper.getLanguage(activity) == "vi") {
             val htmlContentCheckBox =
                 "   " + " Tôi đồng ý với các<font color=\"#4356B4\"> chính sách</font> và <font color=\"#4356B4\"> điều khoản</font>"
@@ -62,13 +74,6 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         mViewDataBinding!!.ButtonMoveLogin.text = spannable
-        eventEnableButton()
-        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragment() }
-        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         mViewModel!!.signUpStatus.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is SignUpViewModel.SignUpStatus.Loading -> {

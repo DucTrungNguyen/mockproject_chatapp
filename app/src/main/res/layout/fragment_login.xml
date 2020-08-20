@@ -10,17 +10,18 @@
             type="com.rikkei.tranning.chatapp.views.uis.login.LoginViewModel" />
     </data>
     <ScrollView
+        android:fillViewport="true"
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/white"
-            android:onClick="hideKeyBoard"
             android:fitsSystemWindows="true"
             android:layout_width="match_parent"
-            android:paddingHorizontal="@dimen/padding_horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:onClick="hideKeyBoard"
+            android:paddingHorizontal="24dp">
             <ProgressBar
                 android:id="@+id/progress_circular"
                 android:visibility="gone"
