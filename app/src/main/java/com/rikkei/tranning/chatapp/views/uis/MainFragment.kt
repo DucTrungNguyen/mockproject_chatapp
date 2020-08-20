@@ -92,7 +92,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        mViewModel.updateStatus("status", "online");
         mViewModel.countNotifiRequest.observe(
             viewLifecycleOwner,
             Observer { s: String ->
@@ -118,30 +118,20 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mViewModel.updateStatus("status", "offline");
-    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
+//    override fun onDestroy() {
+//        super.onDestroy()
 //        mViewModel.updateStatus("status", "offline");
 //    }
-
-    override fun onStart() {
-        super.onStart()
-        mViewModel.updateStatus("status", "online");
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mViewModel.updateStatus("status", "offline");
-
-    }
 //
-//    override fun onResume() {
-//        super.onResume()
+//    override fun onStart() {
+//        super.onStart()
 //        mViewModel.updateStatus("status", "online");
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        mViewModel.updateStatus("status", "offline");
+//
 //    }
 
     override fun getBindingVariable(): Int {

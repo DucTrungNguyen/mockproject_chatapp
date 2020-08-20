@@ -132,8 +132,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         mViewModel?.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
-        val fragment =
-            parentFragmentManager.findFragmentById(R.id.FrameLayout)
+        val fragment = parentFragmentManager.findFragmentById(R.id.FrameLayout)
         fragmentTransaction.remove(fragment!!)
         fragmentTransaction.add(R.id.FrameLayout, SignUpFragment(), null).commit()
         fragmentTransaction.addToBackStack(null)

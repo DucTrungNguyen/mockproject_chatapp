@@ -10,16 +10,24 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.helper.LocaleHelper
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
+import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    var chatViewModel: SharedFriendViewModel? = null
+
     @RequiresApi(Build.VERSION_CODES.M)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        chatViewModel =
+            ViewModelProviders.of(this).get(SharedFriendViewModel::class.java)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.frameLayoutChat, MainFragment(), null)
         fragmentTransaction.commit()
@@ -49,7 +57,22 @@ class MainActivity : AppCompatActivity() {
 //            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //        }
 
+//        chatViewModel?.updateStatus("status", "online");
+
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        chatViewModel?.updateStatus("status", "online");
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        chatViewModel?.updateStatus("status", "offline");
+
+    }
+
 
     fun hideKeyBoardMain(view: View) {
         val inputMethodManager =
