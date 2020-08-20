@@ -132,7 +132,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         mViewModel?.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
-        fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
+        val fragment =
+            parentFragmentManager.findFragmentById(R.id.FrameLayout)
+        fragmentTransaction.remove(fragment!!)
+        fragmentTransaction.add(R.id.FrameLayout, SignUpFragment(), null).commit()
+        fragmentTransaction.addToBackStack(null)
     }
 
     fun setEnableButton() {

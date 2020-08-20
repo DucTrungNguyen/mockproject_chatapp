@@ -34,8 +34,9 @@
     <string name="txt_accept">Accept</string>
     <string name="txt_list_request_friend">Friend Request</string>
     <string name="txt_list_send_friend">Send Request</string>
-    <string name="txt_all_friend_title">All Friends</string>
-    <string name="txt_request_friend_title">Requests</string>
+    <string name="txt_title_friend">FRIEND</string>
+    <string name="txt_all_friend_title">ALL FRIENDS</string>
+    <string name="txt_request_friend_title">REQUEST</string>
 
     <!--    profile-->
     <string name="txt_language">Language</string>

@@ -38,16 +38,16 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        if (LocaleHelper.getLanguage(activity).equals("vi")) {
+        if (LocaleHelper.getLanguage(activity) == "vi") {
             val htmlContentCheckBox =
                 "   " + " Tôi đồng ý với các<font color=\"#4356B4\"> chính sách</font> và <font color=\"#4356B4\"> điều khoản</font>"
-            mViewDataBinding.checkboxRegister.text = Html.fromHtml(
+            mViewDataBinding.textViewCheckbox.text = Html.fromHtml(
                 htmlContentCheckBox
             )
         } else {
             val htmlContentCheckBox =
                 "   " + " I agree with the <font color=\"#4356B4\"> policies</font> and <font color=\"#4356B4\"> terms</font>"
-            mViewDataBinding.checkboxRegister.text = Html.fromHtml(
+            mViewDataBinding.textViewCheckbox.text = Html.fromHtml(
                 htmlContentCheckBox
             )
         }
@@ -63,8 +63,8 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         )
         mViewDataBinding!!.ButtonMoveLogin.text = spannable
         eventEnableButton()
-        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragmentBack() }
-        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragmentBack() }
+        mViewDataBinding.ButtonBackRegister.setOnClickListener { replaceFragment() }
+        mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -79,7 +79,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
                 }
                 is SignUpViewModel.SignUpStatus.IsOk -> {
                     progress_circular_signUp.visibility = View.GONE
-                    replaceFragmentBack()
+                    replaceFragment()
                 }
                 is SignUpViewModel.SignUpStatus.Failure -> {
                     Toast.makeText(context, "Sign up fail", Toast.LENGTH_SHORT).show()
@@ -97,19 +97,6 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
                 }
             }
         })
-//        mViewModel?.signUpUserMutableLiveData?.observe(
-//            viewLifecycleOwner,
-//            Observer { loginUser ->
-//                if (!loginUser.validateEmailPassword()) {
-//                    Toast.makeText(
-//                        context,
-//                        "Invalid Email Or Password!",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                } else {
-//                    mViewModel?.createUserFireBase()
-//                }
-//            })
 
         mViewModel?.userName?.observe(
             viewLifecycleOwner,
@@ -151,16 +138,21 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewDataBinding.checkboxRegister.setOnClickListener { setEnableButton() }
     }
 
-    private fun replaceFragmentBack() {
+    private fun replaceFragment() {
         mViewDataBinding.editTextPassRegister.text = null
         mViewDataBinding.editTextEmailRegister.text = null
         mViewDataBinding.checkboxRegister.isChecked = false
         mViewModel.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left)
+        val fragment =
+            parentFragmentManager.findFragmentById(R.id.FrameLayout)
+        fragmentTransaction.remove(fragment!!)
         FirebaseAuth.getInstance().signOut()
-        fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
+        fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()
+        fragmentTransaction.addToBackStack(null)
     }
+
 
     fun setEnableButton() {
         if (mViewDataBinding.checkboxRegister.isChecked

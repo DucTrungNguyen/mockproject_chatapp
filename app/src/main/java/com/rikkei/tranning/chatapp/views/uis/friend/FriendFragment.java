@@ -59,7 +59,7 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
         InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
         MainViewPaperAdaper mainViewPaperAdaper = new MainViewPaperAdaper(getParentFragmentManager());
-        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), String.valueOf(R.string.txt_friend));
+        mainViewPaperAdaper.AddFragment(new MyFriendFragment(), String.valueOf(R.string.txt_title_friend));
         mainViewPaperAdaper.AddFragment(new AllFriendFragment(), String.valueOf(R.string.txt_all_friend_title));
         mainViewPaperAdaper.AddFragment(new RequestFriendFragment(), String.valueOf(R.string.txt_request_friend_title));
         mViewDataBinding.viewPagerFriend.setAdapter(mainViewPaperAdaper);
@@ -91,7 +91,7 @@ public class FriendFragment extends BaseFragment<FragmentFriendBinding, SharedFr
 
         View textFriend = LayoutInflater.from(getContext()).inflate(R.layout.custom_tablayout, null);
         TextView textNotifiFriend = textFriend.findViewById(R.id.text1);
-        textNotifiFriend.setText(R.string.txt_friend);
+        textNotifiFriend.setText(R.string.txt_title_friend);
         tabFriend = mViewDataBinding.tabLayoutFriend.getTabAt(0);
         assert tabFriend != null;
         tabFriend.setCustomView(textFriend);

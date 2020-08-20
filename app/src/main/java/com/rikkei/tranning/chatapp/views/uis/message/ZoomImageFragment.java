@@ -21,7 +21,7 @@ public class ZoomImageFragment extends Fragment {
     private ScaleGestureDetector scaleGestureDetector;
     private float mScaleFactor = 1.0f;
     private ImageView imageView;
-    private ImageButton imgBack;
+    ImageButton imgBack;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -46,9 +46,7 @@ public class ZoomImageFragment extends Fragment {
             scaleGestureDetector.onTouchEvent(event);
             return true;
         });
-        imgBack.setOnClickListener(v -> {
-            removeFragment();
-        });
+        imgBack.setOnClickListener(v -> removeFragment());
         return view;
     }
 
@@ -65,7 +63,7 @@ public class ZoomImageFragment extends Fragment {
 
     public void removeFragment() {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         assert fragment != null;
         fragmentTransaction.remove(fragment).commit();
     }

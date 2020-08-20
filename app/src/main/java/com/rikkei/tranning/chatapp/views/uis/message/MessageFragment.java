@@ -89,7 +89,6 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
 
             }
         });
-
     }
 
     @Override
@@ -99,8 +98,6 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
             messageArrayList.clear();
             if (chatModels.isEmpty()) {
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.VISIBLE);
-                mViewDataBinding.textViewNoResultChat.setVisibility(View.VISIBLE);
-                messagesAdapter.notifyDataSetChanged();
             } else {
                 mViewModel.softArray(chatModels);
                 int count = mViewModel.getCountUnReadMessage(chatModels);
@@ -110,7 +107,6 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
                     mViewModel.countUnReadMessage.setValue(count + "");
                 }
                 mViewDataBinding.ImageViewNoResultChat.setVisibility(View.GONE);
-                mViewDataBinding.textViewNoResultChat.setVisibility(View.GONE);
             }
             if (messageArrayList.isEmpty()) {
                 messageArrayList.addAll(chatModels);

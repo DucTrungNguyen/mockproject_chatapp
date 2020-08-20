@@ -16,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:onClick="hideKeyBoard"
             android:paddingHorizontal="24dp">
 
@@ -164,13 +165,22 @@
                 </RelativeLayout>
 
                 <CheckBox
+                    android:layout_marginStart="30dp"
                     android:id="@+id/checkboxRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/RelativePass"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="32dp"
                     android:button="@drawable/checkbox_custom"
+                    />
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/checkboxRegister"
+                    android:id="@+id/textViewCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RelativePass"
+                    android:layout_marginTop="32dp"
                     android:textColor="#999999"
                     android:textSize="14sp" />
 

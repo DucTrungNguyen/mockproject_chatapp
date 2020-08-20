@@ -27,6 +27,7 @@
     <!--friend-->
     <string name="txt_search_friend">Tìm kiếm bạn bè</string>
     <string name="txt_friend">Bạn bè</string>
+    <string name="txt_title_friend">BẠN BÈ</string>
     <string name="txt_request">Yêu cầu</string>
     <string name="txt_request_friend">Kết bạn</string>
     <string name="txt_cancel_friend">Hủy bạn</string>
@@ -34,8 +35,8 @@
     <string name="txt_accept">Đồng ý</string>
     <string name="txt_list_request_friend">Lời mời kết bạn</string>
     <string name="txt_list_send_friend">Đã gửi kết bạn</string>
-    <string name="txt_all_friend_title">Tất cả</string>
-    <string name="txt_request_friend_title">Yêu cầu</string>
+    <string name="txt_all_friend_title">TẤT CẢ</string>
+    <string name="txt_request_friend_title">YÊU CẦU</string>
 
     <!--    profile-->
     <string name="txt_language">Ngôn ngữ</string>

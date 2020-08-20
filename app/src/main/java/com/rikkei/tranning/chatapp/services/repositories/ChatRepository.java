@@ -54,7 +54,7 @@ public class ChatRepository {
     public void createMessage(String id, String message, String type) {
         final Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
+        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm ", Locale.getDefault());
         String hour = simpleDateFormatTime.format(calendar.getTime());
         String date = simpleDateFormatDate.format(calendar.getTime());
         databaseReference = FirebaseDatabase.getInstance().getReference("chat");
