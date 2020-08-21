@@ -50,6 +50,19 @@ class SplashActivity : AppCompatActivity() {
 //        }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val count = supportFragmentManager.backStackEntryCount
+
+//        if (count >= 2) {
+            supportFragmentManager.popBackStack(); //popBackStack()
+//            super.onBackPressed()
+            //additional code
+//        } else {
+//
+//        }
+    }
+
     fun hideKeyBoard(view: View) {
         val inputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

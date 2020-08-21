@@ -8,12 +8,14 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding
 import com.rikkei.tranning.chatapp.views.uis.MainActivity
+import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileFragment
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -130,9 +132,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         mViewDataBinding!!.editTextEmailLogin.setText("")
         mViewDataBinding!!.editTextPassLogin.setText("")
         mViewModel?.resetStatus()
+
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
-        fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        fragmentTransaction.add(R.id.FrameLayout, SignUpFragment(), null).commit()
+        fragmentTransaction.addToBackStack(null)
+
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//            .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
+//        fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
     }
 
     fun setEnableButton() {

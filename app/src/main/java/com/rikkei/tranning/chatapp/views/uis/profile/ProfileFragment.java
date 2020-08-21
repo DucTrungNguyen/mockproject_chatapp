@@ -55,6 +55,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             dialog.show(getParentFragmentManager(), null);
         });
         mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
+        mViewDataBinding.TextViewLanguage.setOnClickListener(v -> showMenu());
         mViewDataBinding.CircleImageViewUser.setOnClickListener(v -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

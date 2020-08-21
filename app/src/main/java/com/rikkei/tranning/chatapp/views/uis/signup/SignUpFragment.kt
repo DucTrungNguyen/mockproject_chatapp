@@ -154,6 +154,8 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
     }
 
 
+
+
     fun setEnableButton() {
         if (mViewDataBinding.checkboxRegister.isChecked
             && !TextUtils.isEmpty(
