@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:568187284902:android:4896e92970012fee0eb367",
+        "android_client_info": {
+          "package_name": "com.rikkei.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568187284902-ldufruiofquj5n604ci8evhsugtv2qg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7s6k8GpaaATkan58gyntXVlznVWyNBbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568187284902-ldufruiofquj5n604ci8evhsugtv2qg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:568187284902:android:1b611ca413c5ccf40eb367",
         "android_client_info": {
           "package_name": "com.rikkei.tranning.chatapp"
