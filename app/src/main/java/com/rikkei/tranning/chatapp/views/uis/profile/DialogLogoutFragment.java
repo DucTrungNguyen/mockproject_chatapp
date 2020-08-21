@@ -13,15 +13,18 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.views.uis.SplashActivity;
+import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel;
 
 import java.util.Objects;
 
 public class DialogLogoutFragment extends DialogFragment {
     Button btnLogout, btnNo;
+    private SharedFriendViewModel chatViewModel;
 
     @Nullable
     @Override
@@ -38,6 +41,8 @@ public class DialogLogoutFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        chatViewModel =
+                ViewModelProviders.of(this).get(SharedFriendViewModel.class);
         btnLogout = view.findViewById(R.id.buttonDialogLogout);
         btnNo = view.findViewById(R.id.buttonDialogNo);
         btnNo.setOnClickListener(view1 -> Objects.requireNonNull(getDialog()).dismiss());
@@ -45,10 +50,12 @@ public class DialogLogoutFragment extends DialogFragment {
     }
 
     public void logout() {
+        chatViewModel.updateStatus("status", "offline");
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         requireActivity().finish();
+
     }
 }
