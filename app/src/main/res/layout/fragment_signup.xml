@@ -203,10 +203,10 @@
             <TextView
                 android:id="@+id/ButtonMoveLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="40dp"
                 android:background="@color/white"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/txt_login_span"
                 android:textAllCaps="false"
                 android:textColor="@color/grey"

@@ -52,7 +52,7 @@
     <string name="txt_language_vi">Vietnamese</string>
     <string name="txt_language_en">English</string>
     <string name="txt_camera">Take photo</string>
-    <string name="txt_choose_photo">Choose photo from your photo library</string>
+    <string name="txt_choose_photo">Choose photo</string>
     <string name="txt_hint_phone_number">0999999999</string>
     <string name="txt_hint_date">Choose date of birth</string>
     <string name="txt_save_profile_success">Save profile success</string>

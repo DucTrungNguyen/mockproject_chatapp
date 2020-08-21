@@ -44,7 +44,6 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewDataBinding.ButtonMoveLogin.setOnClickListener { replaceFragment() }
 
 
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -150,12 +149,8 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewModel.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left)
-        val fragment =
-            parentFragmentManager.findFragmentById(R.id.FrameLayout)
-        fragmentTransaction.remove(fragment!!)
         FirebaseAuth.getInstance().signOut()
-        fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
     }
 
 

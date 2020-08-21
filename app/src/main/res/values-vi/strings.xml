@@ -52,7 +52,7 @@
     <string name="txt_language_vi">Tiếng Việt</string>
     <string name="txt_language_en">Tiếng Anh</string>
     <string name="txt_camera">Chụp ảnh</string>
-    <string name="txt_choose_photo">Chọn ảnh từ thư viện ảnh</string>
+    <string name="txt_choose_photo">Chọn ảnh</string>
     <string name="txt_hint_phone_number">0999999999</string>
     <string name="txt_hint_date">Chọn ngày sinh</string>
     <string name="txt_save_profile_success">Cập nhật trang cá nhân thành công</string>
