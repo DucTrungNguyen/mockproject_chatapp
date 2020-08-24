@@ -50,6 +50,10 @@ class SplashActivity : AppCompatActivity() {
 //        }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5ef47dcc0b0ce7231701fd49042800ce98551dfb
     fun hideKeyBoard(view: View) {
         val inputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
