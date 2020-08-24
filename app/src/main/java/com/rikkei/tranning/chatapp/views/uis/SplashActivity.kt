@@ -49,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
 //            )
 //        }
     }
-    
+
 
     fun hideKeyBoard(view: View) {
         val inputMethodManager =
