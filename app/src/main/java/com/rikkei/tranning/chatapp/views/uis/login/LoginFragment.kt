@@ -1,11 +1,13 @@
 package com.rikkei.tranning.chatapp.views.uis.login
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.FragmentTransaction
@@ -15,7 +17,6 @@ import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.base.BaseFragment
 import com.rikkei.tranning.chatapp.databinding.FragmentLoginBinding
 import com.rikkei.tranning.chatapp.views.uis.MainActivity
-import com.rikkei.tranning.chatapp.views.uis.profile.EditProfileFragment
 import com.rikkei.tranning.chatapp.views.uis.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -85,15 +86,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
                         mViewDataBinding!!.editTextEmailLogin.text = null
                         mViewDataBinding!!.editTextPassLogin.text = null
                         progress_circular.visibility = View.GONE
-
                     }
-
-
                 }
                 is LoginViewModel.LoginStatus.Register -> {
-//                    progress_circular.visibility = View.GONE
                     replaceFragment()
-
                 }
             }
         })
@@ -135,12 +131,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
 
         val fragmentTransaction = parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        fragmentTransaction.add(R.id.FrameLayout, SignUpFragment(), null).commit()
-        fragmentTransaction.addToBackStack(null)
 
-//        val fragmentTransaction = parentFragmentManager.beginTransaction()
-//            .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
-//        fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
+        var fragmentSignUp = parentFragmentManager.findFragmentByTag("fragmentSignUp")
+        if (fragmentSignUp == null) {
+            fragmentSignUp = SignUpFragment()
+        }
+        fragmentTransaction.replace(R.id.FrameLayout, fragmentSignUp, "fragmentSignUp")
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     fun setEnableButton() {

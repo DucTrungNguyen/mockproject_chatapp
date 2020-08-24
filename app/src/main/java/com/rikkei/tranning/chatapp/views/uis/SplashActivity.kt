@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         } else {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()
+            fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), "fragmentLogin").commit()
         }
 
         val languageToLoad = LocaleHelper.getLanguage(this)
@@ -47,19 +47,6 @@ class SplashActivity : AppCompatActivity() {
 //                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
 //                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 //            )
-//        }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val count = supportFragmentManager.backStackEntryCount
-
-//        if (count >= 2) {
-            supportFragmentManager.popBackStack(); //popBackStack()
-//            super.onBackPressed()
-            //additional code
-//        } else {
-//
 //        }
     }
 

@@ -165,14 +165,18 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
         assert fragment != null;
-        fragmentTransaction.remove(fragment).commit();
+        fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
+        fragmentTransaction.commit();
     }
 
     public void removeFragmentSave() {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         assert fragment != null;
-        fragmentTransaction.remove(fragment).commit();
+        fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
+        fragmentTransaction.commit();
     }
 
     public void openImage() {

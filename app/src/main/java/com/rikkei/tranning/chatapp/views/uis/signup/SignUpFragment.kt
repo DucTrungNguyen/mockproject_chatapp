@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
@@ -148,13 +149,16 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
         mViewDataBinding.checkboxRegister.isChecked = false
         mViewModel.resetStatus()
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
         FirebaseAuth.getInstance().signOut()
-        fragmentTransaction.replace(R.id.FrameLayout, LoginFragment(), null).commit()
+        var fragmentLogin = parentFragmentManager.findFragmentByTag("fragmentLogin")
+        if (fragmentLogin == null) {
+            fragmentLogin = LoginFragment()
+        }
+        fragmentTransaction.replace(R.id.FrameLayout, fragmentLogin, "fragmentLogin")
+        parentFragmentManager.popBackStack()
+        fragmentTransaction.commit()
     }
-
-
-
 
     fun setEnableButton() {
         if (mViewDataBinding.checkboxRegister.isChecked

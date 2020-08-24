@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -45,12 +46,17 @@ public class MyFriendFragment extends BaseFragment<FragmentMyFriendsBinding, Sha
         mViewDataBinding.RecyclerMyFriend.setAdapter(myFriendAdapter);
         myFriendAdapter.setOnItemClickListener(userModel -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
-                    .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
-            ChatFragment chatFragment = new ChatFragment();
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            Fragment chatFragment = getParentFragmentManager().findFragmentByTag("fragmentChat");
+            if (chatFragment == null) {
+                chatFragment = new ChatFragment();
+                fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, "fragmentChat");
+            } else {
+                fragmentTransaction.replace(R.id.frameLayoutChat, chatFragment, "fragmentChat");
+            }
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserId());
             chatFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, null);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
