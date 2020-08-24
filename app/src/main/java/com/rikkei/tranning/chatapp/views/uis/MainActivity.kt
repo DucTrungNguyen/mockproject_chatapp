@@ -1,7 +1,9 @@
 package com.rikkei.tranning.chatapp.views.uis
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
@@ -10,12 +12,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.helper.LocaleHelper
 import com.rikkei.tranning.chatapp.views.uis.friend.SharedFriendViewModel
-import com.rikkei.tranning.chatapp.views.uis.message.ChatViewModel
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,6 +63,12 @@ class MainActivity : AppCompatActivity() {
 //        chatViewModel?.updateStatus("status", "online");
 
     }
+//    @SuppressLint("ResourceType")
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.layout.fragment_editprofile)
+//        fragment?.onActivityResult(requestCode, resultCode, data)
+//    }
 
     override fun onRestart() {
         super.onRestart()
