@@ -17,13 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
+            android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.rikkei.tranning.chatapp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
         <activity
             android:theme="@style/AppTheme"

@@ -6,6 +6,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -63,12 +65,6 @@ class MainActivity : AppCompatActivity() {
 //        chatViewModel?.updateStatus("status", "online");
 
     }
-//    @SuppressLint("ResourceType")
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.layout.fragment_editprofile)
-//        fragment?.onActivityResult(requestCode, resultCode, data)
-//    }
 
     override fun onRestart() {
         super.onRestart()

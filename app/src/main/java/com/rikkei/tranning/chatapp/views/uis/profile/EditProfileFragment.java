@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.PopupMenu;
@@ -47,7 +48,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
     private static final int IMAGE_REQUEST = 1;
-    int CAMERA_REQUEST = 123;
+    int CAMERA_REQUEST = 2;
+    private File imageFilePath;
+    public static final int REQUEST_IMAGE = 100;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile");
     private Uri imageUri;
     String uriImage;
@@ -230,27 +233,22 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     }
 
     public void takePhoto() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
 
+        Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+            try {
+                imageFilePath = createImageFile();
             }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.rikkei.tranning.chatapp.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+            catch (IOException e) {
+                e.printStackTrace();
+                return;
             }
+            Uri photoUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() +".provider", imageFilePath);
+            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(pictureIntent, REQUEST_IMAGE);
         }
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(intent, CAMERA_REQUEST);
+
     }
 
     String currentPhotoPath;
@@ -266,7 +264,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 storageDir      /* directory */
         );
 
-        currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -297,6 +294,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             if (uploadTask != null && uploadTask.isInProgress()) {
@@ -304,10 +302,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             } else {
                 uploadImage();
             }
-        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null) {
-            Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            assert bitmap != null;
-            imageUri = getImageUri(requireContext(), bitmap);
+        } else if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
+            imageUri = (Uri.fromFile(imageFilePath));
+            Log.d("Paths image", imageUri.toString());
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
             } else {
