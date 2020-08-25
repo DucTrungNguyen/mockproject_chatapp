@@ -248,7 +248,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(pictureIntent, REQUEST_IMAGE);
         }
-
     }
 
     String currentPhotoPath;
@@ -263,7 +262,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         return image;
     }
 
