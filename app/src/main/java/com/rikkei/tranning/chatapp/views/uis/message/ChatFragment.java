@@ -208,12 +208,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         mViewModel.getInfoUserChat(id);
         mViewDataBinding.recyclerChat.setLayoutManager(layoutManager);
         mViewDataBinding.recyclerChat.setHasFixedSize(true);
-
-//
-
-
-
-        chatAdapter = new ChatAdapter(getContext(),"");
+        chatAdapter = new ChatAdapter(getContext(), "");
 
         chatAdapter.setOnItemClickListener(messageModel -> {
             if (messageModel.getType().equals("Image")) {
@@ -229,19 +224,13 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         });
         mViewDataBinding.recyclerChat.setAdapter(chatAdapter);
         mViewModel.userChatLiveData.observe(getViewLifecycleOwner(), userModel -> {
-
             chatAdapter.setImage(userModel.getUserImgUrl());
-
-
-            if (userModel.getStatus().equals("offline")){
+            if (userModel.getStatus().equals("offline")) {
                 mViewDataBinding.stringStatusChat.setText(R.string.txt_status_offline);
                 mViewDataBinding.statusChat.setImageResource(R.drawable.status_offline);
-
-            }else {
-
+            } else {
                 mViewDataBinding.stringStatusChat.setText(R.string.txt_status_online);
                 mViewDataBinding.statusChat.setImageResource(R.drawable.status_online);
-
             }
 
             if (userModel.getUserImgUrl().equals("default")) {
@@ -254,33 +243,20 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mViewDataBinding.recyclerChat.getItemAnimator();
             assert itemAnimator != null;
             itemAnimator.setSupportsChangeAnimations(false);
-
-//            mViewModel.displayMessage(id, lastPositionChat);
         });
-
         checkSeen(id);
-
-
-
         mViewModel.displayMessage(id, lastPositionChat);
-//        RecyclerView.LayoutManager  layoutManager = mViewDataBinding.recyclerChat.getLayoutManager();
         mViewDataBinding.recyclerChat.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 loadPosition = recyclerView.getChildCount();
-
                 int position = layoutManager.findFirstVisibleItemPosition();
-//                Log.d("pos", position + "");
-//                Log.d("last time", lastPositionChat + "");
                 if (position == 0) {
-//                    mViewDataBinding.progressCircularLoadMessage.setVisibility(View.VISIBLE);
                     mViewModel.displayMessage(id, lastPositionChat);
                 }
             }
         });
-//        mViewDataBinding.recyclerChat.
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
             if (arrayList.size() > 0)
@@ -353,6 +329,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
         assert fragment != null;
         fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
         fragmentTransaction.commit();
     }
 

@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.PopupMenu;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -33,6 +36,8 @@ import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
 import com.rikkei.tranning.chatapp.views.uis.message.ZoomImageFragment;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,7 +48,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
     private static final int IMAGE_REQUEST = 1;
-    int CAMERA_REQUEST = 123;
+    int CAMERA_REQUEST = 2;
+    private File imageFilePath;
+    public static final int REQUEST_IMAGE = 100;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile");
     private Uri imageUri;
     String uriImage;
@@ -165,14 +172,18 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.exit_left, R.anim.pop_exit_left);
         assert fragment != null;
-        fragmentTransaction.remove(fragment).commit();
+        fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
+        fragmentTransaction.commit();
     }
 
     public void removeFragmentSave() {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         assert fragment != null;
-        fragmentTransaction.remove(fragment).commit();
+        fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
+        fragmentTransaction.commit();
     }
 
     public void openImage() {
@@ -222,8 +233,38 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     }
 
     public void takePhoto() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA_REQUEST);
+
+        Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+            try {
+                imageFilePath = createImageFile();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            Uri photoUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() +".provider", imageFilePath);
+            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(pictureIntent, REQUEST_IMAGE);
+        }
+
+    }
+
+    String currentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        return image;
     }
 
     private void showMenu() {
@@ -253,6 +294,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             if (uploadTask != null && uploadTask.isInProgress()) {
@@ -260,10 +302,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             } else {
                 uploadImage();
             }
-        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null) {
-            Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            assert bitmap != null;
-            imageUri = getImageUri(requireContext(), bitmap);
+        } else if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
+            imageUri = (Uri.fromFile(imageFilePath));
+            Log.d("Paths image", imageUri.toString());
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
             } else {

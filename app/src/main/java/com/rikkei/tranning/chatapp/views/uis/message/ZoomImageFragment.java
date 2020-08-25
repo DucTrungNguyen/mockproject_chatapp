@@ -65,6 +65,8 @@ public class ZoomImageFragment extends Fragment {
         Fragment fragment = getParentFragmentManager().findFragmentById(R.id.frameLayoutChat);
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         assert fragment != null;
-        fragmentTransaction.remove(fragment).commit();
+        fragmentTransaction.remove(fragment);
+        getParentFragmentManager().popBackStack();
+        fragmentTransaction.commit();
     }
 }

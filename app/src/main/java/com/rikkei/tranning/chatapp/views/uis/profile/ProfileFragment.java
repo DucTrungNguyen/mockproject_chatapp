@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -55,6 +57,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             dialog.show(getParentFragmentManager(), null);
         });
         mViewDataBinding.imageButtonChangeLanguage.setOnClickListener(v -> showMenu());
+        mViewDataBinding.TextViewLanguage.setOnClickListener(v -> showMenu());
         mViewDataBinding.CircleImageViewUser.setOnClickListener(v -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -98,8 +101,15 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void replaceFragment() {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.add(R.id.frameLayoutChat, new EditProfileFragment(), null).commit();
+        Fragment fragmentEditProfile = getParentFragmentManager().findFragmentByTag("fragmentEditProfile");
+        if (fragmentEditProfile == null) {
+            fragmentEditProfile = new EditProfileFragment();
+            fragmentTransaction.add(R.id.frameLayoutChat, fragmentEditProfile, "fragmentEditProfile");
+        } else {
+            fragmentTransaction.replace(R.id.frameLayoutChat, fragmentEditProfile, "fragmentEditProfile");
+        }
         fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private void showMenu() {

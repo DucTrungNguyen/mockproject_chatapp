@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         } else {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), null).commit()
+            fragmentTransaction.add(R.id.FrameLayout, LoginFragment(), "fragmentLogin").commit()
         }
 
         val languageToLoad = LocaleHelper.getLanguage(this)

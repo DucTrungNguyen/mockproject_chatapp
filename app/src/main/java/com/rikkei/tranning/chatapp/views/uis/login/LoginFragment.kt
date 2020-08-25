@@ -1,13 +1,16 @@
 package com.rikkei.tranning.chatapp.views.uis.login
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
@@ -83,15 +86,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
                         mViewDataBinding!!.editTextEmailLogin.text = null
                         mViewDataBinding!!.editTextPassLogin.text = null
                         progress_circular.visibility = View.GONE
-
                     }
-
-
                 }
                 is LoginViewModel.LoginStatus.Register -> {
-//                    progress_circular.visibility = View.GONE
                     replaceFragment()
-
                 }
             }
         })
@@ -130,9 +128,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding?, LoginViewModel?>() {
         mViewDataBinding!!.editTextEmailLogin.setText("")
         mViewDataBinding!!.editTextPassLogin.setText("")
         mViewModel?.resetStatus()
+
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.exit, R.anim.pop_exit)
-        fragmentTransaction.replace(R.id.FrameLayout, SignUpFragment(), null).commit()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        var fragmentSignUp = parentFragmentManager.findFragmentByTag("fragmentSignUp")
+        if (fragmentSignUp == null) {
+            fragmentSignUp = SignUpFragment()
+        }
+        fragmentTransaction.replace(R.id.FrameLayout, fragmentSignUp, "fragmentSignUp")
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     fun setEnableButton() {

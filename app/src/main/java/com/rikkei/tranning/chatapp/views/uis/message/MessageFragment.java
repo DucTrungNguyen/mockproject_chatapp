@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.SimpleItemAnimator;
@@ -56,12 +57,18 @@ public class MessageFragment extends BaseFragment<FragmentMessageBinding, ChatVi
         messagesAdapter.setOnItemClickListener(userModel -> {
             FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ChatFragment chatFragment = new ChatFragment();
+            Fragment chatFragment = getParentFragmentManager().findFragmentByTag("chat");
+            if (chatFragment == null) {
+                chatFragment = new ChatFragment();
+                fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, "chat");
+            } else {
+                fragmentTransaction.replace(R.id.frameLayoutChat, chatFragment, "chat");
+            }
             Bundle bundle = new Bundle();
             bundle.putString("idUser", userModel.getUserModel().getUserId());
             chatFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.frameLayoutChat, chatFragment, null).commit();
             fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
             mViewDataBinding.editTextSearchUserChat.setText(null);
         });
         mViewDataBinding.imageButtonDelete.setOnClickListener(view1 -> {

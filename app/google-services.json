@@ -39,7 +39,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:568187284902:android:1b611ca413c5ccf40eb367",
         "android_client_info": {
-          "package_name": "com.rikkei.tranning.chatapp"
+          "package_name": "com.rikkei.chatapp"
         }
       },
       "oauth_client": [
