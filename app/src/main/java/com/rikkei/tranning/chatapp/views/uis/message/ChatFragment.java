@@ -250,11 +250,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
                 loadPosition = recyclerView.getChildCount();
                 int position = layoutManager.findFirstVisibleItemPosition();
                 if (position == 0) {
