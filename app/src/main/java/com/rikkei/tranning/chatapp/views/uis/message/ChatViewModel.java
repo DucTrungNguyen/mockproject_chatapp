@@ -35,9 +35,7 @@ public class ChatViewModel extends ViewModel {
 
 
     public void getInfoUserChat(String id) {
-        chatRepository.infoUserFromFirebase(id, user -> {
-            userChatLiveData.setValue(user);
-        });
+        chatRepository.infoUserFromFirebase(id, user -> userChatLiveData.setValue(user));
     }
 
     public void sendMessage(String idUser, String message, String type) {
@@ -57,10 +55,8 @@ public class ChatViewModel extends ViewModel {
                     newList.addAll(messageArray);
                     newList.addAll(oldList);
                     messageListLiveData.setValue(newList);
-                    isShowProcessLoadMessage.setValue(false);
-                } else {
-                    isShowProcessLoadMessage.setValue(false);
                 }
+                isShowProcessLoadMessage.setValue(false);
             }
         });
     }

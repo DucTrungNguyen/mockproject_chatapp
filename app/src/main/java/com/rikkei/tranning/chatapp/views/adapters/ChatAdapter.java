@@ -36,7 +36,7 @@ public class ChatAdapter extends ListAdapter<MessageModel, ChatAdapter.ViewHolde
         this.urlImage = urlImage;
     }
 
-    public void setImage(String urlImage){
+    public void setImage(String urlImage) {
         this.urlImage = urlImage;
 
     }

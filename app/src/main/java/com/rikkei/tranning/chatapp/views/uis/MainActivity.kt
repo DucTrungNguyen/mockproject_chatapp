@@ -1,20 +1,15 @@
 package com.rikkei.tranning.chatapp.views.uis
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.rikkei.tranning.chatapp.R
 import com.rikkei.tranning.chatapp.helper.LocaleHelper
@@ -40,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             != PackageManager.PERMISSION_GRANTED
         ) {
             val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-            requestPermissions(permission, 10);
+            requestPermissions(permission, 10)
         }
         val languageToLoad = LocaleHelper.getLanguage(this)
         val locale = Locale(languageToLoad)
@@ -52,29 +47,17 @@ class MainActivity : AppCompatActivity() {
             baseContext.resources.displayMetrics
         )
         LocaleHelper.setBaseContex(baseContext)
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            val w: Window = window
-//            w.setFlags(
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-//            )
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-
-//        chatViewModel?.updateStatus("status", "online");
-
     }
 
     override fun onRestart() {
         super.onRestart()
-        chatViewModel?.updateStatus("status", "online");
+        chatViewModel?.updateStatus("status", "online")
 
     }
 
     override fun onPause() {
         super.onPause()
-        chatViewModel?.updateStatus("status", "offline");
+        chatViewModel?.updateStatus("status", "offline")
 
     }
 

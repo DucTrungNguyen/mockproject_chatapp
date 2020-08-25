@@ -250,6 +250,11 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
                 loadPosition = recyclerView.getChildCount();
                 int position = layoutManager.findFirstVisibleItemPosition();
                 if (position == 0) {
@@ -259,17 +264,21 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         });
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
-            if (arrayList.size() > 0)
+            if (arrayList.size() > 0) {
                 lastPositionChat = arrayList.get(0).getTimeLong();
-            for (int i = 0; i < arrayList.size() - 1; i++) {
-                int j = i + 1;
-                if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
-                        && arrayList.get(i).getIdSender().equals(arrayList.get(j).getIdSender())) {
-                    arrayList.get(i).setIsShow(true);
+                for (int i = 0; i < arrayList.size() - 1; i++) {
+                    int j = i + 1;
+                    if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
+                            && arrayList.get(i).getIdSender().equals(arrayList.get(j).getIdSender())) {
+                        arrayList.get(i).setIsShow(true);
+                    }
                 }
+                chatAdapter.submitList(arrayList);
+                mViewDataBinding.recyclerChat.smoothScrollToPosition(arrayList.size() - 1);
             }
-            chatAdapter.submitList(arrayList);
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(chatAdapter.getItemCount());
+            else {
+                chatAdapter.submitList(arrayList);
+            }
         });
 
         stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
@@ -288,8 +297,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             imageUri = uri;
             uploadImage();
         });
-
-
     }
 
     public void checkSeen(String id) {
