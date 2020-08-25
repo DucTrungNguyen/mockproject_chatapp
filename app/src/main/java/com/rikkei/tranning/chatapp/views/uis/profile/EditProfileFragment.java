@@ -254,7 +254,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         return image;
     }
 
