@@ -269,7 +269,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
                     }
                 }
                 chatAdapter.submitList(arrayList);
-                mViewDataBinding.recyclerChat.smoothScrollToPosition(arrayList.size() - 1);
+                mViewDataBinding.recyclerChat.smoothScrollToPosition(arrayList.size()-1);
             }
             else {
                 chatAdapter.submitList(arrayList);
