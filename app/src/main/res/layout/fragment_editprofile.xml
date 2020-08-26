@@ -72,13 +72,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3">
+
                     <View
-                        android:layout_marginStart="30dp"
-                        android:background="@drawable/profile_left"
-                        android:layout_toStartOf="@+id/CircleImageUserEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_marginStart="30dp"
+                        android:layout_toStartOf="@+id/CircleImageUserEdit"
+                        android:background="@drawable/profile_left" />
+
                     <ImageView
                         android:id="@+id/CircleImageUserEdit"
                         android:layout_width="143dp"
@@ -86,20 +87,23 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="42dp"
                         android:src="@mipmap/ic_launcher" />
+
                     <View
-                        android:background="@drawable/profile_right"
-                        android:layout_toEndOf="@+id/CircleImageUserEdit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/CircleImageUserEdit"
+                        android:background="@drawable/profile_right" />
 
                     <ImageButton
-                        android:scaleType="center"
+                        android:layout_toRightOf="@id/CircleImageUserEdit"
+                        android:layout_marginLeft="-60dp"
+                        android:layout_marginBottom="-15dp"
                         android:id="@+id/ImageButtonCamera"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_marginStart="220dp"
                         android:layout_marginTop="125dp"
                         android:background="@null"
+                        android:scaleType="center"
                         android:src="@drawable/ic_camera" />
                 </RelativeLayout>
 
