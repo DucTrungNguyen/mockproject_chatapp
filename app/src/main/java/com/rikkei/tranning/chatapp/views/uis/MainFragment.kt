@@ -92,7 +92,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, SharedFriendViewModel>() 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mViewModel.updateStatus("status", "online");
+        mViewModel.updateStatus("status", "online")
         mViewModel.countNotifiRequest.observe(
             viewLifecycleOwner,
             Observer { s: String ->

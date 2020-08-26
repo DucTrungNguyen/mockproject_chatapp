@@ -84,6 +84,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding, SignUpViewModel>() {
                 }
                 is SignUpViewModel.SignUpStatus.IsOk -> {
                     progress_circular_signUp.visibility = View.GONE
+                    Toast.makeText(context, "Signup success", Toast.LENGTH_SHORT).show()
                     replaceFragment()
                 }
                 is SignUpViewModel.SignUpStatus.Failure -> {

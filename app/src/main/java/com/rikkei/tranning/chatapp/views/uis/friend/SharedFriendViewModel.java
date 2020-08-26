@@ -16,7 +16,6 @@ import java.util.Collections;
 public class SharedFriendViewModel extends ViewModel {
 
 
-
     public ArrayList<AllUserModel> arrayAllFriend = new ArrayList<>();
     FriendsRepository friendRepository;
     public MutableLiveData<ArrayList<AllUserModel>> allUserListLiveData = new MutableLiveData<>();

@@ -1,11 +1,10 @@
 package com.rikkei.tranning.chatapp.views.uis.profile;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,7 +34,6 @@ import com.rikkei.tranning.chatapp.R;
 import com.rikkei.tranning.chatapp.databinding.FragmentEditprofileBinding;
 import com.rikkei.tranning.chatapp.views.uis.message.ZoomImageFragment;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -48,7 +46,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding, EditProfileViewModel> {
     private static final int IMAGE_REQUEST = 1;
-    int CAMERA_REQUEST = 2;
     private File imageFilePath;
     public static final int REQUEST_IMAGE = 100;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile");
@@ -233,37 +230,30 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
     }
 
     public void takePhoto() {
-
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-
+        if (pictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
             try {
                 imageFilePath = createImageFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
-            Uri photoUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() +".provider", imageFilePath);
+            Uri photoUri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", imageFilePath);
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(pictureIntent, REQUEST_IMAGE);
         }
-
     }
-
-    String currentPhotoPath;
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         return image;
     }
 
@@ -282,13 +272,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditprofileBinding
             return false;
         });
         popupMenu.show();
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     @Override

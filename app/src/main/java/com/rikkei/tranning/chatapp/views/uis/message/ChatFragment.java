@@ -49,6 +49,7 @@ import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 import com.rikkei.tranning.chatapp.views.adapters.ImageAdapter;
 import com.rikkei.tranning.chatapp.views.adapters.StickerAdapter;
+import com.rikkei.tranning.chatapp.views.uis.ViewModelProviderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,7 +109,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
     @Override
     public ChatViewModel getViewModel() {
-        return ViewModelProviders.of(requireActivity()).get(ChatViewModel.class);
+//        return ViewModelProviders.of(requireActivity()).get(ChatViewModel.class);
+        return ViewModelProviders.of(this,new ViewModelProviderFactory()).get(ChatViewModel.class);
     }
 
 
@@ -259,17 +261,21 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         });
         mViewModel.messageListLiveData.observe(getViewLifecycleOwner(), messageModels -> {
             ArrayList<MessageModel> arrayList = new ArrayList<>(messageModels);
-            if (arrayList.size() > 0)
+            if (arrayList.size() > 0) {
                 lastPositionChat = arrayList.get(0).getTimeLong();
-            for (int i = 0; i < arrayList.size() - 1; i++) {
-                int j = i + 1;
-                if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
-                        && arrayList.get(i).getIdSender().equals(arrayList.get(j).getIdSender())) {
-                    arrayList.get(i).setIsShow(true);
+                for (int i = 0; i < arrayList.size() - 1; i++) {
+                    int j = i + 1;
+                    if (arrayList.get(i).getIdReceiver().equals(arrayList.get(j).getIdReceiver())
+                            && arrayList.get(i).getIdSender().equals(arrayList.get(j).getIdSender())) {
+                        arrayList.get(i).setIsShow(true);
+                    }
                 }
+                chatAdapter.submitList(arrayList);
+                mViewDataBinding.recyclerChat.smoothScrollToPosition(arrayList.size()-1);
             }
-            chatAdapter.submitList(arrayList);
-            mViewDataBinding.recyclerChat.smoothScrollToPosition(chatAdapter.getItemCount());
+            else {
+                chatAdapter.submitList(arrayList);
+            }
         });
 
         stickerAdapter = new StickerAdapter(Arrays.asList(stickerResource), requireContext());
@@ -288,8 +294,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
             imageUri = uri;
             uploadImage();
         });
-
-
     }
 
     public void checkSeen(String id) {
