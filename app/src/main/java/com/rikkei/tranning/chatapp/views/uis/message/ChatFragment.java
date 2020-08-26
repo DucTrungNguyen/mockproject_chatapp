@@ -49,6 +49,7 @@ import com.rikkei.tranning.chatapp.services.models.MessageModel;
 import com.rikkei.tranning.chatapp.views.adapters.ChatAdapter;
 import com.rikkei.tranning.chatapp.views.adapters.ImageAdapter;
 import com.rikkei.tranning.chatapp.views.adapters.StickerAdapter;
+import com.rikkei.tranning.chatapp.views.uis.ViewModelProviderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,7 +109,8 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
     @Override
     public ChatViewModel getViewModel() {
-        return ViewModelProviders.of(requireActivity()).get(ChatViewModel.class);
+//        return ViewModelProviders.of(requireActivity()).get(ChatViewModel.class);
+        return ViewModelProviders.of(this,new ViewModelProviderFactory()).get(ChatViewModel.class);
     }
 
 

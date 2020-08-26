@@ -92,7 +92,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             if (idSender.equals(firebaseUser.getUid())) {
                 holder.txtLastMessage.setText("Bạn: Image");
             } else
-                holder.txtLastMessage.setText("Sticker");
+                holder.txtLastMessage.setText("Image");
         }
         if (count > 0) {
             holder.txtSumUnRead.setVisibility(View.VISIBLE);
